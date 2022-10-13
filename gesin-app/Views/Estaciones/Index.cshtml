@@ -1,0 +1,534 @@
+﻿@using gesin_app.Models
+@model IEnumerable<Estacion>
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+
+<script src="https://kit.fontawesome.com/c6f899d35a.js" crossorigin="anonymous"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+
+    .btn-agregar {
+        font-size: 25px;
+    }
+    .btn-eliminar{
+        font-size: 25px;
+    }
+  
+</style>
+
+<div class="row">
+
+    <div class="col-12 d-flex justify-content-center mb-5">
+
+        <h3>Estaciones</h3>
+    </div>
+
+    <div class="col-12 d-flex justify-content-center mb-5">
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crear_estacion">
+
+            <div class="d-flex align-items-center">
+
+               
+                <div class="px-2">agregar</div> <i class="fa-solid fa-circle-plus btn-agregar"></i>
+
+
+            </div>
+
+        </button>
+
+        <!------------- Moda para crear una nueva estacion -------->
+        <div class="modal fade" id="crear_estacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Crear nueva estacion</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="formEstaciones" method="post">
+                        <div class="modal-body">
+
+                           
+
+                            <label class="form-label">Nombre</label>
+                            <input id="nombreEstacion_crear" class="form-control" />
+
+                        </div>
+                        <div class="modal-footer " id="btnfooter">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <input type="submit" class="btn btn-primary" value="Agregar" id="btnenviar">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="col col-sm-6 m-auto">
+
+       
+        
+
+            <table class="table table-sm table-bordered">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>@Html.DisplayNameFor(model => model.Id)</th>
+                        <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+                        <th>Operaciones</th>
+
+
+
+                    </tr>
+
+
+                </thead>
+
+                <tbody id="pintardata" >
+
+                  <!--Aqi se va a cargar la data de manera asincrono-->
+
+                </tbody>
+
+
+
+            </table>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+<!------------------------Modal para editar una estacion ---------------------------->
+
+        <div class="modal fade" id="editarEstacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Editar Estacion</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="formEstacionesEditar" method="post">
+                        <div class="modal-body">
+
+                           <input  class=" form-control" id="idEstacionEditar" disabled hidden>
+
+                            <label class="form-label">Nombre</label>
+                            <input id="nombreEstacionEditar" class="form-control" />
+
+                        </div>
+                        <div class="modal-footer " id="btnfooter">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <input type="submit" class="btn btn-primary" value="Actualizar" id="btnenviar">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+<script>
+
+
+
+    window.onload = function () {
+
+        pintardara();
+
+    }
+
+
+
+
+     //------- crear estaciones asincrono-----------
+
+    const formestaciones = document.getElementById("formEstaciones");
+
+    function crearestaciones(e) {
+
+
+        e.preventDefault();
+
+       
+
+        const nombreEstacion = document.getElementById("nombreEstacion_crear").value;
+        
+
+        
+        const url = "/Estaciones/CrearEditar/estacion";
+
+        fetch(url, {
+
+            method: 'POST',
+            body: JSON.stringify({
+
+                nombre: nombreEstacion,
+              
+
+
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+
+
+        })
+            .then(res => res.json())
+            .then(data => {
+
+                if (data == 3) {
+
+                    Swal.fire('esta estacion ya existe')
+
+                }
+                else {
+
+                   
+
+                    if (data == 1) {
+
+
+
+
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Se ha agregado correctamente',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                        pintardara();
+
+                        const nombreEstacion = document.getElementById("nombreEstacion").value = "";
+                        const idEstacion = document.getElementById("idEstacion").value = "";
+                       
+
+                    }
+
+
+
+  
+                    else{
+
+                        
+                          Swal.fire({
+                          icon: 'warning',
+                          title: 'Advertencia...',
+                          text: 'el campo nombre es obligatorio',
+                          //footer: '<a href="">Why do I have this issue?</a>'
+                        })
+                        
+                    }
+
+                }
+
+
+
+            })
+
+    }
+
+    formestaciones.addEventListener("submit", crearestaciones);
+
+
+
+  
+   //------------ editar estaciones asincrono--------------
+   
+    const formEstacionesEditar = document.getElementById("formEstacionesEditar");
+
+
+    function editarestacion(e) {
+        
+
+        e.preventDefault();
+
+
+
+        const nombreEstacion = document.getElementById("nombreEstacionEditar").value;
+        const idEstacion = Number(document.getElementById("idEstacionEditar").value);
+
+
+        const url = "/Estaciones/CrearEditar/estacion";
+
+        fetch(url, {
+
+            method: 'POST',
+            body: JSON.stringify({
+
+                nombre: nombreEstacion,
+                id: idEstacion
+
+
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+
+
+        })
+            .then(res => res.json())
+            .then(data => {
+
+                if (data == 3) {
+
+                  
+                     
+                    Swal.fire('esta estacion ya existe')
+
+                }
+             
+
+                 else if (data == 2) {
+
+
+
+
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Se ha actualizado correctamente',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                        pintardara();
+
+                        const nombreEstacion = document.getElementById("nombreEstacion").value = "";
+                        const idEstacion = document.getElementById("idEstacion").value = "";
+
+
+                }
+
+                else if (data == 4) {
+
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Advertencia...',
+                        text: 'el campo nombre es obligatorio ',
+                        //footer: '<a href="">Why do I have this issue?</a>'
+                    })
+
+
+                }
+
+                  else {
+
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error...',
+                            text: 'Error 404 recurso no encontrado',
+                            //footer: '<a href="">Why do I have this issue?</a>'
+                        })
+
+                  }
+
+                
+
+
+
+            })
+
+    }
+
+    formEstacionesEditar.addEventListener("submit", editarestacion )
+
+
+    //--------Listar estaciones asincrono----------------------
+    function pintardara() {
+
+        const url = "/Estaciones/Listarestaciones";
+
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+
+                const pintardata = document.getElementById("pintardata");
+                let filatabla = "";
+
+                for (var i = 0; i < data.length; i++) {
+
+                    
+
+                    filatabla += `
+
+                                        <tr>
+
+                                        <td>${data[i].id}</td>
+                                        <td>${data[i].nombre}</td>
+                                        <td class="d-flex justify-content-around">
+
+
+
+                                            <!-- Button trigger modal -->
+
+                                            <button onclick="EditarEstacion(${data[i].id})" type="button" class="btn btn-sm btn-success " data-bs-toggle="modal" data-bs-target="#editarEstacion">
+
+                                                <div class="d-flex align-items-center">
+
+                                                    <div class="px-1">Editar </div>  <i class="fa-solid fa-pen-to-square btn-editar"></i>
+
+                                                </div>
+
+                                            </button>
+
+                                            <button onclick="Eliminarestacion(${data[i].id})" type="button" class="btn btn-sm btn-danger ">
+
+                                                <div class="d-flex align-items-center">
+
+                                                    <div class="px-1">Eliminar </div>  <i class="fas fa-regular fa-trash"></i>
+
+                                                </div>
+
+                                            </button>
+
+                                                                              <!-- Modal -->
+                                                <div class="modal fade" id="editar_estacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <form id="formEstacionesEditar" method="post">
+                                                                <div class="modal-body">
+
+                                                                    <input id="idEstacion" class="form-control" />
+
+                                                                    <label class="form-label">Nombre</label>
+                                                                    <input id="nombreEstacion" class="form-control" />
+                                                                </div>
+                                                                <div class="modal-footer " id="btnfooter">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                                    <input type="submit" class="btn btn-primary" value="Actualizar" >
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                           
+
+                                         </td>
+
+                                       
+
+                                        </tr>
+
+                                        
+
+
+                                         `
+
+
+
+
+
+                }
+
+                pintardata.innerHTML = filatabla;
+
+
+            })
+
+        
+
+    }
+   
+//------Cargar la data para llenar el formulario a ediar asincrono -----------//
+    function EditarEstacion(idEstacion) {
+
+
+                const url = "Estaciones/CargarData_editar/?id="+ idEstacion;
+
+               fetch(url)
+               .then(res => res.json())
+               .then(data =>{
+
+                   const nombreEstacion = document.getElementById("nombreEstacionEditar").value = data.nombre;
+                   const idestacion = document.getElementById("idEstacionEditar").value = data.id;
+
+                   
+
+       })
+
+
+    }
+
+
+    //---------Elimiar una estacion asincrono---------------------//
+
+    function Eliminarestacion(idEstacion) {
+
+
+        alert(idEstacion)
+        const url ="/Estaciones/Eliminar/?id="+ idEstacion;
+
+        fetch(url)
+        .then(res=> res.json())
+        .then(data => {
+             alert(data)
+            
+            if (data == 1) {
+                alert("entre")
+
+
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Se ha eliminado correctamente',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+                pintardara();
+            }
+
+            else if (data == 2) {
+
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error...',
+                    text: 'la estacion no puede ser eliminada porque existen reportes con ella',
+
+                })
+
+                pintardara();
+            }
+            else {
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error...',
+                    text: 'Error 404 recurso no encontrado',
+
+                })
+
+            }
+
+
+           
+        })
+    }
+
+   
+</script>

@@ -1,0 +1,2030 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<gesin_app.ViewModel.ReportesView>
+
+@{
+
+    Layout = null;
+    ViewData["Title"] = "Index";
+
+
+    List<Persona> mantenedors = ViewBag.mant;
+
+    List<Subsistema> subsistemas = ViewBag.subsistema;
+
+    List<Estacion> estaciones = ViewBag.estaciones;
+
+    List<Ubicacion> ubicaciones = ViewBag.ubicacion;
+
+    List<Persona> mantenedornotificar = ViewBag.mantenedornotificar;
+
+ 
+
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+   @* <script src="https://kit.fontawesome.com/c6f899d35a.js" crossorigin="anonymous"></script>*@
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/js/fontawesome.js"></script>
+    <title>Bootstrap</title>
+
+    <style>
+
+        .col-primaria-filtro {
+            height: 07vh;
+            background-color: rgba(0, 0, 0, 0.8);
+            margin: 0;
+            padding: 0;
+            
+        }
+
+        .col-primaria-tabla {
+            height: 50vh;
+            overflow: auto; /*con este overfllow hacemos que me ponga la barra de scroll cuando el contenido no quepa*/
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .col-primaria-reportes {
+            height:43vh;
+            overflow: hidden;
+            
+        }
+
+
+
+        .col-secundaria {
+            /*background-image: url('../img/greg-rosenke-6QnEf_b47eA-unsplash.jpg');*/
+            background-size: cover;
+            background-position: center;
+            min-height: 43vh;
+            /*background-color: rgba(18,47,94,0.9);*/
+            background-repeat: no-repeat;
+        }
+
+
+        .fila-primaria-padre {
+            height: 100vh;
+        }
+
+
+        .Columna-descripcion {
+            width:300px;
+            
+           
+        }
+
+        .filtrofecha {
+            color: red;
+            text-align: center;
+        }
+
+        .cabecera-tabla {
+            background-color: rgba(18,47,94,0.9);
+        }
+
+        .error {
+            background-color: #f77474;
+            border: 1px solid red;
+        }
+
+            .error:focus {
+                outline: red;
+            }
+
+        .normal {
+            outline: none;
+            width: 100px;
+        }
+
+        .estadocreada {
+            background-color: blue;
+        }
+
+
+        .camposfiltros {
+            width: 75px
+        }
+
+        .icono {
+            font-size: 25px;
+            color: rgb(17 155 11);
+        }
+
+            .icono:hover {
+                color: rgb(20 79 17);
+                transition: .5s;
+            }
+
+        .limpiar {
+            font-size: 20px;
+            color: rgb(250 215 98)
+        }
+
+            .limpiar:hover {
+                color: rgb(146 120 0);
+                transition: 0.3s;
+            }
+
+        .salir{
+
+            font-size:20px;
+        }
+
+     
+
+     
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
+
+       
+
+        <div class="row fila-primaria-padre ">
+
+
+            <!-----area del menu-->
+            <div class=" col-primaria col-primaria-filtro  col-12 ">
+
+
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+
+                    <div class="container-fluid">
+
+                        <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon "></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                            <ul class="navbar-nav">
+
+
+
+                                @if (User.IsInRole("administrador"))
+                                {
+
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-circle-user icono"></i>
+                                        </a>
+
+
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                            <li>
+
+
+                                                <!--Button trigger modal --->
+
+                                                <a class="dropdown-item" asp-action="Index" asp-controller="Estaciones">
+
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="fas fa-solid fa-shop me-1 text-success"> </i><div>Estaciones</div>
+                                                    </div>
+
+                                                </a>
+
+
+
+                                            </li>
+                                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        </ul>
+                                    </li>
+
+
+
+                                }
+
+
+
+
+
+                                <li class="nav-item  me-md-2 ">
+                                    <input type="number" name="Ot" id="filtroOt" min="0" class="form-control form-control-sm mt-1
+                                            " placeholder="OT" />
+                                </li>
+                                <li class="nav-item me-md-2  ">
+                                    <input type="date" id="filtrofecha" class=" filtrofecha form-control form-control-sm mt-1" onchange="filtrar()" />
+                                </li>
+                                <li class="nav-item me-md-2">
+                                    <select asp-items="@ViewBag.fitroestaciones" class="form-select form-select-sm mt-1"
+                                            id="fitroestaciones" onchange="filtrar()"></select>
+                                </li>
+                                <li class="nav-item me-md-2 ">
+                                    <select asp-items="@ViewBag.filtrosubsistema" class="form-select form-select-sm mt-1"
+                                            id="filtrosubsistema" onchange="filtrar()"></select>
+                                </li>
+                                <li class="nav-item me-md-2 ">
+                                    <select asp-items="@ViewBag.estadoOTs" class="form-select form-select-sm mt-1"
+                                            id="filtroestadoot" onchange="filtrar()"></select>
+                                </li>
+
+                                <li class="nav-item me-md-2 ">
+                                    <select asp-items="@ViewBag.fitrousuario" class="form-select form-select-sm mt-1"
+                                            id="fitrousuario" onchange="filtrar()"></select>
+                                </li>
+                                <li class="nav-item  pt-1  ">
+                                    <a href="#" id="limpiar" class="">
+                                        <i class="fa-solid fa-brush limpiar pt-2 mx-3"></i>
+
+                                    </a>
+
+                                </li>
+
+                                <li class="nav-item me-md-2  pt-1 ">
+                                    <a asp-action="Logout" asp-controller="Acceso">
+
+
+                                        <i class="fas fa-regular fa-right-from-bracket salir pt-2 mx-3 "></i>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item me-md-2  ">
+                                    <div class="text-white d-none d-md-block" id="reloj" style="font-size:13px"></div>
+                                </li>
+
+
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="Modal-agregar-estaciones" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Estaciones</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form id="formEstaciones" method="post">
+                                <div class="modal-body">
+
+                                    <label class="form-label">Nombre</label>
+                                    <input id="estacionNombre" class="form-control" />
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                    <input type="submit" class="btn btn-primary" value="Agregar">
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <!---area de la tabla-->
+            <div class=" col-primaria col-primaria-tabla col-12">
+
+
+
+                <table class="table table-sm table-hover table-bordered text-center fs-5 ">
+
+                    <thead class="cabecera-tabla text-white  " style="font-size:14px">
+
+                        <tr>
+                            <th>#@ViewBag.conteo</th>
+                            <th>@Html.DisplayNameFor(model => model.Ot)</th>
+                            <th>@Html.DisplayNameFor(model => model.fechaaveriaGuardarMostrar)</th>
+                            <th>@Html.DisplayNameFor(model => model.SubsistemasNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.EstacionesNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.UbicacionesNombre)</th>
+                            <th ><div class="Columna-descripcion">@Html.DisplayNameFor(model => model.Descripcion)</div></th>
+                            <th>@Html.DisplayNameFor(model => model.SistemasNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.CriticidadNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.EstadoOtNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.OperadorReporteNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.OperadorReporteCodigo)</th>
+                            <th>@Html.DisplayNameFor(model => model.Fechanotificacion)</th>
+                            <th>@Html.DisplayNameFor(model => model.MantenedorNotificarNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.MantenedorNotificarCodigo)</th>
+                            <th>@Html.DisplayNameFor(model => model.Fechainicioguardarmostrar)</th>
+                            <th>@Html.DisplayNameFor(model => model.MantenedorReparoNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.MantenedorReparoCodigo)</th>
+                            <th>@Html.DisplayNameFor(model => model.OperadorCierreNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.OperadorCierreCodigo)</th>
+                            <th>@Html.DisplayNameFor(model => model.Fechafinalguardarmostrar)</th>
+                            <th><div class="Columna-descripcion">@Html.DisplayNameFor(model => model.Comentario)</div></th>
+                            <th>@Html.DisplayNameFor(model => model.UsuariosCodigo)</th>
+                            <th>@Html.DisplayNameFor(model => model.UsuariosNombre)</th>
+                            <th>Usuario actualizo</th>
+
+
+
+
+                        </tr>
+                    </thead>
+
+                    <tbody id="Pintardata">
+
+                        @*@foreach (var item in Model)
+                    {
+                    <tr>
+
+                        <td>@Html.DisplayFor(model => item.Ot)</td>
+                        <td>@Html.DisplayFor(model => item.Fechaaveria)</td>
+                        <td>@Html.DisplayFor(model => item.SubsistemasNombre)</td>
+                        <td>@Html.DisplayFor(model => item.EstacionesNombre)</td>
+                        <td>@Html.DisplayFor(model => item.UbicacionesNombre)</td>
+                        <td>@Html.DisplayFor(model => item.Descripcion)</td>
+                        <td>@Html.DisplayFor(model => item.SistemasNombre)</td>
+                        <td>@Html.DisplayFor(model => item.CriticidadNombre)</td>
+                        <td>@Html.DisplayFor(model => item.EstadoOtNombre)</td>
+                        <td>@Html.DisplayFor(model => item.OperadorReporteNombre)</td>
+                        <td>@Html.DisplayFor(model => item.OperadorReporteCodigo)</td>
+                        <td>@Html.DisplayFor(model => item.Fechanotificacion)</td>
+                        <td>@Html.DisplayFor(model => item.MantenedorNotificarNombre)</td>
+                        <td>@Html.DisplayFor(model => item.MantenedorNotificarCodigo)</td>
+                        <td>@Html.DisplayFor(model => item.Fechainicio)</td>
+                        <td>@Html.DisplayFor(model => item.MantenedorReparoNombre)</td>
+                        <td>@Html.DisplayFor(model => item.MantenedorReparoCodigo)</td>
+                        <td>@Html.DisplayFor(model => item.OperadorCierreNombre)</td>
+                        <td>@Html.DisplayFor(model => item.OperadorCierreCodigo)</td>
+                        <td>@Html.DisplayFor(model => item.Fechafinal)</td>
+                        <td>@Html.DisplayFor(model => item.Comentario)</td>
+                        <td>@Html.DisplayFor(model => item.UsuariosCodigo)</td>
+                        <td>@Html.DisplayFor(model => item.UsuariosNombre)</td>
+
+
+                    </tr>
+                    }*@
+
+
+
+                    </tbody>
+
+
+
+
+
+                </table>
+
+
+
+            </div>
+
+
+            <!-----------area del formuilario--------------->
+            <form id="formulario" method="post" class="gx-1">
+
+
+                <div class=" col-primaria col-primaria-reportes col-12 " id="area_averias">
+
+                    <div class="row fila-secundaria " id="divPadre">
+
+                        <!------Registro de averias------>
+
+                        <div class="col-secundaria col-sm-4  col-md-4 border-end border-white border-2 ">
+
+
+                            <div class="row reporte-averia gx-2 ms-3 me-2 d-flex justify-content- ">
+
+
+                                <div class=" col-12 pb-3 pt-2 text-white">
+                                    Registro de Averias
+
+
+                                </div>
+
+                                
+                                <div class="col-12 col-md-4 mb-3">
+
+
+                                    @*<select name="Id" asp-items="@ViewBag.subsistema" class="form-select form-select-sm" id="subsistema"></select>*@
+
+                                    <input class=" subsistema form-control form-control-sm campos_obligatorios" name="Id" list="Listsubsistemas" id="subsistemas" placeholder="Subsistemas">
+
+                                    <datalist id="Listsubsistemas">
+                                        @foreach (var item in subsistemas)
+                                        {
+                                            <option> @item.Nombre</option>
+                                        }
+
+                                    </datalist>
+
+                                    <input id="idreportes" class="form-control form-control-sm" hidden />
+
+                                </div>
+
+
+                                <div class="col-12 col-md-4 mb-3">
+
+                                    @*<select name="Id" asp-items="@ViewBag.estacioes" class="form-select form-select-sm" id="estaciones"></select>*@
+
+
+                                    <input class="form-control form-control-sm campos_obligatorios" name="Id" list="Listestaciones" id="estaciones" placeholder="Estaciones">
+
+                                    <datalist id="Listestaciones">
+                                        @foreach (var item in estaciones)
+                                        {
+                                            <option> @item.Nombre</option>
+                                        }
+
+                                    </datalist>
+
+                                </div>
+
+
+                                <div class="col-12 col-md-4 mb-3 ">
+
+                                    @*<select name="Id" asp-items="@ViewBag.ubicacion" class="form-select form-select-sm" id="ubicacion"></select>*@
+
+                                    <input class="form-control form-control-sm campos_obligatorios" name="Id" list="Listubicaciones" id="ubicaciones" placeholder="Ubicaciones">
+
+                                    <datalist id="Listubicaciones">
+                                        @foreach (var item in ubicaciones)
+                                        {
+                                            <option> @item.Nombre</option>
+                                        }
+
+                                    </datalist>
+                                </div>
+                                <div class="col-12 col-md-4 ">
+
+                                    <input id="usuario" class="form-control-sm" disabled hidden />
+
+                                </div>
+
+
+
+                                
+                                <div class="col-12 mb-2">
+
+
+                                    <input class="form-control form-control-sm cascada" name="Id" list="listcascada" id="descripcioncascada" placeholder="Selecione un activo">
+
+                                    <datalist id="listcascada">
+
+                                        @*<option value="">Seleccione una descripcion</option>*@
+
+                                    </datalist>
+                                </div>
+
+
+
+                                @*<div class="col-12 pb-3">
+
+                                <select name="Id" class="form-select form-select-sm" id="descripcioncascada">
+
+                                    <option value="">Seleccione una descripcion</option>
+
+                                </select>
+
+
+                            </div>*@
+
+
+                                <div class="col-12 ">
+
+                                    <textarea cols="100" rows="3" class="form-control mb-3 campos_obligatorios" name="" id="descripcion" placeholder="Descripcion de Averia"></textarea>
+
+                                </div>
+                                <div class="col-12 col-md-4 mb-2">
+
+                                    <input class="form-control form-control-sm campos_obligatorios" id="codigooperador" placeholder="Cod. Operador" onkeyup="buscaroperadorreporte()">
+
+                                </div>
+
+                                <div class="col-12 col-md-4 mb-2">
+
+                                    <input class="form-control form-control-sm campos_obligatorios" id="nombreoperador" placeholder="nombre" >
+
+                                </div>
+
+                                <div class="col-12 col-md-4 mb-2">
+
+                                    <input class="form-control form-control-sm campos_obligatorios" id="fechareporte" ondblclick="ObtenerfechaReporte()" maxlength="15" placeholder="Fecha">
+
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="row  d-flex justify-content-between  mx-2  ">
+
+                                <div class="col-6 ">
+
+                                    <input type="checkbox" id="reutilizar">
+                                    <label class="text-white" for="reutilizar">Reutilizar averia</label>
+
+                                </div>
+
+
+
+                                <div class="col-4  gx-2">
+
+                                    <input type="submit" class="form-control form-control-sm btn btn-sm btn-success" value="agregar" id="enviar" @* onclick="CrearReportes()"*@>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <!------------------reportes de averias---------------------->
+
+                        <div class=" col-secundaria col-sm-4 col-md-4 border-end border-white border-2">
+
+
+
+                            <div class="row gx-2 d-flex justify-content-between mx-2 ">
+
+                                <div class="col-12 pb-3 pt-2 text-white ">
+                                    Reportes de Averias
+                                </div>
+                                <div class=" col-12 col-md-5 mb-3 ">
+                                    <select name="Id" asp-items="@ViewBag.criticidad" class="form-select form-select-sm campos_obligatorios" id="criticidad"></select>
+
+                                </div>
+
+                                <div class=" col-12 col-md-5 mb-3 ">
+                                    <select name="Id" asp-items="@ViewBag.SM" class="form-select form-select-sm campos_obligatorios" id="sistema"></select>
+
+                                </div>
+
+                                <div class="col-12">
+
+                                    <div class="row">
+                                        <div class=" col-12 col-md-5 mb-3">
+                                            <select name="Id" asp-items="ViewBag.estadoOTs" class="form-select form-select-sm" id="estado"></select>
+
+                                        </div>
+                                        <div class=" col-12 col-md-4 mb-3 offset-md-2">
+
+                                            <input type="number" class="form-control form-control-sm" id="ot" min="0" placeholder="#OT">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-12 mb-3">
+
+                                    <textarea cols="100" rows="3" class="form-control " name="" id="comentario" placeholder="Comentario"></textarea>
+
+                                </div>
+
+                                <div class="col-12 col-md-5 mb-3">
+
+                                    <input class="form-control form-control-sm" id="fechanotificacion" ondblclick="ObtenerfechaNotificacion()" placeholder="Fecha">
+
+                                </div>
+
+                                <div class="col-12 col-md-5 mb-3">
+
+                                    @*<select name="Id" asp-items="@ViewBag.mantenedor" class="form-select form-select-sm" id="mantenedorreporte"></select>*@
+
+                                    <input class="form-control form-control-sm" name="Id" list="Litsmantenedornotificar" id="mantenedornotificar" placeholder="mantenedor">
+
+                                    <datalist id="Litsmantenedornotificar">
+
+                                        @foreach (var item in mantenedornotificar)
+                                        {
+                                            <option> @item.Nombre</option>
+                                        }
+
+                                    </datalist>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!----------cierre de averias----------------->
+
+
+                        <div class=" col-secundaria col-12 col-sm-4 ">
+
+
+                            <div class="row align-items-center justify-content-around" style="height:35vh">
+
+                                <div class="col-12  text-white ">
+                                    Cierre de Averias
+                                </div>
+
+
+                                <div class=" col-12 col-md-5  ">
+
+                                    <input class="form-control form-control-sm" placeholder="Fecha inicio" id="fechainicio">
+                                </div>
+
+                                <div class=" col-12 col-md-5 ">
+
+                                    <input class="form-control form-control-sm" placeholder="Fecha final" id="fechafinal">
+                                </div>
+
+                                <div class=" col-12 col-md-5 ">
+
+                                    <input class="form-control form-control-sm" placeholder="Codigo OP" id="codigooperadorfinal">
+                                </div>
+
+                                <div class=" col-12 col-md-5  ">
+
+                                    <input class="form-control form-control-sm" placeholder="Nombre OP." id="nombreoperadorfinal" onkeyup="buscaroperadorreporte()">
+                                </div>
+
+
+                                <div class=" col-12 col-md-5 ">
+
+
+                                    @*<select asp-items="ViewBag.mantenedor" class="form-select form-select-sm" ></select>*@
+
+
+                                    <input class="form-control form-control-sm" name="Id" list="Litsmantenedorfinal" id="mantenedorcierre" placeholder="Mant. Reparo">
+
+                                    <datalist id="Litsmantenedorfinal">
+                                        @foreach (var item in mantenedors)
+                                        {
+                                            <option> @item.Nombre</option>
+                                        }
+
+                                    </datalist>
+                                </div>
+
+                                <div class="col-12 ">
+
+                                    <div class="row">
+                                        <div class="col-4 ">
+
+                                            <input class=" form-control form-control-sm btn btn-sm btn-primary text-white " value="nuevo registro" id="btn_nuevoregistro" />
+
+                                        </div>
+                                       
+                                        <div class="col-2">
+
+                                            <input type="color" id="inputcolor" value="#563d7c" title="Choose your color">
+                                        </div>
+
+                                    </div>
+
+                                    
+
+
+                                   
+
+                                </div>
+
+
+                            </div>
+
+
+
+
+
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+
+
+
+
+    
+</div>
+         
+</body>
+
+</html>
+
+@*<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+*@<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+<script>
+
+    window.onload = function () {
+
+        let url = "Reportes/Listarasincrono"
+        Listardata(url)
+
+        ObtenerLocalstore()
+     
+
+    }
+      
+
+
+
+    function Fecha(fecha) {
+
+        let date = new Date()
+
+
+
+        let dias = date.getDate();
+        let meses = date.getMonth() + 1;
+        let anios = date.getFullYear();
+        let horas = date.getHours();
+        let minutos = date.getMinutes();
+
+       
+
+        
+        minutos = minutos <= 9 ? "0" + minutos : minutos;
+       
+        horas = horas <= 9 ? "0" + horas : horas;
+
+        meses = meses <= 9 ? "0" + meses : meses;
+
+        fecha.value = `${dias}/${meses}/${anios} ${horas}:${minutos}`
+
+    }
+
+    function ObtenerfechaReporte() {
+
+        let fechareportes = document.getElementById("fechareporte");
+
+        fechareportes.classList.remove("error");
+
+        Fecha(fechareportes)
+
+    }
+
+
+    function ObtenerfechaNotificacion() {
+
+        let fechanotificar = document.getElementById("fechanotificacion");
+
+        Fecha(fechanotificar)
+
+    }
+
+    let fechainicio = document.getElementById("fechainicio");
+
+    fechainicio.ondblclick = function (fechainicio) {
+
+        let fecha = document.getElementById("fechainicio");
+        Fecha(fecha)
+
+
+    }
+
+    let fechafinal = document.getElementById("fechafinal");
+
+
+    fechafinal.addEventListener("dblclick", function () {
+
+        let fecha = document.getElementById("fechafinal");
+
+        Fecha(fecha);
+    })
+
+
+    function Operador(codigooperador, nombreoperador) {
+
+
+
+             let url = "Reportes/Operador/?op=" + codigooperador;
+
+                 fetch(url)
+                .then(res => res.json())
+                .then(data => {
+
+              
+
+                    nombreoperador.value = "";
+                    nombreoperador.value = data[0].value;
+
+                })
+
+
+    }
+
+
+    function buscaroperadorreporte() {
+
+        let codOperador = document.getElementById("codigooperador").value;
+        let nomOperador = document.getElementById("nombreoperador");
+
+        Operador(codOperador, nomOperador);
+
+
+      
+
+    }
+
+    function buscaroperadorcierre() {
+
+        let codOperador = document.getElementById("codigooperadorfinal");
+        let nomOperadorfinal = document.getElementById("nombreoperadorfinal");
+
+        Operador(codOperador, nomOperadorfinal)
+
+    }
+
+
+    let codOperadorfinal = document.getElementById("codigooperadorfinal");
+
+    codOperadorfinal.onkeyup = function () {
+
+        let codigooperadorfinal = document.getElementById("codigooperadorfinal").value
+        let nombreoperadorfinal = document.getElementById("nombreoperadorfinal");
+
+        Operador(codigooperadorfinal, nombreoperadorfinal)
+
+
+
+    }
+
+
+
+
+
+
+    const check = document.getElementById("reutilizar");
+
+
+        function chekiar(){
+
+            let idreportes = Number(document.getElementById("idreportes").value);  
+
+            if (check.checked && idreportes == 0 || check.checked && idreportes != 0)
+            {
+
+                const btn = document.getElementById("enviar").value = "Reutilizar Agregar";
+
+                        
+            }
+                
+
+            else{
+
+                let idreportes = Number(document.getElementById("idreportes").value);
+
+                    if(idreportes == 0){
+
+                        const btn = document.getElementById("enviar").value = "agregar";
+                    }
+
+                    else{
+
+                        const btn = document.getElementById("enviar").value = "Actualizar";
+                    }
+                    
+                     
+            }
+
+
+
+        }
+
+    check.addEventListener("change", chekiar);
+
+
+
+
+
+    const form = document.getElementById("formulario");
+
+
+
+        function CrearReportes(e) {
+       
+             e.preventDefault();
+
+        
+            /*el id solo se enviara si es para editar */
+            let idreportes = Number(document.getElementById("idreportes").value); 
+            let subsistemas = document.getElementById("subsistemas");
+            let estaciones = document.getElementById("estaciones");
+            let ubicaciones = document.getElementById("ubicaciones");
+            let descripcion = document.getElementById("descripcion");
+            let codigooperador = document.getElementById("codigooperador");
+            let nomoperador = document.getElementById("nombreoperador");
+            let fechareportes = document.getElementById("fechareporte");
+            let criticidad = document.getElementById("criticidad");
+            let sistema = document.getElementById("sistema");
+            let estadoot = document.getElementById("estado");
+            let ot = Number(document.getElementById("ot").value);
+            let comentario = document.getElementById("comentario").value;
+            let fechanotificacion = document.getElementById("fechanotificacion").value;
+            let mantenedornotificar = document.getElementById("mantenedornotificar").value;
+            let fechainicio = document.getElementById("fechainicio").value;
+            let fechafinal = document.getElementById("fechainicio").value;
+            let codigooperadorfinal =  document.getElementById("codigooperadorfinal").value;
+            let mantenedorcierre = document.getElementById("mantenedorcierre").value;
+            let usuario = Number( document.getElementById("usuario").value);
+
+           
+           
+             subsistemas.value == ""? subsistemas.classList.add("error"): subsistemas.classList.remove("error") ;
+             estaciones.value == ""? estaciones.classList.add("error"): estaciones.classList.remove("error");
+             ubicaciones.value == ""? ubicaciones.classList.add("error"): ubicaciones.classList.remove("error");
+             descripcion.value == ""? descripcion.classList.add("error"): descripcion.classList.remove("error");
+             codigooperador.value == "" ? codigooperador.classList.add("error") : codigooperador.classList.remove("error");
+             nomoperador.value == "" ? nomoperador.classList.add("error") : nomoperador.classList.remove("error");
+             Number( fechareportes.value) == 0? fechareportes.classList.add("error"): fechareportes.classList.remove("error");
+             criticidad.value == ""? criticidad.classList.add("error"): criticidad.classList.remove("error");
+             sistema.value =="" ? sistema.classList.add("error"): sistema.classList.remove("error");
+
+
+
+
+                const check = document.getElementById("reutilizar");
+
+                
+
+                if(check.checked){
+
+                    idreportes = 0;
+
+                     
+
+                }
+
+            // cuando se aya enviado el formulario entonces me valida nuevamente los campos
+            //esto es para que una vez esten lleno un campo se le quite en automatico el color rojo sin tener que enviar
+            //si no hicieramos esto aunquie llenemos los campos se quedarian en rojo hasta enviar otra vez el form
+            if (e.isTrusted) {
+
+                //traemos el elemento padre
+                let divPadre = document.getElementById("divPadre");
+
+                //traemos los elementos hijos y lo convertimos en un array
+                let hijos = Array.prototype.slice.apply(document.getElementsByClassName("campos_obligatorios"));
+
+                //creamos la funcion para el evento change que disparara un hijo
+                function cambio(e) {
+
+                   
+
+                    //aqui comprobamos si el evento fue disparado por un elemento que es obligatorio
+                    if (e.target.classList.contains("campos_obligatorios")) {
+
+                        //aqui guardamos en una variable el indice del elemento que disporo el evento
+                        let index = hijos.indexOf(e.target)
+
+                        //aqui volovemos a verificar y decimos que si el elemento que disparo el evento tiene un valor le quitela clase error
+                        //y si el elemento no contiene ningun valor me le siga aplicando la clase error
+                        e.target.value != "" ? hijos[index].classList.remove("error") : hijos[index].classList.add("error");
+
+                        //aqui verificamos que el el elemento que disparo el evento fue el que tiene el id codigooperador
+                        //de ser asi entonces tambien le quitamos la clase error a nombre operador
+                        //ya que estos campos son combinados
+                        if (e.target.id == "codigooperador") {
+
+                            nomoperador.classList.remove("error");
+                        }
+
+                    }
+
+                }
+
+                //eventeo change aplicado al padre pero los hijos son quienes lo dispararan
+                divPadre.addEventListener("change", cambio);
+
+                
+
+            }
+
+            
+
+        let url ="Reportes/CrearReportes/reporte"
+
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({
+
+                id:idreportes,
+                subsistemasNombre: subsistemas.value,
+                estacionesNombre: estaciones.value,
+                ubicacionesNombre: ubicaciones.value,
+                descripcion: descripcion.value,
+                operadorReporteCodigo: codigooperador.value,
+                fechaaveriaGuardarMostrar: fechareportes.value,
+                idCriticidad: Number( criticidad.value),
+                idSistemas: Number( sistema.value),
+                idEstadoOt: Number( estadoot.value),
+                ot:ot,
+                comentario: comentario,
+                fechanotificacionguardarmostrar: fechanotificacion,
+                mantenedorNotificarNombre: mantenedornotificar,
+                fechainicioguardarmostrar: fechainicio,
+                fechafinalguardarmostrar: fechafinal,
+                operadorCierreCodigo: codigooperadorfinal,
+                mantenedorReparoNombre: mantenedorcierre,
+                idUsuarios: usuario
+
+                
+
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+
+                if (data == 1) {
+
+                    let url = "Reportes/Listarasincrono";
+                    //llamamos al metodo listar para que vuelva a cargar la tabla
+                    Listardata(url);
+
+
+
+
+                    Swal.fire({
+                        position: 'center-end',
+                        icon: 'success',
+                        title: 'Reporte agregado satisfactoriamente',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+
+
+                    //limpiamos todos los campos
+
+                    function Limpiar() {
+
+                        let idreportes = document.getElementById("idreportes").value = "";
+                        let subsistemas = document.getElementById("subsistemas").value = "";
+                        let estaciones = document.getElementById("estaciones").value = "";
+                        let ubicaciones = document.getElementById("ubicaciones").value = "";
+                        let descripcion = document.getElementById("descripcion").value = "";
+                        let codigooperador = document.getElementById("codigooperador").value = "";
+                        let fechareportes = document.getElementById("fechareporte").value = "";
+                        let criticidad = document.getElementById("criticidad").value = "";
+                        let sistema = document.getElementById("sistema").value = "";
+                        let estadoot = document.getElementById("estado").value = "";
+                        let ot = document.getElementById("ot").value = "";
+                        let comentario = document.getElementById("comentario").value = "";
+                        let fechanotificacion = document.getElementById("fechanotificacion").value = "";
+                        let mantenedornotificar = document.getElementById("mantenedornotificar").value = "";
+                        let fechainicio = document.getElementById("fechainicio").value = "";
+                        let fechafinal = document.getElementById("fechainicio").value = "";
+                        let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = "";
+                        let mantenedorcierre = document.getElementById("mantenedorcierre").value = "";
+                    }
+
+
+
+                    const check = document.getElementById("reutilizar")
+
+
+                    if (!check.checked) {
+
+                        Limpiar();
+
+                    }
+
+                }
+
+                else if (data == 2) {
+
+
+
+                    let url = "Reportes/Listarasincrono";
+                    //llamamos al metodo listar para que vuelva a cargar la tabla
+                    Listardata(url);
+
+
+
+                    Swal.fire({
+                        position: 'center-end',
+                        icon: 'success',
+                        title: 'Reporte Actualizado satisfactoriamente',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+
+
+                    //limpiamos todos los campos
+
+                    function Limpiar() {
+
+                        let idreportes = document.getElementById("idreportes").value = "";
+                        let subsistemas = document.getElementById("subsistemas").value = "";
+                        let estaciones = document.getElementById("estaciones").value = "";
+                        let ubicaciones = document.getElementById("ubicaciones").value = "";
+                        let descripcion = document.getElementById("descripcion").value = "";
+                        let codigooperador = document.getElementById("codigooperador").value = "";
+                        let fechareportes = document.getElementById("fechareporte").value = "";
+                        let criticidad = document.getElementById("criticidad").value = "";
+                        let sistema = document.getElementById("sistema").value = "";
+                        let estadoot = document.getElementById("estado").value = "";
+                        let ot = document.getElementById("ot").value = "";
+                        let comentario = document.getElementById("comentario").value = "";
+                        let fechanotificacion = document.getElementById("fechanotificacion").value = "";
+                        let mantenedornotificar = document.getElementById("mantenedornotificar").value = "";
+                        let fechainicio = document.getElementById("fechainicio").value = "";
+                        let fechafinal = document.getElementById("fechainicio").value = "";
+                        let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = "";
+                        let mantenedorcierre = document.getElementById("mantenedorcierre").value = "";
+
+                    }
+
+
+
+                    const check = document.getElementById("reutilizar")
+
+
+                    if (!check.checked) {
+
+                        Limpiar();
+
+                    }
+
+                }
+
+
+
+            })
+
+
+
+    }
+
+    form.addEventListener("submit", CrearReportes);
+
+
+    // Buscar la data y cargarla al formulario para ediarla
+
+    function Editar(idreporte) {
+
+
+       
+        let subsistemas = document.getElementById("subsistemas");
+        let estaciones = document.getElementById("estaciones");
+        let ubicaciones = document.getElementById("ubicaciones");
+        let descripcion = document.getElementById("descripcion");
+        let codigooperador = document.getElementById("codigooperador");
+        let fechareportes = document.getElementById("fechareporte");
+        let criticidad = document.getElementById("criticidad");
+        let sistema = document.getElementById("sistema");
+       
+
+
+
+         subsistemas.classList.remove("error");
+        estaciones.classList.remove("error");
+         ubicaciones.classList.remove("error");
+        descripcion.classList.remove("error");
+         codigooperador.classList.remove("error");
+        fechareportes.classList.remove("error");
+        criticidad.classList.remove("error");
+         sistema.classList.remove("error");
+
+        
+        let url = "Reportes/Editar/?id=" + idreporte;
+
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                alert(JSON.stringify(data))
+
+                 
+
+             
+                let Idreportes = document.getElementById("idreportes").value = data.id;
+                let subsistemas = document.getElementById("subsistemas").value = data.subsistemasNombre;
+                let estaciones = document.getElementById("estaciones").value = data.estacionesNombre;
+                let ubicaciones = document.getElementById("ubicaciones").value = data.ubicacionesNombre;
+                let descripcion = document.getElementById("descripcion").value = data.descripcion;
+                let codigooperador = document.getElementById("codigooperador").value = data.operadorReporteCodigo;
+                let nombreoperador = document.getElementById("nombreoperador").value = data.operadorReporteNombre;
+                let fechareportes = document.getElementById("fechareporte").value = data.fechaaveriaGuardarMostrar;
+                let criticidad = document.getElementById("criticidad").value = data.idCriticidad;
+                let sistema = document.getElementById("sistema").value = data.idSistemas;
+                let estadoot = document.getElementById("estado").value = data.idEstadoOt;
+                let ot = document.getElementById("ot").value = data.ot;
+                let comentario = document.getElementById("comentario").value = data.comentario;
+                let fechanotificacion = document.getElementById("fechanotificacion").value = data.fechanotificacionguardarmostrar;
+                let mantenedornotificar = document.getElementById("mantenedornotificar").value = data.mantenedorNotificarNombre;
+                let fechainicio = document.getElementById("fechainicio").value = data.fechainicioguardarmostrar;
+                let fechafinal = document.getElementById("fechafinal").value = data.fechafinalguardarmostrar;
+                let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = data.operadorCierreCodigo;
+                let nombreoperadorfinal = document.getElementById("nombreoperadorfinal").value = data.operadorCierreNombre;
+                let mantenedorcierre = document.getElementById("mantenedorcierre").value = data.mantenedorReparoNombre;
+                let usuario = document.getElementById("usuario").value = data.idUsuarios;
+
+                if (Idreportes != 0) {
+
+                    const btnenviar = document.getElementById("enviar").value = "Actualizar";
+                }
+
+               
+            })
+
+
+
+
+     }
+
+    //funcion para lista en la misma se cambia de color de la fila de la tabla segun el estado de la ot
+
+         function Listardata(url) {
+
+            fetch(url)
+            .then(res => res.json())
+            .then(data => {
+
+               
+
+                let Pintardata = document.getElementById("Pintardata");
+
+               let filasTabla = "";
+
+                for (var i = 0; i < data.length; i++) {
+
+                    let conteo = 1;
+
+
+                    if (data[i].operadorCierreNombre == null) {
+
+                        data[i].operadorCierreNombre = "";
+
+                    }
+
+
+                    filasTabla += `
+
+                       
+
+                      ${data[i].estadoOtNombre == "Creada" ?
+                      
+                      
+                      `
+                      
+                      <tr style ="background-color:#F8F2CD; font-size:14px" ondblclick="Editar(${data[i].id})">
+
+                                <td>${conteo + i}</td>
+                                <td>${data[i].ot}</td>
+                                <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                <td>${data[i].subsistemasNombre}</td>
+                                <td>${data[i].estacionesNombre}</td>
+                                <td>${data[i].ubicacionesNombre}</td>
+                                <td>${data[i].descripcion}</td>
+                                <td>${data[i].sistemasNombre}</td>
+                                <td>${data[i].criticidadNombre}</td>
+                                <td>${data[i].estadoOtNombre}</td>
+                                <td>${data[i].operadorReporteNombre}</td>
+                                <td>${data[i].operadorReporteCodigo}</td>
+
+                                <td>${data[i].fechanotificacionguardarmostrar}</td>
+                                <td>${data[i].mantenedorNotificarNombre}</td>
+                                <td>${data[i].mantenedorNotificarCodigo}</td>
+
+
+                                <td>${data[i].fechainicioguardarmostrar}</td>
+                                <td>${data[i].mantenedorReparoNombre}</td>
+                                <td>${data[i].mantenedorReparoCodigo}</td>
+        
+                                <td>${data[i].operadorCierreNombre}</td>
+                                <td>${data[i].operadorCierreCodigo}</td>
+                                <td>${data[i].fechafinalguardarmostrar}</td>
+                                <td>${data[i].comentario}</td>
+                                <td>${data[i].usuariosCodigo}</td>
+                                <td>${data[i].usuariosNombre}</td>
+                                <td>${data[i].usuarioActualizoNombre}</td>
+
+                                
+                              
+                            </tr>
+
+                                `
+
+                        : data[i].estadoOtNombre == "Reportada" ?
+
+
+                            `
+                      
+                      <tr style ="background-color:#FFCBCB;  font-size:14px" ondblclick="Editar(${data[i].id})">
+
+                                <td>${conteo + i}</td>
+                                <td>${data[i].ot}</td>
+                                <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                <td>${data[i].subsistemasNombre}</td>
+                                <td>${data[i].estacionesNombre}</td>
+                                <td>${data[i].ubicacionesNombre}</td>
+                                <td>${data[i].descripcion}</td>
+                                <td>${data[i].sistemasNombre}</td>
+                                <td>${data[i].criticidadNombre}</td>
+                                <td>${data[i].estadoOtNombre}</td>
+                                <td>${data[i].operadorReporteNombre}</td>
+                                <td>${data[i].operadorReporteCodigo}</td>
+
+                                <td>${data[i].fechanotificacionguardarmostrar}</td>
+                                <td>${data[i].mantenedorNotificarNombre}</td>
+                                <td>${data[i].mantenedorNotificarCodigo}</td>
+
+
+                                <td>${data[i].fechainicioguardarmostrar}</td>
+                                <td>${data[i].mantenedorReparoNombre}</td>
+                                <td>${data[i].mantenedorReparoCodigo}</td>
+        
+                                <td>${data[i].operadorCierreNombre}</td>
+                                <td>${data[i].operadorCierreCodigo}</td>
+                                <td>${data[i].fechafinalguardarmostrar}</td>
+                                <td>${data[i].comentario}</td>
+                                <td>${data[i].usuariosCodigo}</td>
+                                <td>${data[i].usuariosNombre}</td>
+                                <td>${data[i].usuarioActualizoNombre}</td>
+                            </tr>`
+
+
+                      
+                      
+                      
+                      
+                     : data[i].estadoOtNombre == "Creada Reportada" ? 
+                      
+                      
+                      `
+                      
+                      <tr style ="background-color:#D3F8FC;  font-size:14px" ondblclick="Editar(${data[i].id})">
+
+                                <td>${conteo + i}</td>
+                                <td>${data[i].ot}</td>
+                                <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                <td>${data[i].subsistemasNombre}</td>
+                                <td>${data[i].estacionesNombre}</td>
+                                <td>${data[i].ubicacionesNombre}</td>
+                                <td>${data[i].descripcion}</td>
+                                <td>${data[i].sistemasNombre}</td>
+                                <td>${data[i].criticidadNombre}</td>
+                                <td>${data[i].estadoOtNombre}</td>
+                                <td>${data[i].operadorReporteNombre}</td>
+                                <td>${data[i].operadorReporteCodigo}</td>
+
+                                <td>${data[i].fechanotificacionguardarmostrar}</td>
+                                <td>${data[i].mantenedorNotificarNombre}</td>
+                                <td>${data[i].mantenedorNotificarCodigo}</td>
+
+
+                                <td>${data[i].fechainicioguardarmostrar}</td>
+                                <td>${data[i].mantenedorReparoNombre}</td>
+                                <td>${data[i].mantenedorReparoCodigo}</td>
+        
+                                <td>${data[i].operadorCierreNombre}</td>
+                                <td>${data[i].operadorCierreCodigo}</td>
+                                <td>${data[i].fechafinalguardarmostrar}</td>
+                                <td>${data[i].comentario}</td>
+                                <td>${data[i].usuariosCodigo}</td>
+                                <td>${data[i].usuariosNombre}</td>
+                                <td>${data[i].usuarioActualizoNombre}</td>
+                            </tr>`
+
+                             : data[i].estadoOtNombre == "Cerrada" ?
+
+
+                                    `
+                      
+                      <tr style ="background-color:#CEF8CD;  font-size:14px" ondblclick="Editar(${data[i].id})">
+
+                                <td>${conteo + i}</td>
+                                <td>${data[i].ot}</td>
+                                <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                <td>${data[i].subsistemasNombre}</td>
+                                <td>${data[i].estacionesNombre}</td>
+                                <td>${data[i].ubicacionesNombre}</td>
+                                <td>${data[i].descripcion}</td>
+                                <td>${data[i].sistemasNombre}</td>
+                                <td>${data[i].criticidadNombre}</td>
+                                <td>${data[i].estadoOtNombre}</td>
+                                <td>${data[i].operadorReporteNombre}</td>
+                                <td>${data[i].operadorReporteCodigo}</td>
+
+                                <td>${data[i].fechanotificacionguardarmostrar}</td>
+                                <td>${data[i].mantenedorNotificarNombre}</td>
+                                <td>${data[i].mantenedorNotificarCodigo}</td>
+
+
+                                <td>${data[i].fechainicioguardarmostrar}</td>
+                                <td>${data[i].mantenedorReparoNombre}</td>
+                                <td>${data[i].mantenedorReparoCodigo}</td>
+        
+                                <td>${data[i].operadorCierreNombre}</td>
+                                <td>${data[i].operadorCierreCodigo}</td>
+                                <td>${data[i].fechafinalguardarmostrar}</td>
+                                <td>${data[i].comentario}</td>
+                                <td>${data[i].usuariosCodigo}</td>
+                                <td>${data[i].usuariosNombre}</td>
+                                <td>${data[i].usuarioActualizoNombre}</td>
+                            </tr>`
+
+                                : data[i].estadoOtNombre == "Duplicada" ?
+
+
+                                    `
+                      
+                      <tr style ="background-color:#CECECE;  font-size:14px" ondblclick="Editar(${data[i].id})">
+
+                                <td>${conteo + i}</td>
+                                <td>${data[i].ot}</td>
+                                <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                <td>${data[i].subsistemasNombre}</td>
+                                <td>${data[i].estacionesNombre}</td>
+                                <td>${data[i].ubicacionesNombre}</td>
+                                <td>${data[i].descripcion}</td>
+                                <td>${data[i].sistemasNombre}</td>
+                                <td>${data[i].criticidadNombre}</td>
+                                <td>${data[i].estadoOtNombre}</td>
+                                <td>${data[i].operadorReporteNombre}</td>
+                                <td>${data[i].operadorReporteCodigo}</td>
+
+                                <td>${data[i].fechanotificacionguardarmostrar}</td>
+                                <td>${data[i].mantenedorNotificarNombre}</td>
+                                <td>${data[i].mantenedorNotificarCodigo}</td>
+
+
+                                <td>${data[i].fechainicioguardarmostrar}</td>
+                                <td>${data[i].mantenedorReparoNombre}</td>
+                                <td>${data[i].mantenedorReparoCodigo}</td>
+        
+                                <td>${data[i].operadorCierreNombre}</td>
+                                <td>${data[i].operadorCierreCodigo}</td>
+                                <td>${data[i].fechafinalguardarmostrar}</td>
+                                <td>${data[i].comentario}</td>
+                                <td>${data[i].usuariosCodigo}</td>
+                                <td>${data[i].usuariosNombre}</td>
+                                <td>${data[i].usuarioActualizoNombre}</td>
+                              
+                            </tr>`
+
+                                    : data[i].estadoOtNombre == "Falsa Averia" ?
+
+
+                                        `
+                      
+                      <tr style ="background-color:#F3A9FF;  font-size:14px" ondblclick="Editar(${data[i].id})">
+
+                                <td>${conteo + i}</td>
+                                <td>${data[i].ot}</td>
+                                <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                <td>${data[i].subsistemasNombre}</td>
+                                <td>${data[i].estacionesNombre}</td>
+                                <td>${data[i].ubicacionesNombre}</td>
+                                <td>${data[i].descripcion}</td>
+                                <td>${data[i].sistemasNombre}</td>
+                                <td>${data[i].criticidadNombre}</td>
+                                <td>${data[i].estadoOtNombre}</td>
+                                <td>${data[i].operadorReporteNombre}</td>
+                                <td>${data[i].operadorReporteCodigo}</td>
+
+                                <td>${data[i].fechanotificacionguardarmostrar}</td>
+                                <td>${data[i].mantenedorNotificarNombre}</td>
+                                <td>${data[i].mantenedorNotificarCodigo}</td>
+
+
+                                <td>${data[i].fechainicioguardarmostrar}</td>
+                                <td>${data[i].mantenedorReparoNombre}</td>
+                                <td>${data[i].mantenedorReparoCodigo}</td>
+        
+                                <td>${data[i].operadorCierreNombre}</td>
+                                <td>${data[i].operadorCierreCodigo}</td>
+                                <td>${data[i].fechafinalguardarmostrar}</td>
+                                <td>${data[i].comentario}</td>
+                                <td>${data[i].usuariosCodigo}</td>
+                                <td>${data[i].usuariosNombre}</td>
+                                <td>${data[i].usuarioActualizoNombre}</td>
+                            </tr>`
+
+
+                            : data[i].estadoOtNombre == "Reutilizar" ?
+
+
+                                                `
+                      
+                      <tr style ="background-color:#FDFF8B;  font-size:14px" ondblclick="Editar(${data[i].id})">
+
+                                <td>${conteo + i}</td>
+                                <td>${data[i].ot}</td>
+                                <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                <td>${data[i].subsistemasNombre}</td>
+                                <td>${data[i].estacionesNombre}</td>
+                                <td>${data[i].ubicacionesNombre}</td>
+                                <td>${data[i].descripcion}</td>
+                                <td>${data[i].sistemasNombre}</td>
+                                <td>${data[i].criticidadNombre}</td>
+                                <td>${data[i].estadoOtNombre}</td>
+                                <td>${data[i].operadorReporteNombre}</td>
+                                <td>${data[i].operadorReporteCodigo}</td>
+
+                                <td>${data[i].fechanotificacionguardarmostrar}</td>
+                                <td>${data[i].mantenedorNotificarNombre}</td>
+                                <td>${data[i].mantenedorNotificarCodigo}</td>
+
+
+                                <td>${data[i].fechainicioguardarmostrar}</td>
+                                <td>${data[i].mantenedorReparoNombre}</td>
+                                <td>${data[i].mantenedorReparoCodigo}</td>
+        
+                                <td>${data[i].operadorCierreNombre}</td>
+                                <td>${data[i].operadorCierreCodigo}</td>
+                                <td>${data[i].fechafinalguardarmostrar}</td>
+                                <td>${data[i].comentario}</td>
+                                <td>${data[i].usuariosCodigo}</td>
+                                <td>${data[i].usuariosNombre}</td>
+                                <td>${data[i].usuarioActualizoNombre}</td>
+                            </tr>`
+
+
+
+
+                      
+                                                : `
+                      
+                      <tr style ="background-color:#FFFF;  font-size:14px" ondblclick="Editar(${data[i].id})">
+
+                                <td>${conteo + i}</td>
+                                <td>${data[i].ot}</td>
+                                <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                <td>${data[i].subsistemasNombre}</td>
+                                <td>${data[i].estacionesNombre}</td>
+                                <td>${data[i].ubicacionesNombre}</td>
+                                <td>${data[i].descripcion}</td>
+                                <td>${data[i].sistemasNombre}</td>
+                                <td>${data[i].criticidadNombre}</td>
+                                <td>${data[i].estadoOtNombre}</td>
+                                <td>${data[i].operadorReporteNombre}</td>
+                                <td>${data[i].operadorReporteCodigo}</td>
+
+                                <td>${data[i].fechanotificacionguardarmostrar}</td>
+                                <td>${data[i].mantenedorNotificarNombre}</td>
+                                <td>${data[i].mantenedorNotificarCodigo}</td>
+
+
+                                <td>${data[i].fechainicioguardarmostrar}</td>
+                                <td>${data[i].mantenedorReparoNombre}</td>
+                                <td>${data[i].mantenedorReparoCodigo}</td>
+        
+                                <td>${data[i].operadorCierreNombre}</td>
+                                <td>${data[i].operadorCierreCodigo}</td>
+                                <td>${data[i].fechafinalguardarmostrar}</td>
+                                <td>${data[i].comentario}</td>
+                                <td>${data[i].usuariosCodigo}</td>
+                                <td>${data[i].usuariosNombre}</td>
+                                <td>${data[i].usuarioActualizoNombre}</td>
+                            </tr>`
+}
+
+
+
+                          
+                                   `
+
+
+
+                }
+
+                Pintardata.innerHTML = filasTabla;
+
+                 })
+
+
+
+
+        }
+
+
+
+    //funcion para que al filtrar por ot cuando se presione entre se realize el filtrado
+
+   
+        function presionar_tecla(e){
+
+
+            let otfiltro = document.getElementById("filtroOt").value;
+
+            let obtener_tecla = e.keyCode; // tambien puedo usar event
+
+                //aqui decimos que si la tecla presionada fue la tecla enter me ejecute el codigo dentro
+                    if (obtener_tecla == 13) {
+
+                        //este codigo me enviar a realizar el filtro
+                        let url = "Reportes/Listarasincrono/?Ot="+ otfiltro;
+
+                        Listardata(url);
+                };
+
+   
+        }
+
+
+        let otfiltro = document.getElementById("filtroOt");
+
+        //aqui le aplicamos que al presionar la tecla se ejecute la funcion obtener_tecla
+        otfiltro.onkeydown  = presionar_tecla;
+  
+   
+       
+    //--------funcion para filtrar---------------------------
+
+        function filtrar (){
+
+    
+            let estaciones =  document.getElementById("fitroestaciones").value;
+            let subsistemas =  document.getElementById("filtrosubsistema").value;
+            let fecha = document.getElementById("filtrofecha").value;
+            let estadoot = document.getElementById("filtroestadoot").value;
+            let usuario = document.getElementById("fitrousuario").value;
+
+            alert(usuario)
+            
+            let url = "Reportes/Listarasincrono/?IdEstacion=" + estaciones + "&IdSubsistema=" + subsistemas + "&fechaaveriaGuardarMostrar=" + fecha
+                + "&IdEstadoOt=" + estadoot + "&IdUsuarios=" + usuario;
+
+            Listardata(url)
+
+
+        }
+
+
+ //------------funcion para mostrar la fecha y hora --------------------
+        function reloj() {
+
+            let mostrarreloj = document.getElementById("reloj")
+
+            let fecha = new Date();
+
+            let dias = fecha.getDate();
+
+            //le sumams uno para obtener el mes actual ya que los meses tienen indice y comienzan por el cero
+            let meses = fecha.getMonth() + 1;
+            let anios = fecha.getFullYear();
+            let horas = fecha.getHours();
+            let minutos = fecha.getMinutes();
+            let segundos = fecha.getSeconds();
+
+
+
+            segundos = (segundos <= 9 ? "0" + segundos : segundos);
+            minutos = minutos <= 9 ? "0" + minutos : minutos;
+
+            
+            horas =  horas ==00 ? horas +12 : horas;
+
+            //le restamos 12 para convertir el horario de 12 horas ya que viene en 24
+            horas =  horas >=13 ? horas -12 : horas;
+            horas = horas <= 9 ? "0" + horas : horas;
+
+            meses = meses <= 9 ? "0" + meses : meses;
+
+
+
+            mostrarreloj.innerHTML = `${dias}/${meses}/${anios} <br> ${horas}:${minutos}:${segundos}`
+
+        }
+
+        //lo que actualiza la hora cada segundo
+        setInterval(reloj,1000)
+
+
+
+        //-----funcion para llenar el campo descripcion cascada-----------------
+
+        const subsistemacascada = document.getElementById("subsistemas");
+
+      function descripcionCascada(){
+
+           const subsistemas = document.getElementById("subsistemas");
+
+            if (subsistemas.value != "") {
+
+
+           
+
+            let url = "/Reportes/Descripcion/?subsistema=" + subsistemas.value;
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+
+                    const listcascada = document.getElementById("listcascada");
+
+
+                    for (let i = 0; i < data.length; i++) {
+
+                        let Element = document.createElement("option");
+                        let valor = document.createTextNode(`${data[i].value}`);
+
+                        Element.appendChild(valor);
+
+                        listcascada.appendChild(Element);
+
+                    }
+    
+
+
+
+                })
+
+
+                 }
+
+       }
+
+        subsistemacascada.addEventListener("change", descripcionCascada)
+
+
+
+        
+
+        //se ejecuta cuando hacemos un cambio en el campo mantenedor reporte si seleccionamos uno me cambia el estado a reportada
+        const mantenedornotificar = document.getElementById("mantenedornotificar");
+
+    function mantenedorestado() {
+
+        const estadoot = document.getElementById("estado");
+        const ot = document.getElementById("ot");
+        if (mantenedornotificar.value != "" && estadoot.value == 7) {
+
+                alert("dupli 1")
+
+                 estadoot.value = 7;
+        }
+        else if (mantenedornotificar.value != "" && estadoot.value != 7) {
+
+            if (ot.value != "") {
+
+                alert("otras 2")
+                estadoot.value = 3;
+
+            }
+            else {
+
+                alert("otras 2 dupli")
+                estadoot.value = 2;
+
+            }
+
+
+           
+        }
+        else if (mantenedornotificar.value =="" && estadoot.value == 7) {
+
+            alert("otras 3")
+            estadoot.value = 7;
+        }
+
+        else if (mantenedornotificar.value == "" && ot.value !="") {
+
+            alert("otras 4")
+            estadoot.value = 3;
+        }
+
+       
+
+            else{
+            alert("por defecto");
+                estadoot.value = "";
+            }
+    }
+        mantenedornotificar.addEventListener("keyup", mantenedorestado)
+
+
+
+    //---------funcion para cambiar los estasdo de la ot segun algunas condiciones
+
+    const ot = document.getElementById("ot");
+
+
+    const buscarot = () => {
+
+
+       
+        const otvalue = Number( document.getElementById("ot").value);
+
+        const url = "Reportes/BuscarOt/?ot=" + otvalue;
+
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+
+              
+                // si existen ordenes con el mismo numero de ot entonces me cambia a estado duplicada y pone el color gris
+                if (data >= 1) {
+
+
+
+                    const ot = document.getElementById("ot");
+
+                    ot.style.backgroundColor = "grey";
+
+                    const estadoot = document.getElementById("estado");
+
+                    estadoot.value = 7;
+
+
+                }
+                // se ejecuta si no existen reportes con ot duplicada
+
+                else if(data == 0) {
+                    
+                    const mantenedornotificar = document.getElementById("mantenedornotificar");
+                    const estadoot = document.getElementById("estado");
+                     
+                     ot.style.backgroundColor = "white";
+
+                     //aqui le decimos que si existe algun valor en el campo ot y no esta duplicado me cambie el estado a creada reportada
+                    if(ot.value !=""){
+
+                        
+                        estadoot.value = 3;
+
+                        alert("primerito")
+                        estadoot.value = 3;
+                    }
+
+                    else if (ot.value == "" && mantenedornotificar.value !="") {
+
+                        estadoot.value = 2;
+                        alert("segundito")
+                    }
+
+                    // si no existen valores en el campo ot evaluamos nuevamente
+                    else {
+                        alert("por defecto")
+                        const estadoot = document.getElementById("estado");
+                        estadoot.value = "";
+                    }
+
+                    
+                }
+
+            })
+
+    }
+
+    ot.addEventListener('keyup', buscarot)
+
+
+    //-----------funcion para Limpiar los campos del filtrado-----------------------
+
+    const btnlimpiar = document.getElementById("limpiar")
+
+    function Limpiar() {
+
+        document.getElementById("filtroOt").value = "";
+        document.getElementById("filtrofecha").value = "";
+        document.getElementById("fitroestaciones").value = "";
+        document.getElementById("filtrosubsistema").value = "";
+        document.getElementById("filtroestadoot").value = "";
+        document.getElementById("fitrousuario").value = "";
+
+
+        let url = "Reportes/Listarasincrono"
+        Listardata(url)
+       
+
+    }
+
+    btnlimpiar.addEventListener("click", Limpiar);
+
+
+
+    // -------para auto completar la descripcion de la averia-------------------
+
+
+    const descripcioncascada = document.getElementById("descripcioncascada");
+
+    const obtenerdescricion = () => {
+
+        const descripcioncascadas = document.getElementById("descripcioncascada").value;
+
+        document.getElementById("descripcion").value = descripcioncascadas;
+
+    }
+
+    descripcioncascada.addEventListener('change', obtenerdescricion);
+
+    //funcion para cambiar el fondo de color en el area de averias reportes
+    //esta misma guarda en Localstore el color obtenido
+
+    let inputColor = document.getElementById("inputcolor");
+
+    function guardarLocalstore() {
+
+        let obtenerColor = inputColor.value;
+
+        localStorage.setItem("color", obtenerColor)
+
+        let area_averias = document.getElementById("area_averias");
+
+        area_averias.style.backgroundColor = `${obtenerColor}`;
+
+    }
+
+    inputColor.addEventListener("change", guardarLocalstore)
+
+
+
+
+    //funcion que recupera el color de localstore y lo muestra en el are de averias
+    //esta funcion es llamada en el envento onload que se ejecuta al cargarse el contenido
+    function ObtenerLocalstore() {
+
+
+        let colorRecuperado = localStorage.getItem("color")
+
+        let area_averias = document.getElementById("area_averias");
+
+        area_averias.style.backgroundColor = `${colorRecuperado}`;
+    }
+
+
+
+    const btn_nuevoregistro = document.getElementById("btn_nuevoregistro");
+
+    const LimpiarFormulario = () => {
+
+        alert("a limpiar")
+
+        let subsistemas = document.getElementById("subsistemas");
+        let estaciones = document.getElementById("estaciones");
+        let ubicaciones = document.getElementById("ubicaciones");
+        let descripcion = document.getElementById("descripcion");
+        let codigooperador = document.getElementById("codigooperador");
+        let nombreoperador = document.getElementById("nombreoperador");
+        let fechareportes = document.getElementById("fechareporte");
+        let criticidad = document.getElementById("criticidad");
+        let sistema = document.getElementById("sistema");
+
+        subsistemas.value = "";
+        estaciones.value = "";
+        ubicaciones.value = "";
+        descripcion.value = "";
+        codigooperador.value = "";
+        nombreoperador.value = "";
+        fechareportes.value = "";
+        criticidad.value = "";
+        sistema.value = "";
+
+        let estadoot = document.getElementById("estado").value = "";
+        let ot = document.getElementById("ot").value = "";
+        let comentario = document.getElementById("comentario").value = "";
+        let fechanotificacion = document.getElementById("fechanotificacion").value = "";
+        let mantenedornotificar = document.getElementById("mantenedornotificar").value = "";
+        let fechainicio = document.getElementById("fechainicio").value = "";
+        let fechafinal = document.getElementById("fechainicio").value = "";
+        let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = "";
+        let mantenedorcierre = document.getElementById("mantenedorcierre").value = "";
+       
+      
+        // aqui le quitamos la calse error encaso de que las tengan
+        subsistemas.classList.remove("error");
+        estaciones.classList.remove("error");
+        ubicaciones.classList.remove("error");
+        descripcion.classList.remove("error");
+        codigooperador.classList.remove("error");
+        nombreoperador.classList.remove("error");
+        fechareportes.classList.remove("error");
+        criticidad.classList.remove("error");
+        sistema.classList.remove("error");
+
+
+
+        const check = document.getElementById("reutilizar");
+        // si el checkbox reutilizar averia esta activada la desactivamos
+        if (check.checked) {
+
+            check.checked = false;
+        }
+
+        
+            
+
+
+    }
+
+
+    btn_nuevoregistro.addEventListener("click", LimpiarFormulario)
+
+
+
+</script>

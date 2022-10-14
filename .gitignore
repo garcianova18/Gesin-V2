@@ -6,3 +6,4 @@ Resultados-Compilación.txt
 *.lock
 /.vs/ProjectEvaluation
 /vs
+*.suo

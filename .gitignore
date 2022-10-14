@@ -1,9 +1,3 @@
 obj
 bin
 Resultados-Compilación.txt
-*.vsidx
-*.lock
-*.1
-*.v2
-/.vsidx
-/.vs

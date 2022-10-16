@@ -17,11 +17,9 @@
 
     List<Persona> mantenedornotificar = ViewBag.mantenedornotificar;
 
- 
-
 }
 
-<!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -29,10 +27,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-   @* <script src="https://kit.fontawesome.com/c6f899d35a.js" crossorigin="anonymous"></script>*@
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="~/js/fontawesome.js"></script>
-    <title>Bootstrap</title>
+    <link rel="icon" href="/img/icono_gestiondeaverias.png" />
+    <title>GestionAverias</title>
 
     <style>
 
@@ -41,7 +37,6 @@
             background-color: rgba(0, 0, 0, 0.8);
             margin: 0;
             padding: 0;
-            
         }
 
         .col-primaria-tabla {
@@ -53,9 +48,8 @@
         }
 
         .col-primaria-reportes {
-            height:43vh;
+            height: 43vh;
             overflow: hidden;
-            
         }
 
 
@@ -76,9 +70,7 @@
 
 
         .Columna-descripcion {
-            width:300px;
-            
-           
+            width: 400px;
         }
 
         .filtrofecha {
@@ -133,14 +125,22 @@
                 transition: 0.3s;
             }
 
-        .salir{
-
-            font-size:20px;
+        .salir {
+            font-size: 20px;
         }
 
-     
+        /* .cascada{
 
-     
+            height:100%;
+        }
+
+        .divcascada{
+
+            border: 1px solid red;
+
+        }*/
+
+
 
     </style>
 
@@ -150,7 +150,6 @@
 
     <div class="container-fluid">
 
-       
 
         <div class="row fila-primaria-padre ">
 
@@ -174,41 +173,41 @@
 
                                 @if (User.IsInRole("administrador"))
                                 {
+                                <li class="nav-item dropdown">
 
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa-solid fa-circle-user icono"></i>
-                                        </a>
-
-
-                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                            <li>
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-circle-user icono"></i>
+                                    </a>
 
 
-                                                <!--Button trigger modal --->
-
-                                                <a class="dropdown-item" asp-action="Index" asp-controller="Estaciones">
-
-                                                    <div class="d-flex align-items-center">
-                                                        <i class="fas fa-solid fa-shop me-1 text-success"> </i><div>Estaciones</div>
-                                                    </div>
-
-                                                </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <li>
 
 
+                                            @*Button trigger modal -*@
 
-                                            </li>
-                                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                        </ul>
-                                    </li>
+                                            <a class="dropdown-item" asp-action="Index" asp-controller="Estaciones">
+
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-solid fa-shop me-1 text-success"> </i><div>Estaciones</div>
+                                                </div>
+
+                                            </a>
+
+
+
+                                        </li>
+                                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    </ul>
+
+                                </li>
+
+
 
 
 
                                 }
-
-
-
 
 
                                 <li class="nav-item  me-md-2 ">
@@ -297,7 +296,7 @@
 
 
 
-                <table class="table table-sm table-hover table-bordered text-center fs-5 ">
+                <table class="table table-sm table-hover table-bordered text-center  ">
 
                     <thead class="cabecera-tabla text-white  " style="font-size:14px">
 
@@ -308,7 +307,7 @@
                             <th>@Html.DisplayNameFor(model => model.SubsistemasNombre)</th>
                             <th>@Html.DisplayNameFor(model => model.EstacionesNombre)</th>
                             <th>@Html.DisplayNameFor(model => model.UbicacionesNombre)</th>
-                            <th ><div class="Columna-descripcion">@Html.DisplayNameFor(model => model.Descripcion)</div></th>
+                            <th><div class="Columna-descripcion">@Html.DisplayNameFor(model => model.Descripcion)</div></th>
                             <th>@Html.DisplayNameFor(model => model.SistemasNombre)</th>
                             <th>@Html.DisplayNameFor(model => model.CriticidadNombre)</th>
                             <th>@Html.DisplayNameFor(model => model.EstadoOtNombre)</th>
@@ -323,7 +322,7 @@
                             <th>@Html.DisplayNameFor(model => model.OperadorCierreNombre)</th>
                             <th>@Html.DisplayNameFor(model => model.OperadorCierreCodigo)</th>
                             <th>@Html.DisplayNameFor(model => model.Fechafinalguardarmostrar)</th>
-                            <th><div class="Columna-descripcion">@Html.DisplayNameFor(model => model.Comentario)</div></th>
+                            <th>@Html.DisplayNameFor(model => model.Comentario)</th>
                             <th>@Html.DisplayNameFor(model => model.UsuariosCodigo)</th>
                             <th>@Html.DisplayNameFor(model => model.UsuariosNombre)</th>
                             <th>Usuario actualizo</th>
@@ -337,36 +336,36 @@
                     <tbody id="Pintardata">
 
                         @*@foreach (var item in Model)
-                    {
-                    <tr>
+                            {
+                            <tr>
 
-                        <td>@Html.DisplayFor(model => item.Ot)</td>
-                        <td>@Html.DisplayFor(model => item.Fechaaveria)</td>
-                        <td>@Html.DisplayFor(model => item.SubsistemasNombre)</td>
-                        <td>@Html.DisplayFor(model => item.EstacionesNombre)</td>
-                        <td>@Html.DisplayFor(model => item.UbicacionesNombre)</td>
-                        <td>@Html.DisplayFor(model => item.Descripcion)</td>
-                        <td>@Html.DisplayFor(model => item.SistemasNombre)</td>
-                        <td>@Html.DisplayFor(model => item.CriticidadNombre)</td>
-                        <td>@Html.DisplayFor(model => item.EstadoOtNombre)</td>
-                        <td>@Html.DisplayFor(model => item.OperadorReporteNombre)</td>
-                        <td>@Html.DisplayFor(model => item.OperadorReporteCodigo)</td>
-                        <td>@Html.DisplayFor(model => item.Fechanotificacion)</td>
-                        <td>@Html.DisplayFor(model => item.MantenedorNotificarNombre)</td>
-                        <td>@Html.DisplayFor(model => item.MantenedorNotificarCodigo)</td>
-                        <td>@Html.DisplayFor(model => item.Fechainicio)</td>
-                        <td>@Html.DisplayFor(model => item.MantenedorReparoNombre)</td>
-                        <td>@Html.DisplayFor(model => item.MantenedorReparoCodigo)</td>
-                        <td>@Html.DisplayFor(model => item.OperadorCierreNombre)</td>
-                        <td>@Html.DisplayFor(model => item.OperadorCierreCodigo)</td>
-                        <td>@Html.DisplayFor(model => item.Fechafinal)</td>
-                        <td>@Html.DisplayFor(model => item.Comentario)</td>
-                        <td>@Html.DisplayFor(model => item.UsuariosCodigo)</td>
-                        <td>@Html.DisplayFor(model => item.UsuariosNombre)</td>
+                                <td>@Html.DisplayFor(model => item.Ot)</td>
+                                <td>@Html.DisplayFor(model => item.Fechaaveria)</td>
+                                <td>@Html.DisplayFor(model => item.SubsistemasNombre)</td>
+                                <td>@Html.DisplayFor(model => item.EstacionesNombre)</td>
+                                <td>@Html.DisplayFor(model => item.UbicacionesNombre)</td>
+                                <td>@Html.DisplayFor(model => item.Descripcion)</td>
+                                <td>@Html.DisplayFor(model => item.SistemasNombre)</td>
+                                <td>@Html.DisplayFor(model => item.CriticidadNombre)</td>
+                                <td>@Html.DisplayFor(model => item.EstadoOtNombre)</td>
+                                <td>@Html.DisplayFor(model => item.OperadorReporteNombre)</td>
+                                <td>@Html.DisplayFor(model => item.OperadorReporteCodigo)</td>
+                                <td>@Html.DisplayFor(model => item.Fechanotificacion)</td>
+                                <td>@Html.DisplayFor(model => item.MantenedorNotificarNombre)</td>
+                                <td>@Html.DisplayFor(model => item.MantenedorNotificarCodigo)</td>
+                                <td>@Html.DisplayFor(model => item.Fechainicio)</td>
+                                <td>@Html.DisplayFor(model => item.MantenedorReparoNombre)</td>
+                                <td>@Html.DisplayFor(model => item.MantenedorReparoCodigo)</td>
+                                <td>@Html.DisplayFor(model => item.OperadorCierreNombre)</td>
+                                <td>@Html.DisplayFor(model => item.OperadorCierreCodigo)</td>
+                                <td>@Html.DisplayFor(model => item.Fechafinal)</td>
+                                <td>@Html.DisplayFor(model => item.Comentario)</td>
+                                <td>@Html.DisplayFor(model => item.UsuariosCodigo)</td>
+                                <td>@Html.DisplayFor(model => item.UsuariosNombre)</td>
 
 
-                    </tr>
-                    }*@
+                            </tr>
+                            }*@
 
 
 
@@ -405,7 +404,7 @@
 
                                 </div>
 
-                                
+
                                 <div class="col-12 col-md-4 mb-3">
 
 
@@ -466,7 +465,7 @@
 
 
 
-                                
+                                <!--ir-->
                                 <div class="col-12 mb-2">
 
 
@@ -483,14 +482,14 @@
 
                                 @*<div class="col-12 pb-3">
 
-                                <select name="Id" class="form-select form-select-sm" id="descripcioncascada">
+                                        <select name="Id" class="form-select form-select-sm" id="descripcioncascada">
 
-                                    <option value="">Seleccione una descripcion</option>
+                                            <option value="">Seleccione una descripcion</option>
 
-                                </select>
+                                        </select>
 
 
-                            </div>*@
+                                    </div>*@
 
 
                                 <div class="col-12 ">
@@ -498,7 +497,7 @@
                                     <textarea cols="100" rows="3" class="form-control mb-3 campos_obligatorios" name="" id="descripcion" placeholder="Descripcion de Averia"></textarea>
 
                                 </div>
-                                <div class="col-12 col-md-4 mb-2">
+                                <div class="col-12 col-md-3 mb-2">
 
                                     <input class="form-control form-control-sm campos_obligatorios" id="codigooperador" placeholder="Cod. Operador" onkeyup="buscaroperadorreporte()">
 
@@ -506,7 +505,7 @@
 
                                 <div class="col-12 col-md-4 mb-2">
 
-                                    <input class="form-control form-control-sm campos_obligatorios" id="nombreoperador" placeholder="nombre" >
+                                    <input class="form-control form-control-sm campos_obligatorios" id="nombreoperador" placeholder="nombre">
 
                                 </div>
 
@@ -671,7 +670,7 @@
                                             <input class=" form-control form-control-sm btn btn-sm btn-primary text-white " value="nuevo registro" id="btn_nuevoregistro" />
 
                                         </div>
-                                       
+
                                         <div class="col-2">
 
                                             <input type="color" id="inputcolor" value="#563d7c" title="Choose your color">
@@ -679,10 +678,10 @@
 
                                     </div>
 
-                                    
 
 
-                                   
+
+
 
                                 </div>
 
@@ -715,15 +714,17 @@
 
 
 
-    
-</div>
-         
+
+    </div>
+
+    <script src="https://kit.fontawesome.com/c6f899d35a.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 
 </html>
 
-@*<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-*@<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
 <script>
 
@@ -873,7 +874,7 @@
 
             let idreportes = Number(document.getElementById("idreportes").value);  
 
-            if (check.checked && idreportes == 0 || check.checked && idreportes != 0)
+            if (check.checked && idreportes >=0)
             {
 
                 const btn = document.getElementById("enviar").value = "Reutilizar Agregar";
@@ -884,16 +885,16 @@
 
             else{
 
-                let idreportes = Number(document.getElementById("idreportes").value);
+                
 
                     if(idreportes == 0){
 
-                        const btn = document.getElementById("enviar").value = "agregar";
+                       document.getElementById("enviar").value = "agregar";
                     }
 
                     else{
 
-                        const btn = document.getElementById("enviar").value = "Actualizar";
+                        document.getElementById("enviar").value = "Actualizar";
                     }
                     
                      
@@ -912,8 +913,7 @@
     const form = document.getElementById("formulario");
 
 
-
-        function CrearReportes(e) {
+    function CrearReportes(e) {
        
              e.preventDefault();
 
@@ -968,7 +968,7 @@
                 }
 
             // cuando se aya enviado el formulario entonces me valida nuevamente los campos
-            //esto es para que una vez esten lleno un campo se le quite en automatico el color rojo sin tener que enviar
+            //esto es para que una vez esten lleno se quite en automatico el color rojo sin tener que enviar
             //si no hicieramos esto aunquie llenemos los campos se quedarian en rojo hasta enviar otra vez el form
             if (e.isTrusted) {
 
@@ -981,12 +981,10 @@
                 //creamos la funcion para el evento change que disparara un hijo
                 function cambio(e) {
 
-                   
-
                     //aqui comprobamos si el evento fue disparado por un elemento que es obligatorio
                     if (e.target.classList.contains("campos_obligatorios")) {
 
-                        //aqui guardamos en una variable el indice del elemento que disporo el evento
+                        //aqui gardamos en una variable el indice del elemento que disporo el evento
                         let index = hijos.indexOf(e.target)
 
                         //aqui volovemos a verificar y decimos que si el elemento que disparo el evento tiene un valor le quitela clase error
@@ -1005,7 +1003,7 @@
 
                 }
 
-                //eventeo change aplicado al padre pero los hijos son quienes lo dispararan
+                //eventeo change aplicado al padre pero los hios son quienes lo dispararan
                 divPadre.addEventListener("change", cambio);
 
                 
@@ -1246,7 +1244,7 @@
 
      }
 
-    //funcion para lista en la misma se cambia de color de la fila de la tabla segun el estado de la ot
+    //funcion para lista en la misma se cambia de color la fila de la tabla segun el estado de la ot
 
          function Listardata(url) {
 
@@ -1264,7 +1262,8 @@
 
                     let conteo = 1;
 
-
+                    // si de cierre viene null aqui le decimos que sea igual a vacio,
+                  // esto mismo lo hacemos en el backend para otros campos
                     if (data[i].operadorCierreNombre == null) {
 
                         data[i].operadorCierreNombre = "";
@@ -1884,7 +1883,7 @@
     ot.addEventListener('keyup', buscarot)
 
 
-    //-----------funcion para Limpiar los campos del filtrado-----------------------
+    //-----------funcion para Limpiar los capos del filtrado-----------------------
 
     const btnlimpiar = document.getElementById("limpiar")
 
@@ -1922,6 +1921,8 @@
     }
 
     descripcioncascada.addEventListener('change', obtenerdescricion);
+
+
 
     //funcion para cambiar el fondo de color en el area de averias reportes
     //esta misma guarda en Localstore el color obtenido
@@ -1964,7 +1965,7 @@
     const LimpiarFormulario = () => {
 
         alert("a limpiar")
-
+        let idreportes = document.getElementById("idreportes");
         let subsistemas = document.getElementById("subsistemas");
         let estaciones = document.getElementById("estaciones");
         let ubicaciones = document.getElementById("ubicaciones");
@@ -1975,6 +1976,7 @@
         let criticidad = document.getElementById("criticidad");
         let sistema = document.getElementById("sistema");
 
+        idreportes.value = "";
         subsistemas.value = "";
         estaciones.value = "";
         ubicaciones.value = "";
@@ -2016,7 +2018,7 @@
             check.checked = false;
         }
 
-        
+        chekiar()
             
 
 

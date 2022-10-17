@@ -28,121 +28,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="icon" href="/img/icono_gestiondeaverias.png" />
+    <link rel="stylesheet" href="~/css/Index.css"/>
     <title>GestionAverias</title>
 
-    <style>
-
-        .col-primaria-filtro {
-            height: 07vh;
-            background-color: rgba(0, 0, 0, 0.8);
-            margin: 0;
-            padding: 0;
-        }
-
-        .col-primaria-tabla {
-            height: 50vh;
-            overflow: auto; /*con este overfllow hacemos que me ponga la barra de scroll cuando el contenido no quepa*/
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        .col-primaria-reportes {
-            height: 43vh;
-            overflow: hidden;
-        }
-
-
-
-        .col-secundaria {
-            /*background-image: url('../img/greg-rosenke-6QnEf_b47eA-unsplash.jpg');*/
-            background-size: cover;
-            background-position: center;
-            min-height: 43vh;
-            /*background-color: rgba(18,47,94,0.9);*/
-            background-repeat: no-repeat;
-        }
-
-
-        .fila-primaria-padre {
-            height: 100vh;
-        }
-
-
-        .Columna-descripcion {
-            width: 400px;
-        }
-
-        .filtrofecha {
-            color: red;
-            text-align: center;
-        }
-
-        .cabecera-tabla {
-            background-color: rgba(18,47,94,0.9);
-        }
-
-        .error {
-            background-color: #f77474;
-            border: 1px solid red;
-        }
-
-            .error:focus {
-                outline: red;
-            }
-
-        .normal {
-            outline: none;
-            width: 100px;
-        }
-
-        .estadocreada {
-            background-color: blue;
-        }
-
-
-        .camposfiltros {
-            width: 75px
-        }
-
-        .icono {
-            font-size: 25px;
-            color: rgb(17 155 11);
-        }
-
-            .icono:hover {
-                color: rgb(20 79 17);
-                transition: .5s;
-            }
-
-        .limpiar {
-            font-size: 20px;
-            color: rgb(250 215 98)
-        }
-
-            .limpiar:hover {
-                color: rgb(146 120 0);
-                transition: 0.3s;
-            }
-
-        .salir {
-            font-size: 20px;
-        }
-
-        /* .cascada{
-
-            height:100%;
-        }
-
-        .divcascada{
-
-            border: 1px solid red;
-
-        }*/
-
-
-
-    </style>
+   
 
 </head>
 
@@ -877,7 +766,7 @@
             if (check.checked && idreportes >=0)
             {
 
-                const btn = document.getElementById("enviar").value = "Reutilizar Agregar";
+               document.getElementById("enviar").value = "Reutilizar Agregar";
 
                         
             }
@@ -913,12 +802,12 @@
     const form = document.getElementById("formulario");
 
 
-    function CrearReportes(e) {
+    function CrearEditarReportes(e) {
        
              e.preventDefault();
 
-        
-            /*el id solo se enviara si es para editar */
+       
+           
             let idreportes = Number(document.getElementById("idreportes").value); 
             let subsistemas = document.getElementById("subsistemas");
             let estaciones = document.getElementById("estaciones");
@@ -940,7 +829,7 @@
             let mantenedorcierre = document.getElementById("mantenedorcierre").value;
             let usuario = Number( document.getElementById("usuario").value);
 
-           
+        buscarot();
            
              subsistemas.value == ""? subsistemas.classList.add("error"): subsistemas.classList.remove("error") ;
              estaciones.value == ""? estaciones.classList.add("error"): estaciones.classList.remove("error");
@@ -1003,7 +892,7 @@
 
                 }
 
-                //eventeo change aplicado al padre pero los hios son quienes lo dispararan
+                //eventeo change aplicado al padre pero los hijos son quienes lo dispararan
                 divPadre.addEventListener("change", cambio);
 
                 
@@ -1012,7 +901,7 @@
 
             
 
-        let url ="Reportes/CrearReportes/reporte"
+        let url ="Reportes/CrearEditarReportes/reporte"
 
         fetch(url, {
             method: 'POST',
@@ -1049,6 +938,8 @@
             .then(data => {
 
                 if (data == 1) {
+
+                   
 
                     let url = "Reportes/Listarasincrono";
                     //llamamos al metodo listar para que vuelva a cargar la tabla
@@ -1168,12 +1059,12 @@
 
     }
 
-    form.addEventListener("submit", CrearReportes);
+    form.addEventListener("submit", CrearEditarReportes);
 
 
     // Buscar la data y cargarla al formulario para ediarla
 
-    function Editar(idreporte) {
+    function BuscarEditar(idreporte) {
 
 
        
@@ -1199,7 +1090,7 @@
          sistema.classList.remove("error");
 
         
-        let url = "Reportes/Editar/?id=" + idreporte;
+        let url = "Reportes/BuscarEditar/?id=" + idreporte;
 
         fetch(url)
             .then(res => res.json())
@@ -1248,6 +1139,8 @@
 
          function Listardata(url) {
 
+      
+
             fetch(url)
             .then(res => res.json())
             .then(data => {
@@ -1280,7 +1173,7 @@
                       
                       `
                       
-                      <tr style ="background-color:#F8F2CD; font-size:14px" ondblclick="Editar(${data[i].id})">
+                      <tr style ="background-color:#F8F2CD; font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
                                 <td>${conteo + i}</td>
                                 <td>${data[i].ot}</td>
@@ -1323,7 +1216,7 @@
 
                             `
                       
-                      <tr style ="background-color:#FFCBCB;  font-size:14px" ondblclick="Editar(${data[i].id})">
+                      <tr style ="background-color:#FFCBCB;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
                                 <td>${conteo + i}</td>
                                 <td>${data[i].ot}</td>
@@ -1366,7 +1259,7 @@
                       
                       `
                       
-                      <tr style ="background-color:#D3F8FC;  font-size:14px" ondblclick="Editar(${data[i].id})">
+                      <tr style ="background-color:#D3F8FC;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
                                 <td>${conteo + i}</td>
                                 <td>${data[i].ot}</td>
@@ -1404,7 +1297,7 @@
 
                                     `
                       
-                      <tr style ="background-color:#CEF8CD;  font-size:14px" ondblclick="Editar(${data[i].id})">
+                      <tr style ="background-color:#CEF8CD;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
                                 <td>${conteo + i}</td>
                                 <td>${data[i].ot}</td>
@@ -1442,7 +1335,7 @@
 
                                     `
                       
-                      <tr style ="background-color:#CECECE;  font-size:14px" ondblclick="Editar(${data[i].id})">
+                      <tr style ="background-color:#CECECE;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
                                 <td>${conteo + i}</td>
                                 <td>${data[i].ot}</td>
@@ -1481,7 +1374,7 @@
 
                                         `
                       
-                      <tr style ="background-color:#F3A9FF;  font-size:14px" ondblclick="Editar(${data[i].id})">
+                      <tr style ="background-color:#F3A9FF;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
                                 <td>${conteo + i}</td>
                                 <td>${data[i].ot}</td>
@@ -1520,7 +1413,7 @@
 
                                                 `
                       
-                      <tr style ="background-color:#FDFF8B;  font-size:14px" ondblclick="Editar(${data[i].id})">
+                      <tr style ="background-color:#FDFF8B;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
                                 <td>${conteo + i}</td>
                                 <td>${data[i].ot}</td>
@@ -1559,7 +1452,7 @@
                       
                                                 : `
                       
-                      <tr style ="background-color:#FFFF;  font-size:14px" ondblclick="Editar(${data[i].id})">
+                      <tr style ="background-color:#FFFF;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
                                 <td>${conteo + i}</td>
                                 <td>${data[i].ot}</td>
@@ -1593,12 +1486,13 @@
                             </tr>`
 }
 
-
+            
 
                           
                                    `
 
-
+                        
+                     
 
                 }
 

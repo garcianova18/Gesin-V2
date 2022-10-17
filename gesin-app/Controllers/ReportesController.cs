@@ -63,10 +63,7 @@ namespace gesin_app.Controllers
             return View();
 
 
-            using (GesinContext db = new GesinContext())
-            {
-                var usuarios = db.Usuarios.ToList();
-            }
+          
         }
 
 
@@ -494,7 +491,7 @@ namespace gesin_app.Controllers
 
         //Metodo para crear y Editar los reportes
         [HttpPost]
-        public async Task< IActionResult> CrearReportes([FromBody] ReportesView reporte)
+        public async Task< IActionResult> CrearEditarReportes([FromBody] ReportesView reporte)
         {
 
             if (reporte !=null )
@@ -673,7 +670,7 @@ namespace gesin_app.Controllers
 
         //Metodo para recuperar la informacion y luego editar
         [HttpGet]
-        public IActionResult Editar(int? id)
+        public IActionResult BuscarEditar(int? id)
         {
 
 

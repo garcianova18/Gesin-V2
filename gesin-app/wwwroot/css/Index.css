@@ -1,0 +1,112 @@
+﻿
+.col-primaria-filtro {
+    height: 07vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    margin: 0;
+    padding: 0;
+}
+
+.col-primaria-tabla {
+    height: 50vh;
+    overflow: auto; /*con este overfllow hacemos que me ponga la barra de scroll cuando el contenido no quepa*/
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.col-primaria-reportes {
+    height: 43vh;
+    overflow: hidden;
+}
+
+
+
+.col-secundaria {
+    /*background-image: url('../img/greg-rosenke-6QnEf_b47eA-unsplash.jpg');*/
+    background-size: cover;
+    background-position: center;
+    min-height: 43vh;
+    /*background-color: rgba(18,47,94,0.9);*/
+    background-repeat: no-repeat;
+}
+
+
+.fila-primaria-padre {
+    height: 100vh;
+}
+
+
+.Columna-descripcion {
+    width: 400px;
+}
+
+.filtrofecha {
+    color: red;
+    text-align: center;
+}
+
+.cabecera-tabla {
+    background-color: rgba(18,47,94,0.9);
+}
+
+.error {
+    background-color: #f77474;
+    border: 1px solid red;
+}
+
+    .error:focus {
+        outline: red;
+    }
+
+.normal {
+    outline: none;
+    width: 100px;
+}
+
+.estadocreada {
+    background-color: blue;
+}
+
+
+.camposfiltros {
+    width: 75px
+}
+
+.icono {
+    font-size: 25px;
+    color: rgb(17 155 11);
+}
+
+    .icono:hover {
+        color: rgb(20 79 17);
+        transition: .5s;
+    }
+
+.limpiar {
+    font-size: 20px;
+    color: rgb(250 215 98)
+}
+
+    .limpiar:hover {
+        color: rgb(146 120 0);
+        transition: 0.3s;
+    }
+
+.salir {
+    font-size: 20px;
+}
+
+/* .cascada{
+
+            height:100%;
+        }
+
+        .divcascada{
+
+            border: 1px solid red;
+
+        }*/
+
+
+
+

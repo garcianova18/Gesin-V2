@@ -398,7 +398,7 @@
 
                                 </div>
 
-                                <div class="col-12 col-md-4 mb-2">
+                                <div class="col-12 col-md-5 mb-2">
 
                                     <input class="form-control form-control-sm campos_obligatorios" id="fechareporte" ondblclick="ObtenerfechaReporte()" maxlength="15" placeholder="Fecha">
 
@@ -460,7 +460,7 @@
                                         </div>
                                         <div class=" col-12 col-md-4 mb-3 offset-md-2">
 
-                                            <input type="number" class="form-control form-control-sm" id="ot" min="0" placeholder="#OT">
+                                            <input type="number" class="form-control form-control-sm" id="ot" placeholder="#OT">
 
                                         </div>
                                     </div>
@@ -767,7 +767,10 @@
             {
 
                document.getElementById("enviar").value = "Reutilizar Agregar";
-
+               
+               //llamamos la funcion buscarot para que verifique si ya existe este nuemero  de ot en ese campo y ponerla duplicada
+               // o dejarla como esta
+               buscarot();
                         
             }
                 
@@ -829,7 +832,6 @@
             let mantenedorcierre = document.getElementById("mantenedorcierre").value;
             let usuario = Number( document.getElementById("usuario").value);
 
-        buscarot();
            
              subsistemas.value == ""? subsistemas.classList.add("error"): subsistemas.classList.remove("error") ;
              estaciones.value == ""? estaciones.classList.add("error"): estaciones.classList.remove("error");
@@ -967,6 +969,7 @@
                         let ubicaciones = document.getElementById("ubicaciones").value = "";
                         let descripcion = document.getElementById("descripcion").value = "";
                         let codigooperador = document.getElementById("codigooperador").value = "";
+                        let nombreoperador = document.getElementById("nombreoperador").value ="";
                         let fechareportes = document.getElementById("fechareporte").value = "";
                         let criticidad = document.getElementById("criticidad").value = "";
                         let sistema = document.getElementById("sistema").value = "";
@@ -1076,18 +1079,19 @@
         let fechareportes = document.getElementById("fechareporte");
         let criticidad = document.getElementById("criticidad");
         let sistema = document.getElementById("sistema");
+        let nombreoperador = document.getElementById("nombreoperador");
        
 
 
-
-         subsistemas.classList.remove("error");
+        subsistemas.classList.remove("error");
         estaciones.classList.remove("error");
-         ubicaciones.classList.remove("error");
+        ubicaciones.classList.remove("error");
         descripcion.classList.remove("error");
-         codigooperador.classList.remove("error");
+        codigooperador.classList.remove("error");
         fechareportes.classList.remove("error");
         criticidad.classList.remove("error");
-         sistema.classList.remove("error");
+        sistema.classList.remove("error");
+        nombreoperador.classList.remove("error");
 
         
         let url = "Reportes/BuscarEditar/?id=" + idreporte;
@@ -1098,7 +1102,6 @@
                 alert(JSON.stringify(data))
 
                  
-
              
                 let Idreportes = document.getElementById("idreportes").value = data.id;
                 let subsistemas = document.getElementById("subsistemas").value = data.subsistemasNombre;
@@ -1126,6 +1129,11 @@
 
                     const btnenviar = document.getElementById("enviar").value = "Actualizar";
                 }
+
+                if (check.checked) {
+
+                 check.checked = false;
+               }
 
                
             })
@@ -1653,50 +1661,7 @@
 
     function mantenedorestado() {
 
-        const estadoot = document.getElementById("estado");
-        const ot = document.getElementById("ot");
-        if (mantenedornotificar.value != "" && estadoot.value == 7) {
-
-                alert("dupli 1")
-
-                 estadoot.value = 7;
-        }
-        else if (mantenedornotificar.value != "" && estadoot.value != 7) {
-
-            if (ot.value != "") {
-
-                alert("otras 2")
-                estadoot.value = 3;
-
-            }
-            else {
-
-                alert("otras 2 dupli")
-                estadoot.value = 2;
-
-            }
-
-
-           
-        }
-        else if (mantenedornotificar.value =="" && estadoot.value == 7) {
-
-            alert("otras 3")
-            estadoot.value = 7;
-        }
-
-        else if (mantenedornotificar.value == "" && ot.value !="") {
-
-            alert("otras 4")
-            estadoot.value = 3;
-        }
-
-       
-
-            else{
-            alert("por defecto");
-                estadoot.value = "";
-            }
+        buscarot();
     }
         mantenedornotificar.addEventListener("keyup", mantenedorestado)
 
@@ -1709,7 +1674,7 @@
 
     const buscarot = () => {
 
-
+        
        
         const otvalue = Number( document.getElementById("ot").value);
 
@@ -1730,7 +1695,7 @@
                     ot.style.backgroundColor = "grey";
 
                     const estadoot = document.getElementById("estado");
-
+                    // duplicada
                     estadoot.value = 7;
 
 
@@ -1741,30 +1706,51 @@
                     
                     const mantenedornotificar = document.getElementById("mantenedornotificar");
                     const estadoot = document.getElementById("estado");
+                    const codigooperadorfinal =  document.getElementById("codigooperadorfinal");
+                    
                      
-                     ot.style.backgroundColor = "white";
+                     ot.style.backgroundColor = "";
 
                      //aqui le decimos que si existe algun valor en el campo ot y no esta duplicado me cambie el estado a creada reportada
-                    if(ot.value !=""){
+                    if (ot.value != "" && mantenedornotificar.value == "" && codigooperadorfinal.value == "") {
 
-                        
-                        estadoot.value = 3;
+                        //creada
+                        estadoot.value = 1;
 
-                        alert("primerito")
-                        estadoot.value = 3;
+                       
                     }
 
-                    else if (ot.value == "" && mantenedornotificar.value !="") {
 
+                    
+
+                    else if (ot.value == "" && mantenedornotificar.value !="" && codigooperadorfinal.value =="") {
+
+                        //reportada
                         estadoot.value = 2;
-                        alert("segundito")
+                        
                     }
 
+                    else if (ot.value !="" && mantenedornotificar.value !="" && codigooperadorfinal.value ==""){
+                        
+                        //creada reportada
+                        estadoot.value = 3;
+
+                    }
+
+                    else if (codigooperadorfinal.value != "" && ot.value != "" && mantenedornotificar.value != "") {
+
+                        //cerrada
+                        estadoot.value = 5;
+
+                    }
+                  
                     // si no existen valores en el campo ot evaluamos nuevamente
                     else {
-                        alert("por defecto")
+                       
                         const estadoot = document.getElementById("estado");
-                        estadoot.value = "";
+
+                        //sin estado
+                        estadoot.value = 8;
                     }
 
                     
@@ -1776,6 +1762,14 @@
 
     ot.addEventListener('keyup', buscarot)
 
+    let codigooperadorfinal =  document.getElementById("codigooperadorfinal");
+
+
+    //funcion para disparar el evento de cerrar OT
+
+   let EstadoOTCerrado = () => buscarot();
+
+   codigooperadorfinal.addEventListener('keyup', EstadoOTCerrado);
 
     //-----------funcion para Limpiar los capos del filtrado-----------------------
 
@@ -1858,7 +1852,7 @@
 
     const LimpiarFormulario = () => {
 
-        alert("a limpiar")
+        
         let idreportes = document.getElementById("idreportes");
         let subsistemas = document.getElementById("subsistemas");
         let estaciones = document.getElementById("estaciones");
@@ -1890,9 +1884,13 @@
         let fechafinal = document.getElementById("fechainicio").value = "";
         let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = "";
         let mantenedorcierre = document.getElementById("mantenedorcierre").value = "";
+
+        document.getElementById("ot").style.backgroundColor = "";
+
+        
        
       
-        // aqui le quitamos la calse error encaso de que las tengan
+        // aqui le quitamos la clase error encaso de que las tengan
         subsistemas.classList.remove("error");
         estaciones.classList.remove("error");
         ubicaciones.classList.remove("error");
@@ -1903,6 +1901,8 @@
         criticidad.classList.remove("error");
         sistema.classList.remove("error");
 
+       
+
 
 
         const check = document.getElementById("reutilizar");
@@ -1912,7 +1912,8 @@
             check.checked = false;
         }
 
-        chekiar()
+
+        
             
 
 

@@ -62,35 +62,35 @@
 
                                 @if (User.IsInRole("administrador"))
                                 {
-                                <li class="nav-item dropdown">
+                                    <li class="nav-item dropdown">
 
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-circle-user icono"></i>
-                                    </a>
-
-
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <li>
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-circle-user icono"></i>
+                                        </a>
 
 
-                                            @*Button trigger modal -*@
-
-                                            <a class="dropdown-item" asp-action="Index" asp-controller="Estaciones">
-
-                                                <div class="d-flex align-items-center">
-                                                    <i class="fas fa-solid fa-shop me-1 text-success"> </i><div>Estaciones</div>
-                                                </div>
-
-                                            </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                            <li>
 
 
+                                                @*Button trigger modal -*@
 
-                                        </li>
-                                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                    </ul>
+                                                <a class="dropdown-item" asp-action="Index" asp-controller="Estaciones">
 
-                                </li>
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="fas fa-solid fa-shop me-1 text-success"> </i><div>Estaciones</div>
+                                                    </div>
+
+                                                </a>
+
+
+
+                                            </li>
+                                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        </ul>
+
+                                 </li>
 
 
 
@@ -1902,7 +1902,7 @@
 
         document.getElementById("ot").style.backgroundColor = "";
 
-        
+        Limpiar();
        
       
         // aqui le quitamos la clase error encaso de que las tengan
@@ -1927,9 +1927,6 @@
             check.checked = false;
         }
 
-
-        
-            
 
 
     }

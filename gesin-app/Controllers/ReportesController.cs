@@ -51,7 +51,7 @@ namespace gesin_app.Controllers
 
             ViewBag.Combosubsistema = ComboSubsistema();
 
-            ViewBag.mant = mantenedorreparo();
+            ViewBag.mantenedorreparo = mantenedorreparo();
 
             ViewBag.fitroestaciones = Filtroestaciones();
 
@@ -532,6 +532,9 @@ namespace gesin_app.Controllers
 
                         var userName = HttpContext.User.Claims.ToList();
 
+                       
+
+
                         reporte.IdUsuarios = Convert.ToInt32(userName[2].Value);
 
 
@@ -563,8 +566,13 @@ namespace gesin_app.Controllers
                         reportemodel.IdmantenedorReparo = reporte.IdmantenedorReparo;
                         reportemodel.IdUsuarios = reporte.IdUsuarios;
 
+                     
+
                         Db.Reportes.Add(reportemodel);
                        await Db.SaveChangesAsync();
+
+
+                        
 
                         return Ok(1);
 

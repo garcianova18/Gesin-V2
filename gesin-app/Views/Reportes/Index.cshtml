@@ -7,7 +7,7 @@
     ViewData["Title"] = "Index";
 
 
-    List<Persona> mantenedors = ViewBag.mant;
+    List<Persona> mantenedorreparo = ViewBag.mantenedorreparo;
 
     List<Subsistema> subsistemas = ViewBag.subsistema;
 
@@ -543,7 +543,7 @@
                                     <input class="form-control form-control-sm" name="Id" list="Litsmantenedorfinal" id="mantenedorcierre" placeholder="Mant. Reparo">
 
                                     <datalist id="Litsmantenedorfinal">
-                                        @foreach (var item in mantenedors)
+                                        @foreach (var item in mantenedorreparo)
                                         {
                                             <option> @item.Nombre</option>
                                         }

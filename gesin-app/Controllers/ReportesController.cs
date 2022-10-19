@@ -78,6 +78,7 @@ namespace gesin_app.Controllers
 
 
             //para realizar el fintrado combinado
+            
             if (reportesView.Ot != null)
             {
                 reportes = reportes.Where(t => t.Ot == reportesView.Ot);
@@ -187,7 +188,7 @@ namespace gesin_app.Controllers
 
 
                 item.MantenedorNotificarNombre = item.MantenedorNotificarNombre == null ? item.MantenedorNotificarNombre = "" : item.MantenedorNotificarNombre;
-                item.MantenedorNotificarCodigo = item.MantenedorNotificarCodigo == null ? item.MantenedorNotificarCodigo = "" : item.MantenedorNotificarCodigo;
+                //item.MantenedorNotificarCodigo = item.MantenedorNotificarCodigo == null ? item.MantenedorNotificarCodigo = "" : item.MantenedorNotificarCodigo;
                 item.OperadorCierreNombre = item.OperadorCierreNombre == null ? item.OperadorCierreNombre = "" : item.OperadorCierreNombre;
                 item.OperadorCierreCodigo = item.OperadorCierreCodigo == null ? item.OperadorCierreCodigo = "" : item.OperadorCierreCodigo;
                 item.MantenedorReparoNombre = item.MantenedorReparoNombre == null ? item.MantenedorReparoNombre = "" : item.MantenedorReparoNombre;
@@ -506,7 +507,7 @@ namespace gesin_app.Controllers
 
                 //aqui buscamos el id de cada uno de esto ya que por usar datalist no podemos traer su  id desde la vista pero traemos lo que se digite en el campo lo buscamos y estraemos su id para luego gardar en base de datos
 
-                var operadorreporte = Db.Personas.FirstOrDefault(o => o.Codigo == reporte.OperadorReporteCodigo);
+                var operadorreporte = Db.Personas.FirstOrDefault(o => o.Codigo == reporte.OperadorreporteCodigo);
                 var subsistema = Db.Subsistemas.FirstOrDefault(o => o.Nombre == reporte.SubsistemasNombre);
                 var estacion = Db.Estacions.FirstOrDefault(o => o.Nombre == reporte.EstacionesNombre);
                 var ubicacion = Db.Ubicacions.FirstOrDefault(o => o.Nombre == reporte.UbicacionesNombre);

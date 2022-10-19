@@ -35,13 +35,10 @@ namespace gesin_app.ViewModel
         [Required(ErrorMessage = "seleccione un estado")]
         public int IdEstadoOt { get; set; }
         public string Comentario { get; set; }
-        public string OperadorReporte { get; set; }
+       
         public int? IdOperadorCierre { get; set; }
-        public string MantenedorNotificar { get; set; }
-        public string MantenedorReparo { get; set; }
 
-        public string OperadorCierre { get; set; }
-
+       
 
         [Display(Name = "Usuario actualizo")]
         public string UsuarioActualizoNombre { get; set; }
@@ -81,13 +78,13 @@ namespace gesin_app.ViewModel
         [Display(Name = "Mantenedor")]
         public string MantenedorNotificarNombre { get; set; }
         [Display(Name = "Cod. Mantenedor")]
-        public string MantenedorNotificarCodigo { get; set; }
-        [Display(Name = "Operador")]
+      
 
         public string OperadorReporteNombre { get; set; }
+
         [Display(Name = "Cod. Operador")]
         [Required(ErrorMessage = "Cod. OP. es obligatorio")]
-        public string OperadorReporteCodigo { get; set; }
+        public string OperadorreporteCodigo { get; set; }
         [Display(Name = "Sistema")]
         public string SistemasNombre { get; set; }
         [Display(Name = "Subsistema")]
@@ -111,6 +108,17 @@ namespace gesin_app.ViewModel
 
         [Display(Name = "Cod. Mantenedor cierre")]
         public string MantenedorReparoCodigo { get; set; }
+
+        public string OperadorReporte { get; set; }
+        public string CodigoOperadorReporte { get; set; }
+       
+
+        public string MantenedorNotificar { get; set; }
+        public string MantenedorReparo { get; set; }
+
+        public string OperadorCierre { get; set; }
+
+        public string CodigoOperadorCierre { get; set; }
 
 
 

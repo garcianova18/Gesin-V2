@@ -27,18 +27,18 @@ namespace gesin_app.Models
         public string MantenedorReparo { get; set; }
         public string OperadorCierre { get; set; }
         public int? IdUsuarioActualizo { get; set; }
+        public string CodigoOperadorReporte { get; set; }
+        public string CodigoOperadorCierre { get; set; }
+
+        
 
         public virtual Criticidad Criticidad { get; set; }
         public virtual Estacion Estaciones { get; set; }
         public virtual EstadoOt EstadoOT { get; set; }
-        public virtual Persona Mantenedornotificar { get; set; }
-        public virtual Persona Operadorcierre { get; set; }
-        public virtual Persona Operadorreporte { get; set; }
         public virtual Sistema Sistemas { get; set; }
         public virtual Subsistema Subsistemas { get; set; }
         public virtual Ubicacion Ubicaciones { get; set; }
         public virtual Usuario Usuarios { get; set; }
-        public virtual Persona Mantenedorreparo { get; set; }
         public virtual Usuario UsuarioActualizo { get; set; }
     }
 }

@@ -200,16 +200,16 @@
                             <th>@Html.DisplayNameFor(model => model.SistemasNombre)</th>
                             <th>@Html.DisplayNameFor(model => model.CriticidadNombre)</th>
                             <th>@Html.DisplayNameFor(model => model.EstadoOtNombre)</th>
-                            <th>@Html.DisplayNameFor(model => model.OperadorReporteNombre)</th>
-                            <th>@Html.DisplayNameFor(model => model.OperadorReporteCodigo)</th>
+                            <th>@Html.DisplayNameFor(model => model.OperadorReporte)</th>
+                            <th>@Html.DisplayNameFor(model => model.CodigoOperadorReporte)</th>
                             <th>@Html.DisplayNameFor(model => model.Fechanotificacion)</th>
-                            <th>@Html.DisplayNameFor(model => model.MantenedorNotificarNombre)</th>
-                            <th>@Html.DisplayNameFor(model => model.MantenedorNotificarCodigo)</th>
+                            <th>@Html.DisplayNameFor(model => model.MantenedorNotificar)</th>
+                            @*<th>@Html.DisplayNameFor(model => model.MantenedorNotificarCodigo)</th>*@
                             <th>@Html.DisplayNameFor(model => model.Fechainicioguardarmostrar)</th>
-                            <th>@Html.DisplayNameFor(model => model.MantenedorReparoNombre)</th>
-                            <th>@Html.DisplayNameFor(model => model.MantenedorReparoCodigo)</th>
-                            <th>@Html.DisplayNameFor(model => model.OperadorCierreNombre)</th>
-                            <th>@Html.DisplayNameFor(model => model.OperadorCierreCodigo)</th>
+                            <th>@Html.DisplayNameFor(model => model.MantenedorReparo)</th>
+                            @*<th>@Html.DisplayNameFor(model => model.MantenedorReparoCodigo)</th>*@
+                            <th>@Html.DisplayNameFor(model => model.OperadorCierre)</th>
+                            <th>@Html.DisplayNameFor(model => model.CodigoOperadorCierre)</th>
                             <th>@Html.DisplayNameFor(model => model.Fechafinalguardarmostrar)</th>
                             <th>@Html.DisplayNameFor(model => model.Comentario)</th>
                             <th>@Html.DisplayNameFor(model => model.UsuariosCodigo)</th>
@@ -1198,20 +1198,19 @@
                                 <td>${data[i].sistemasNombre}</td>
                                 <td>${data[i].criticidadNombre}</td>
                                 <td>${data[i].estadoOtNombre}</td>
-                                <td>${data[i].operadorReporteNombre}</td>
-                                <td>${data[i].operadorReporteCodigo}</td>
+                                <td>${data[i].operadorReporte}</td>
+                                <td>${data[i].codigoOperadorReporte}</td>
 
                                 <td>${data[i].fechanotificacionguardarmostrar}</td>
-                                <td>${data[i].mantenedorNotificarNombre}</td>
-                                <td>${data[i].mantenedorNotificarCodigo}</td>
+                                <td>${data[i].mantenedorNotificar}</td>
 
 
                                 <td>${data[i].fechainicioguardarmostrar}</td>
-                                <td>${data[i].mantenedorReparoNombre}</td>
-                                <td>${data[i].mantenedorReparoCodigo}</td>
+                                <td>${data[i].mantenedorReparo}</td>
+                              
         
-                                <td>${data[i].operadorCierreNombre}</td>
-                                <td>${data[i].operadorCierreCodigo}</td>
+                                <td>${data[i].operadorCierre}</td>
+                                <td>${data[i].codigoOperadorCierre}</td>
                                 <td>${data[i].fechafinalguardarmostrar}</td>
                                 <td>${data[i].comentario}</td>
                                 <td>${data[i].usuariosCodigo}</td>

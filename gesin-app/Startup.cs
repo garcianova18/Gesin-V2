@@ -27,7 +27,7 @@ namespace gesin_app
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<GesinContext>(opciones => opciones.UseSqlServer(Configuration.GetConnectionString("ConexionDb")));
+            services.AddDbContext<GesinV2Context>(opciones => opciones.UseSqlServer(Configuration.GetConnectionString("ConexionDb")));
             services.AddAutoMapper(typeof(Startup));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

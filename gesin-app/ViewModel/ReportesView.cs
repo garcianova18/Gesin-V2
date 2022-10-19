@@ -35,10 +35,12 @@ namespace gesin_app.ViewModel
         [Required(ErrorMessage = "seleccione un estado")]
         public int IdEstadoOt { get; set; }
         public string Comentario { get; set; }
-        public int IdOperadorReporte { get; set; }
-        public int? IdmantenedorReparo { get; set; }
+        public string OperadorReporte { get; set; }
         public int? IdOperadorCierre { get; set; }
-        public int? IdMantenedorNotificar { get; set; }
+        public string MantenedorNotificar { get; set; }
+        public string MantenedorReparo { get; set; }
+
+        public string OperadorCierre { get; set; }
 
 
         [Display(Name = "Usuario actualizo")]

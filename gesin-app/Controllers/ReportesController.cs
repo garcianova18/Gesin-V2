@@ -19,10 +19,10 @@ namespace gesin_app.Controllers
     public class ReportesController : Controller
     {
 
-        private readonly GesinContext Db;
+        private readonly GesinV2Context Db;
         private readonly IMapper mapper;
 
-        public ReportesController(GesinContext context, IMapper mapper)
+        public ReportesController(GesinV2Context context, IMapper mapper)
         {
             Db = context;
             this.mapper = mapper;
@@ -514,11 +514,11 @@ namespace gesin_app.Controllers
                 var mantenedorreparo = Db.Personas.FirstOrDefault(m => m.Nombre == reporte.MantenedorReparoNombre);
                 var operadorcierre = Db.Personas.FirstOrDefault(o => o.Codigo == reporte.OperadorCierreCodigo);
 
-                reporte.IdMantenedorNotificar = (mantenedornotificar != null) ? reporte.IdMantenedorNotificar = mantenedornotificar.Id : reporte.IdMantenedorNotificar = null;
+                //reporte.IdMantenedorNotificar = (mantenedornotificar != null) ? reporte.IdMantenedorNotificar = mantenedornotificar.Id : reporte.IdMantenedorNotificar = null;
 
-                reporte.IdmantenedorReparo = (mantenedorreparo != null) ? reporte.IdmantenedorReparo = mantenedorreparo.Id : reporte.IdmantenedorReparo = null;
+                //reporte.IdmantenedorReparo = (mantenedorreparo != null) ? reporte.IdmantenedorReparo = mantenedorreparo.Id : reporte.IdmantenedorReparo = null;
 
-                reporte.IdOperadorCierre = (operadorcierre != null) ? reporte.IdOperadorCierre = operadorcierre.Id : reporte.IdOperadorCierre = null;
+                //reporte.IdOperadorCierre = (operadorcierre != null) ? reporte.IdOperadorCierre = operadorcierre.Id : reporte.IdOperadorCierre = null;
 
 
 
@@ -551,7 +551,7 @@ namespace gesin_app.Controllers
                         reportemodel.IdEstacion = estacion.Id;
                         reportemodel.IdUbicacion = ubicacion.Id;
                         reportemodel.Descripcion = reporte.Descripcion;
-                        reportemodel.IdOperadorReporte = operadorreporte.Id;
+                        reportemodel.OperadorReporte = reporte.OperadorReporte;
                         reportemodel.Fechaaveria = Convert.ToDateTime(fechareporte);
                         reportemodel.IdCriticidad = reporte.IdCriticidad;
                         reportemodel.IdSistemas = reporte.IdSistemas;
@@ -559,11 +559,11 @@ namespace gesin_app.Controllers
                         reportemodel.Ot = reporte.Ot;
                         reportemodel.Comentario = reporte.Comentario;
                         reportemodel.Fechanotificacion = fechanotificacion;
-                        reportemodel.IdMantenedorNotificar = reporte.IdMantenedorNotificar;
+                        reportemodel.MantenedorNotificar = reporte.MantenedorNotificar;
                         reportemodel.Fechainicio = fechainicio;
                         reportemodel.Fechafinal = fechafinal;
-                        reportemodel.IdOperadorCierre = reporte.IdOperadorCierre;
-                        reportemodel.IdmantenedorReparo = reporte.IdmantenedorReparo;
+                        reportemodel.OperadorCierre = reporte.OperadorCierre;
+                        reportemodel.MantenedorReparo = reporte.MantenedorReparo;
                         reportemodel.IdUsuarios = reporte.IdUsuarios;
 
                      
@@ -600,7 +600,7 @@ namespace gesin_app.Controllers
                     reportemodel.IdEstacion = estacion.Id;
                     reportemodel.IdUbicacion = ubicacion.Id;
                     reportemodel.Descripcion = reporte.Descripcion;
-                    reportemodel.IdOperadorReporte = operadorreporte.Id;
+                    reportemodel.OperadorReporte = reporte.OperadorReporte;
                     reportemodel.Fechaaveria = Convert.ToDateTime(fechareporte);
                     reportemodel.IdCriticidad = reporte.IdCriticidad;
                     reportemodel.IdSistemas = reporte.IdSistemas;
@@ -608,11 +608,11 @@ namespace gesin_app.Controllers
                     reportemodel.Ot = reporte.Ot;
                     reportemodel.Comentario = reporte.Comentario;
                     reportemodel.Fechanotificacion = fechanotificacion;
-                    reportemodel.IdMantenedorNotificar = reporte.IdMantenedorNotificar;
+                    reportemodel.MantenedorNotificar = reporte.MantenedorNotificar;
                     reportemodel.Fechainicio = fechainicio;
                     reportemodel.Fechafinal = fechafinal;
-                    reportemodel.IdOperadorCierre = reporte.IdOperadorCierre;
-                    reportemodel.IdmantenedorReparo = reporte.IdmantenedorReparo;
+                    reportemodel.OperadorCierre = reporte.OperadorCierre;
+                    reportemodel.MantenedorReparo = reporte.MantenedorReparo;
                     reportemodel.IdUsuarios = reporte.IdUsuarios;
                     reportemodel.IdUsuarioActualizo = reporte.IdUsuarioActualizo;
 

@@ -13,10 +13,10 @@ namespace gesin_app.Controllers
     public class EstacionesController : Controller
     {
 
-        private readonly GesinContext Db;
+        private readonly GesinV2Context Db;
         
 
-        public EstacionesController(GesinContext context)
+        public EstacionesController(GesinV2Context context)
         {
             Db = context;
           

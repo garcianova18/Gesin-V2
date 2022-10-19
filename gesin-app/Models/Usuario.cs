@@ -23,6 +23,7 @@ namespace gesin_app.Models
         public DateTime? Fecha { get; set; }
 
         public virtual Rol IdRolNavigation { get; set; }
+        public virtual ConfigUsuario ConfigUsuario { get; set; }
         public virtual ICollection<Reporte> ReporteIdUsuarioActualizoNavigations { get; set; }
         public virtual ICollection<Reporte> ReporteIdUsuariosNavigations { get; set; }
     }

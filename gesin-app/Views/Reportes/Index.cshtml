@@ -817,7 +817,8 @@
             let ubicaciones = document.getElementById("ubicaciones");
             let descripcion = document.getElementById("descripcion");
             let codigooperador = document.getElementById("codigooperador");
-            let nomoperador = document.getElementById("nombreoperador");
+            let nombreoperador = document.getElementById("nombreoperador");
+
             let fechareportes = document.getElementById("fechareporte");
             let criticidad = document.getElementById("criticidad");
             let sistema = document.getElementById("sistema");
@@ -828,6 +829,7 @@
             let mantenedornotificar = document.getElementById("mantenedornotificar").value;
             let fechainicio = document.getElementById("fechainicio").value;
             let fechafinal = document.getElementById("fechainicio").value;
+            let nombreoperadorfinal = document.getElementById("nombreoperadorfinal").value;
             let codigooperadorfinal =  document.getElementById("codigooperadorfinal").value;
             let mantenedorcierre = document.getElementById("mantenedorcierre").value;
             let usuario = Number( document.getElementById("usuario").value);
@@ -838,7 +840,7 @@
              ubicaciones.value == ""? ubicaciones.classList.add("error"): ubicaciones.classList.remove("error");
              descripcion.value == ""? descripcion.classList.add("error"): descripcion.classList.remove("error");
              codigooperador.value == "" ? codigooperador.classList.add("error") : codigooperador.classList.remove("error");
-             nomoperador.value == "" ? nomoperador.classList.add("error") : nomoperador.classList.remove("error");
+             nombreoperador.value == "" ? nombreoperador.classList.add("error") : nombreoperador.classList.remove("error");
              Number( fechareportes.value) == 0? fechareportes.classList.add("error"): fechareportes.classList.remove("error");
              criticidad.value == ""? criticidad.classList.add("error"): criticidad.classList.remove("error");
              sistema.value =="" ? sistema.classList.add("error"): sistema.classList.remove("error");
@@ -914,7 +916,8 @@
                 estacionesNombre: estaciones.value,
                 ubicacionesNombre: ubicaciones.value,
                 descripcion: descripcion.value,
-                operadorReporteCodigo: codigooperador.value,
+                operadorReporte: nombreoperador.value,
+                codigoOperadorReporte: codigooperador.value,
                 fechaaveriaGuardarMostrar: fechareportes.value,
                 idCriticidad: Number( criticidad.value),
                 idSistemas: Number( sistema.value),
@@ -922,11 +925,12 @@
                 ot:ot,
                 comentario: comentario,
                 fechanotificacionguardarmostrar: fechanotificacion,
-                mantenedorNotificarNombre: mantenedornotificar,
+                mantenedorNotificar: mantenedornotificar,
                 fechainicioguardarmostrar: fechainicio,
                 fechafinalguardarmostrar: fechafinal,
-                operadorCierreCodigo: codigooperadorfinal,
-                mantenedorReparoNombre: mantenedorcierre,
+                operadorCierre: nombreoperadorfinal,
+                codigoOperadorCierre: codigooperadorfinal,
+                mantenedorReparo: mantenedorcierre,
                 idUsuarios: usuario
 
                 

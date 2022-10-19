@@ -507,13 +507,13 @@ namespace gesin_app.Controllers
 
                 //aqui buscamos el id de cada uno de esto ya que por usar datalist no podemos traer su  id desde la vista pero traemos lo que se digite en el campo lo buscamos y estraemos su id para luego gardar en base de datos
 
-                var operadorreporte = Db.Personas.FirstOrDefault(o => o.Codigo == reporte.OperadorreporteCodigo);
+                //var operadorreporte = Db.Personas.FirstOrDefault(o => o.Codigo == reporte.OperadorreporteCodigo);
                 var subsistema = Db.Subsistemas.FirstOrDefault(o => o.Nombre == reporte.SubsistemasNombre);
                 var estacion = Db.Estacions.FirstOrDefault(o => o.Nombre == reporte.EstacionesNombre);
                 var ubicacion = Db.Ubicacions.FirstOrDefault(o => o.Nombre == reporte.UbicacionesNombre);
-                var mantenedornotificar = Db.Personas.FirstOrDefault(m => m.Nombre == reporte.MantenedorNotificarNombre);
-                var mantenedorreparo = Db.Personas.FirstOrDefault(m => m.Nombre == reporte.MantenedorReparoNombre);
-                var operadorcierre = Db.Personas.FirstOrDefault(o => o.Codigo == reporte.OperadorCierreCodigo);
+                //var mantenedornotificar = Db.Personas.FirstOrDefault(m => m.Nombre == reporte.MantenedorNotificarNombre);
+                //var mantenedorreparo = Db.Personas.FirstOrDefault(m => m.Nombre == reporte.MantenedorReparoNombre);
+                //var operadorcierre = Db.Personas.FirstOrDefault(o => o.Codigo == reporte.OperadorCierreCodigo);
 
                 //reporte.IdMantenedorNotificar = (mantenedornotificar != null) ? reporte.IdMantenedorNotificar = mantenedornotificar.Id : reporte.IdMantenedorNotificar = null;
 
@@ -552,6 +552,7 @@ namespace gesin_app.Controllers
                         reportemodel.IdEstacion = estacion.Id;
                         reportemodel.IdUbicacion = ubicacion.Id;
                         reportemodel.Descripcion = reporte.Descripcion;
+                        reportemodel.CodigoOperadorReporte = reporte.CodigoOperadorReporte;
                         reportemodel.OperadorReporte = reporte.OperadorReporte;
                         reportemodel.Fechaaveria = Convert.ToDateTime(fechareporte);
                         reportemodel.IdCriticidad = reporte.IdCriticidad;
@@ -564,6 +565,7 @@ namespace gesin_app.Controllers
                         reportemodel.Fechainicio = fechainicio;
                         reportemodel.Fechafinal = fechafinal;
                         reportemodel.OperadorCierre = reporte.OperadorCierre;
+                        reportemodel.CodigoOperadorCierre = reporte.CodigoOperadorCierre;
                         reportemodel.MantenedorReparo = reporte.MantenedorReparo;
                         reportemodel.IdUsuarios = reporte.IdUsuarios;
 

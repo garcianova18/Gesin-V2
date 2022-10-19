@@ -83,7 +83,7 @@ namespace gesin_app.ViewModel
         public string OperadorReporteNombre { get; set; }
 
         [Display(Name = "Cod. Operador")]
-        [Required(ErrorMessage = "Cod. OP. es obligatorio")]
+      
         public string OperadorreporteCodigo { get; set; }
         [Display(Name = "Sistema")]
         public string SistemasNombre { get; set; }

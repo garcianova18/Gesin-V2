@@ -925,7 +925,9 @@
                 ot:ot,
                 comentario: comentario,
                 fechanotificacionguardarmostrar: fechanotificacion,
-                mantenedorNotificar: mantenedornotificar,
+                MantenedorNotificar: mantenedornotificar,
+                MantenedorNotificar: mantenedornotificar,
+                MantenedorNotificar: mantenedornotificar,
                 fechainicioguardarmostrar: fechainicio,
                 fechafinalguardarmostrar: fechafinal,
                 operadorCierre: nombreoperadorfinal,
@@ -1084,7 +1086,7 @@
         let criticidad = document.getElementById("criticidad");
         let sistema = document.getElementById("sistema");
         let nombreoperador = document.getElementById("nombreoperador");
-       
+
 
 
         subsistemas.classList.remove("error");
@@ -1112,8 +1114,8 @@
                 let estaciones = document.getElementById("estaciones").value = data.estacionesNombre;
                 let ubicaciones = document.getElementById("ubicaciones").value = data.ubicacionesNombre;
                 let descripcion = document.getElementById("descripcion").value = data.descripcion;
-                let codigooperador = document.getElementById("codigooperador").value = data.operadorReporteCodigo;
-                let nombreoperador = document.getElementById("nombreoperador").value = data.operadorReporteNombre;
+                let codigooperador = document.getElementById("codigooperador").value = data.codigoOperadorReporte;
+                let nombreoperador = document.getElementById("nombreoperador").value = data.operadorReporte;
                 let fechareportes = document.getElementById("fechareporte").value = data.fechaaveriaGuardarMostrar;
                 let criticidad = document.getElementById("criticidad").value = data.idCriticidad;
                 let sistema = document.getElementById("sistema").value = data.idSistemas;
@@ -1121,12 +1123,12 @@
                 let ot = document.getElementById("ot").value = data.ot;
                 let comentario = document.getElementById("comentario").value = data.comentario;
                 let fechanotificacion = document.getElementById("fechanotificacion").value = data.fechanotificacionguardarmostrar;
-                let mantenedornotificar = document.getElementById("mantenedornotificar").value = data.mantenedorNotificarNombre;
+                let mantenedornotificar = document.getElementById("mantenedornotificar").value = data.mantenedorNotificar;
                 let fechainicio = document.getElementById("fechainicio").value = data.fechainicioguardarmostrar;
                 let fechafinal = document.getElementById("fechafinal").value = data.fechafinalguardarmostrar;
-                let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = data.operadorCierreCodigo;
-                let nombreoperadorfinal = document.getElementById("nombreoperadorfinal").value = data.operadorCierreNombre;
-                let mantenedorcierre = document.getElementById("mantenedorcierre").value = data.mantenedorReparoNombre;
+                let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = data.codigoOperadorCierre;
+                let nombreoperadorfinal = document.getElementById("nombreoperadorfinal").value = data.operadorCierre;
+                let mantenedorcierre = document.getElementById("mantenedorcierre").value = data.mantenedorReparo;
                 let usuario = document.getElementById("usuario").value = data.idUsuarios;
                 
                 //llamamos el metodo buscarot para que al cargar un registro si esta esta duplicada me cargue con color gris

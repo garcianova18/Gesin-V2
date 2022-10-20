@@ -187,12 +187,12 @@ namespace gesin_app.Controllers
                 #endregion
 
 
-                item.MantenedorNotificarNombre = item.MantenedorNotificarNombre == null ? item.MantenedorNotificarNombre = "" : item.MantenedorNotificarNombre;
+               // item.MantenedorNotificarNombre = item.MantenedorNotificarNombre == null ? item.MantenedorNotificarNombre = "" : item.MantenedorNotificarNombre;
                 //item.MantenedorNotificarCodigo = item.MantenedorNotificarCodigo == null ? item.MantenedorNotificarCodigo = "" : item.MantenedorNotificarCodigo;
-                item.OperadorCierreNombre = item.OperadorCierreNombre == null ? item.OperadorCierreNombre = "" : item.OperadorCierreNombre;
-                item.OperadorCierreCodigo = item.OperadorCierreCodigo == null ? item.OperadorCierreCodigo = "" : item.OperadorCierreCodigo;
-                item.MantenedorReparoNombre = item.MantenedorReparoNombre == null ? item.MantenedorReparoNombre = "" : item.MantenedorReparoNombre;
-                item.MantenedorReparoCodigo = item.MantenedorReparoCodigo == null ? item.MantenedorReparoCodigo = "" : item.MantenedorReparoCodigo;
+               // item.OperadorCierreNombre = item.OperadorCierreNombre == null ? item.OperadorCierreNombre = "" : item.OperadorCierreNombre;
+               // item.OperadorCierreCodigo = item.OperadorCierreCodigo == null ? item.OperadorCierreCodigo = "" : item.OperadorCierreCodigo;
+                //item.MantenedorReparoNombre = item.MantenedorReparoNombre == null ? item.MantenedorReparoNombre = "" : item.MantenedorReparoNombre;
+                //item.MantenedorReparoCodigo = item.MantenedorReparoCodigo == null ? item.MantenedorReparoCodigo = "" : item.MantenedorReparoCodigo;
                 item.Ot = item.Ot == null ? item.Ot = 0 : item.Ot = item.Ot;
                 item.UsuarioActualizoNombre = item.UsuarioActualizoNombre == null ? item.UsuarioActualizoNombre = "" : item.UsuarioActualizoNombre = item.UsuarioActualizoNombre;
 
@@ -547,7 +547,6 @@ namespace gesin_app.Controllers
                         {
                             reporte.IdEstadoOt = 1;
                         }
-
                         reportemodel.IdSubsistema = subsistema.Id;
                         reportemodel.IdEstacion = estacion.Id;
                         reportemodel.IdUbicacion = ubicacion.Id;
@@ -604,6 +603,7 @@ namespace gesin_app.Controllers
                     reportemodel.IdUbicacion = ubicacion.Id;
                     reportemodel.Descripcion = reporte.Descripcion;
                     reportemodel.OperadorReporte = reporte.OperadorReporte;
+                    reportemodel.CodigoOperadorReporte = reporte.CodigoOperadorReporte;
                     reportemodel.Fechaaveria = Convert.ToDateTime(fechareporte);
                     reportemodel.IdCriticidad = reporte.IdCriticidad;
                     reportemodel.IdSistemas = reporte.IdSistemas;
@@ -613,8 +613,8 @@ namespace gesin_app.Controllers
                     reportemodel.Fechanotificacion = fechanotificacion;
                     reportemodel.MantenedorNotificar = reporte.MantenedorNotificar;
                     reportemodel.Fechainicio = fechainicio;
-                    reportemodel.Fechafinal = fechafinal;
                     reportemodel.OperadorCierre = reporte.OperadorCierre;
+                    reportemodel.CodigoOperadorCierre = reporte.CodigoOperadorCierre;
                     reportemodel.MantenedorReparo = reporte.MantenedorReparo;
                     reportemodel.IdUsuarios = reporte.IdUsuarios;
                     reportemodel.IdUsuarioActualizo = reporte.IdUsuarioActualizo;

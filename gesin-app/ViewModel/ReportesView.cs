@@ -36,7 +36,6 @@ namespace gesin_app.ViewModel
         public int IdEstadoOt { get; set; }
         public string Comentario { get; set; }
        
-        public int? IdOperadorCierre { get; set; }
 
        
 
@@ -46,7 +45,7 @@ namespace gesin_app.ViewModel
         [Display(Name = "Fecha notificacion")]
 
         public DateTime? Fechanotificacion { get; set; }
-        public DateTime Fechanotificacionprueba { get; set; }
+      
         public string Fechanotificacionguardarmostrar { get; set; }
 
          public int? IdUsuarioActualizo { get; set; }
@@ -75,16 +74,9 @@ namespace gesin_app.ViewModel
         public string CriticidadNombre { get; set; }
         [Display(Name = "Estado")]
         public string EstadoOtNombre { get; set; }
-        [Display(Name = "Mantenedor")]
-        public string MantenedorNotificarNombre { get; set; }
-        [Display(Name = "Cod. Mantenedor")]
-      
+    
 
-        public string OperadorReporteNombre { get; set; }
-
-        [Display(Name = "Cod. Operador")]
-      
-        public string OperadorreporteCodigo { get; set; }
+     
         [Display(Name = "Sistema")]
         public string SistemasNombre { get; set; }
         [Display(Name = "Subsistema")]
@@ -97,17 +89,11 @@ namespace gesin_app.ViewModel
         [Required(ErrorMessage = "Seleccione una estacion")]
         public string EstacionesNombre { get; set; }
 
-        [Display(Name = "Operador cierre")]
-        public string OperadorCierreNombre { get; set; }
+      
 
-        [Display(Name = "Cod. Operador cierre")]
-        public string OperadorCierreCodigo { get; set; }
+      
 
-        [Display(Name = "Mantenedor cierre")]
-        public string MantenedorReparoNombre { get; set; }
-
-        [Display(Name = "Cod. Mantenedor cierre")]
-        public string MantenedorReparoCodigo { get; set; }
+     
 
         public string OperadorReporte { get; set; }
         public string CodigoOperadorReporte { get; set; }

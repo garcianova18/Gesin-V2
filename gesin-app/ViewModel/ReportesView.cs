@@ -38,7 +38,6 @@ namespace gesin_app.ViewModel
         public int IdEstadoOt { get; set; }
         public string Comentario { get; set; }
        
-        public int? IdOperadorCierre { get; set; }
 
        
 

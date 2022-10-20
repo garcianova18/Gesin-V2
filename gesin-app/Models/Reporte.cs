@@ -11,7 +11,7 @@ namespace gesin_app.Models
         public int IdSubsistema { get; set; }
         public int IdUbicacion { get; set; }
         public int IdEstacion { get; set; }
-        public string OperadorReporte { get; set; }
+       
         public string Descripcion { get; set; }
         public DateTime Fechaaveria { get; set; }
         public int IdCriticidad { get; set; }
@@ -20,17 +20,27 @@ namespace gesin_app.Models
         public int IdEstadoOt { get; set; }
         public string Comentario { get; set; }
         public DateTime? Fechanotificacion { get; set; }
-        public string MantenedorNotificar { get; set; }
+       
         public DateTime? Fechainicio { get; set; }
         public DateTime? Fechafinal { get; set; }
         public int? IdUsuarios { get; set; }
+
+        public string OperadorReporte { get; set; }
+        public string CodigoOperadorReporte { get; set; }
+        public string MantenedorNotificar { get; set; }
         public string MantenedorReparo { get; set; }
         public string OperadorCierre { get; set; }
-        public int? IdUsuarioActualizo { get; set; }
-        public string CodigoOperadorReporte { get; set; }
+        
         public string CodigoOperadorCierre { get; set; }
 
+
+        public int? IdUsuarioActualizo { get; set; }
+       
+
+       
         
+     
+       
 
         public virtual Criticidad Criticidad { get; set; }
         public virtual Estacion Estaciones { get; set; }

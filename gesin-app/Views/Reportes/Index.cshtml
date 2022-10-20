@@ -1112,8 +1112,8 @@
                 let estaciones = document.getElementById("estaciones").value = data.estacionesNombre;
                 let ubicaciones = document.getElementById("ubicaciones").value = data.ubicacionesNombre;
                 let descripcion = document.getElementById("descripcion").value = data.descripcion;
-                let codigooperador = document.getElementById("codigooperador").value = data.operadorReporteCodigo;
-                let nombreoperador = document.getElementById("nombreoperador").value = data.operadorReporteNombre;
+                let codigooperador = document.getElementById("codigooperador").value = data.codigoOperadorReporte;
+                let nombreoperador = document.getElementById("nombreoperador").value = data.operadorReporte;
                 let fechareportes = document.getElementById("fechareporte").value = data.fechaaveriaGuardarMostrar;
                 let criticidad = document.getElementById("criticidad").value = data.idCriticidad;
                 let sistema = document.getElementById("sistema").value = data.idSistemas;
@@ -1121,18 +1121,18 @@
                 let ot = document.getElementById("ot").value = data.ot;
                 let comentario = document.getElementById("comentario").value = data.comentario;
                 let fechanotificacion = document.getElementById("fechanotificacion").value = data.fechanotificacionguardarmostrar;
-                let mantenedornotificar = document.getElementById("mantenedornotificar").value = data.mantenedorNotificarNombre;
+                let mantenedornotificar = document.getElementById("mantenedornotificar").value = data.mantenedorNotificar;
                 let fechainicio = document.getElementById("fechainicio").value = data.fechainicioguardarmostrar;
                 let fechafinal = document.getElementById("fechafinal").value = data.fechafinalguardarmostrar;
-                let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = data.operadorCierreCodigo;
-                let nombreoperadorfinal = document.getElementById("nombreoperadorfinal").value = data.operadorCierreNombre;
-                let mantenedorcierre = document.getElementById("mantenedorcierre").value = data.mantenedorReparoNombre;
+                let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = data.operadorCierre;
+                let nombreoperadorfinal = document.getElementById("nombreoperadorfinal").value = data.codigoOperadorCierre;
+                let mantenedorcierre = document.getElementById("mantenedorcierre").value = data.mantenedorReparo;
                 let usuario = document.getElementById("usuario").value = data.idUsuarios;
                 
                 //llamamos el metodo buscarot para que al cargar un registro si esta esta duplicada me cargue con color gris
                 // y si no es duplicada en blanco de no llamar este metodo para que recalcule no me carga el gris y si pongo el gris al cargar una sin duplicidad despues de cargar una duplicadad me le pone el gris
 
-               buscarot();
+               //buscarot();
 
                 if (Idreportes != 0) {
 
@@ -1234,7 +1234,7 @@
                       
                       <tr style ="background-color:#FFCBCB;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
-                                <td>${conteo + i}</td>
+                                 <td>${conteo + i}</td>
                                 <td>${data[i].ot}</td>
                                 <td>${data[i].fechaaveriaGuardarMostrar}</td>
                                 <td>${data[i].subsistemasNombre}</td>
@@ -1244,20 +1244,19 @@
                                 <td>${data[i].sistemasNombre}</td>
                                 <td>${data[i].criticidadNombre}</td>
                                 <td>${data[i].estadoOtNombre}</td>
-                                <td>${data[i].operadorReporteNombre}</td>
-                                <td>${data[i].operadorReporteCodigo}</td>
+                                <td>${data[i].operadorReporte}</td>
+                                <td>${data[i].codigoOperadorReporte}</td>
 
                                 <td>${data[i].fechanotificacionguardarmostrar}</td>
-                                <td>${data[i].mantenedorNotificarNombre}</td>
-                                <td>${data[i].mantenedorNotificarCodigo}</td>
+                                <td>${data[i].mantenedorNotificar}</td>
 
 
                                 <td>${data[i].fechainicioguardarmostrar}</td>
-                                <td>${data[i].mantenedorReparoNombre}</td>
-                                <td>${data[i].mantenedorReparoCodigo}</td>
+                                <td>${data[i].mantenedorReparo}</td>
+                              
         
-                                <td>${data[i].operadorCierreNombre}</td>
-                                <td>${data[i].operadorCierreCodigo}</td>
+                                <td>${data[i].operadorCierre}</td>
+                                <td>${data[i].codigoOperadorCierre}</td>
                                 <td>${data[i].fechafinalguardarmostrar}</td>
                                 <td>${data[i].comentario}</td>
                                 <td>${data[i].usuariosCodigo}</td>
@@ -1277,7 +1276,7 @@
                       
                       <tr style ="background-color:#D3F8FC;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
-                                <td>${conteo + i}</td>
+                                 <td>${conteo + i}</td>
                                 <td>${data[i].ot}</td>
                                 <td>${data[i].fechaaveriaGuardarMostrar}</td>
                                 <td>${data[i].subsistemasNombre}</td>
@@ -1287,20 +1286,19 @@
                                 <td>${data[i].sistemasNombre}</td>
                                 <td>${data[i].criticidadNombre}</td>
                                 <td>${data[i].estadoOtNombre}</td>
-                                <td>${data[i].operadorReporteNombre}</td>
-                                <td>${data[i].operadorReporteCodigo}</td>
+                                <td>${data[i].operadorReporte}</td>
+                                <td>${data[i].codigoOperadorReporte}</td>
 
                                 <td>${data[i].fechanotificacionguardarmostrar}</td>
-                                <td>${data[i].mantenedorNotificarNombre}</td>
-                                <td>${data[i].mantenedorNotificarCodigo}</td>
+                                <td>${data[i].mantenedorNotificar}</td>
 
 
                                 <td>${data[i].fechainicioguardarmostrar}</td>
-                                <td>${data[i].mantenedorReparoNombre}</td>
-                                <td>${data[i].mantenedorReparoCodigo}</td>
+                                <td>${data[i].mantenedorReparo}</td>
+                              
         
-                                <td>${data[i].operadorCierreNombre}</td>
-                                <td>${data[i].operadorCierreCodigo}</td>
+                                <td>${data[i].operadorCierre}</td>
+                                <td>${data[i].codigoOperadorCierre}</td>
                                 <td>${data[i].fechafinalguardarmostrar}</td>
                                 <td>${data[i].comentario}</td>
                                 <td>${data[i].usuariosCodigo}</td>
@@ -1315,35 +1313,34 @@
                       
                       <tr style ="background-color:#CEF8CD;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
-                                <td>${conteo + i}</td>
-                                <td>${data[i].ot}</td>
-                                <td>${data[i].fechaaveriaGuardarMostrar}</td>
-                                <td>${data[i].subsistemasNombre}</td>
-                                <td>${data[i].estacionesNombre}</td>
-                                <td>${data[i].ubicacionesNombre}</td>
-                                <td>${data[i].descripcion}</td>
-                                <td>${data[i].sistemasNombre}</td>
-                                <td>${data[i].criticidadNombre}</td>
-                                <td>${data[i].estadoOtNombre}</td>
-                                <td>${data[i].operadorReporteNombre}</td>
-                                <td>${data[i].operadorReporteCodigo}</td>
+                                     <td>${conteo + i}</td>
+                                    <td>${data[i].ot}</td>
+                                    <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                    <td>${data[i].subsistemasNombre}</td>
+                                    <td>${data[i].estacionesNombre}</td>
+                                    <td>${data[i].ubicacionesNombre}</td>
+                                    <td>${data[i].descripcion}</td>
+                                    <td>${data[i].sistemasNombre}</td>
+                                    <td>${data[i].criticidadNombre}</td>
+                                    <td>${data[i].estadoOtNombre}</td>
+                                    <td>${data[i].operadorReporte}</td>
+                                    <td>${data[i].codigoOperadorReporte}</td>
 
-                                <td>${data[i].fechanotificacionguardarmostrar}</td>
-                                <td>${data[i].mantenedorNotificarNombre}</td>
-                                <td>${data[i].mantenedorNotificarCodigo}</td>
+                                    <td>${data[i].fechanotificacionguardarmostrar}</td>
+                                    <td>${data[i].mantenedorNotificar}</td>
 
 
-                                <td>${data[i].fechainicioguardarmostrar}</td>
-                                <td>${data[i].mantenedorReparoNombre}</td>
-                                <td>${data[i].mantenedorReparoCodigo}</td>
-        
-                                <td>${data[i].operadorCierreNombre}</td>
-                                <td>${data[i].operadorCierreCodigo}</td>
-                                <td>${data[i].fechafinalguardarmostrar}</td>
-                                <td>${data[i].comentario}</td>
-                                <td>${data[i].usuariosCodigo}</td>
-                                <td>${data[i].usuariosNombre}</td>
-                                <td>${data[i].usuarioActualizoNombre}</td>
+                                    <td>${data[i].fechainicioguardarmostrar}</td>
+                                    <td>${data[i].mantenedorReparo}</td>
+
+
+                                    <td>${data[i].operadorCierre}</td>
+                                    <td>${data[i].codigoOperadorCierre}</td>
+                                    <td>${data[i].fechafinalguardarmostrar}</td>
+                                    <td>${data[i].comentario}</td>
+                                    <td>${data[i].usuariosCodigo}</td>
+                                    <td>${data[i].usuariosNombre}</td>
+                                    <td>${data[i].usuarioActualizoNombre}</td>
                             </tr>`
 
                                 : data[i].estadoOtNombre == "Duplicada" ?
@@ -1353,7 +1350,7 @@
                       
                       <tr style ="background-color:#CECECE;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
-                                <td>${conteo + i}</td>
+                                 <td>${conteo + i}</td>
                                 <td>${data[i].ot}</td>
                                 <td>${data[i].fechaaveriaGuardarMostrar}</td>
                                 <td>${data[i].subsistemasNombre}</td>
@@ -1363,20 +1360,19 @@
                                 <td>${data[i].sistemasNombre}</td>
                                 <td>${data[i].criticidadNombre}</td>
                                 <td>${data[i].estadoOtNombre}</td>
-                                <td>${data[i].operadorReporteNombre}</td>
-                                <td>${data[i].operadorReporteCodigo}</td>
+                                <td>${data[i].operadorReporte}</td>
+                                <td>${data[i].codigoOperadorReporte}</td>
 
                                 <td>${data[i].fechanotificacionguardarmostrar}</td>
-                                <td>${data[i].mantenedorNotificarNombre}</td>
-                                <td>${data[i].mantenedorNotificarCodigo}</td>
+                                <td>${data[i].mantenedorNotificar}</td>
 
 
                                 <td>${data[i].fechainicioguardarmostrar}</td>
-                                <td>${data[i].mantenedorReparoNombre}</td>
-                                <td>${data[i].mantenedorReparoCodigo}</td>
+                                <td>${data[i].mantenedorReparo}</td>
+                              
         
-                                <td>${data[i].operadorCierreNombre}</td>
-                                <td>${data[i].operadorCierreCodigo}</td>
+                                <td>${data[i].operadorCierre}</td>
+                                <td>${data[i].codigoOperadorCierre}</td>
                                 <td>${data[i].fechafinalguardarmostrar}</td>
                                 <td>${data[i].comentario}</td>
                                 <td>${data[i].usuariosCodigo}</td>
@@ -1402,20 +1398,19 @@
                                 <td>${data[i].sistemasNombre}</td>
                                 <td>${data[i].criticidadNombre}</td>
                                 <td>${data[i].estadoOtNombre}</td>
-                                <td>${data[i].operadorReporteNombre}</td>
-                                <td>${data[i].operadorReporteCodigo}</td>
+                                <td>${data[i].operadorReporte}</td>
+                                <td>${data[i].codigoOperadorReporte}</td>
 
                                 <td>${data[i].fechanotificacionguardarmostrar}</td>
-                                <td>${data[i].mantenedorNotificarNombre}</td>
-                                <td>${data[i].mantenedorNotificarCodigo}</td>
+                                <td>${data[i].mantenedorNotificar}</td>
 
 
                                 <td>${data[i].fechainicioguardarmostrar}</td>
-                                <td>${data[i].mantenedorReparoNombre}</td>
-                                <td>${data[i].mantenedorReparoCodigo}</td>
+                                <td>${data[i].mantenedorReparo}</td>
+                              
         
-                                <td>${data[i].operadorCierreNombre}</td>
-                                <td>${data[i].operadorCierreCodigo}</td>
+                                <td>${data[i].operadorCierre}</td>
+                                <td>${data[i].codigoOperadorCierre}</td>
                                 <td>${data[i].fechafinalguardarmostrar}</td>
                                 <td>${data[i].comentario}</td>
                                 <td>${data[i].usuariosCodigo}</td>
@@ -1430,8 +1425,7 @@
                                                 `
                       
                       <tr style ="background-color:#FDFF8B;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
-
-                                <td>${conteo + i}</td>
+                       <td>${conteo + i}</td>
                                 <td>${data[i].ot}</td>
                                 <td>${data[i].fechaaveriaGuardarMostrar}</td>
                                 <td>${data[i].subsistemasNombre}</td>
@@ -1441,20 +1435,19 @@
                                 <td>${data[i].sistemasNombre}</td>
                                 <td>${data[i].criticidadNombre}</td>
                                 <td>${data[i].estadoOtNombre}</td>
-                                <td>${data[i].operadorReporteNombre}</td>
-                                <td>${data[i].operadorReporteCodigo}</td>
+                                <td>${data[i].operadorReporte}</td>
+                                <td>${data[i].codigoOperadorReporte}</td>
 
                                 <td>${data[i].fechanotificacionguardarmostrar}</td>
-                                <td>${data[i].mantenedorNotificarNombre}</td>
-                                <td>${data[i].mantenedorNotificarCodigo}</td>
+                                <td>${data[i].mantenedorNotificar}</td>
 
 
                                 <td>${data[i].fechainicioguardarmostrar}</td>
-                                <td>${data[i].mantenedorReparoNombre}</td>
-                                <td>${data[i].mantenedorReparoCodigo}</td>
+                                <td>${data[i].mantenedorReparo}</td>
+                              
         
-                                <td>${data[i].operadorCierreNombre}</td>
-                                <td>${data[i].operadorCierreCodigo}</td>
+                                <td>${data[i].operadorCierre}</td>
+                                <td>${data[i].codigoOperadorCierre}</td>
                                 <td>${data[i].fechafinalguardarmostrar}</td>
                                 <td>${data[i].comentario}</td>
                                 <td>${data[i].usuariosCodigo}</td>
@@ -1480,20 +1473,19 @@
                                 <td>${data[i].sistemasNombre}</td>
                                 <td>${data[i].criticidadNombre}</td>
                                 <td>${data[i].estadoOtNombre}</td>
-                                <td>${data[i].operadorReporteNombre}</td>
-                                <td>${data[i].operadorReporteCodigo}</td>
+                                <td>${data[i].operadorReporte}</td>
+                                <td>${data[i].codigoOperadorReporte}</td>
 
                                 <td>${data[i].fechanotificacionguardarmostrar}</td>
-                                <td>${data[i].mantenedorNotificarNombre}</td>
-                                <td>${data[i].mantenedorNotificarCodigo}</td>
+                                <td>${data[i].mantenedorNotificar}</td>
 
 
                                 <td>${data[i].fechainicioguardarmostrar}</td>
-                                <td>${data[i].mantenedorReparoNombre}</td>
-                                <td>${data[i].mantenedorReparoCodigo}</td>
+                                <td>${data[i].mantenedorReparo}</td>
+                              
         
-                                <td>${data[i].operadorCierreNombre}</td>
-                                <td>${data[i].operadorCierreCodigo}</td>
+                                <td>${data[i].operadorCierre}</td>
+                                <td>${data[i].codigoOperadorCierre}</td>
                                 <td>${data[i].fechafinalguardarmostrar}</td>
                                 <td>${data[i].comentario}</td>
                                 <td>${data[i].usuariosCodigo}</td>

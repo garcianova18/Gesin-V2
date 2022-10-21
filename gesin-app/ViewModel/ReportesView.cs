@@ -13,26 +13,28 @@ namespace gesin_app.ViewModel
         public int IdUbicacion { get; set; }
         public int IdEstacion { get; set; }
 
-        [Required(ErrorMessage = "Digite una descripcion")]
+        [Required]
         public string Descripcion { get; set; }
 
         [DisplayFormat(DataFormatString = "{0: yyyy-MM-dd }", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
+        [Required]
         public DateTime Fechaaveria { get; set; }
 
         public int? IdUsuarios { get; set; }
 
-        [Required(ErrorMessage = "Digite una fecha")]
+        [Required]
         [Display(Name ="Fecha Averia")]
         public string fechaaveriaGuardarMostrar { get; set; }
 
-        [Required(ErrorMessage = "Seleccione la criticidad")]
+        [Required]
         public int IdCriticidad { get; set; }
-        [Required(ErrorMessage = "Seleccione un sistema")]
+
+        [Required]
         public int IdSistemas { get; set; }
         public int? Ot { get; set; }
 
-        [Required(ErrorMessage = "seleccione un estado")]
+        [Required]
         public int IdEstadoOt { get; set; }
         public string Comentario { get; set; }
        
@@ -45,7 +47,7 @@ namespace gesin_app.ViewModel
         [Display(Name = "Fecha notificacion")]
 
         public DateTime? Fechanotificacion { get; set; }
-        public DateTime Fechanotificacionprueba { get; set; }
+     
         public string Fechanotificacionguardarmostrar { get; set; }
 
          public int? IdUsuarioActualizo { get; set; }
@@ -75,48 +77,41 @@ namespace gesin_app.ViewModel
         [Display(Name = "Estado")]
         public string EstadoOtNombre { get; set; }
         [Display(Name = "Mantenedor")]
-        public string MantenedorNotificarNombre { get; set; }
-        [Display(Name = "Cod. Mantenedor")]
+       
       
-
-        public string OperadorReporteNombre { get; set; }
-
-        [Display(Name = "Cod. Operador")]
-      
-        public string OperadorreporteCodigo { get; set; }
-        [Display(Name = "Sistema")]
+       
         public string SistemasNombre { get; set; }
         [Display(Name = "Subsistema")]
-        [Required(ErrorMessage = "Seleccione un subsistema")]
+
         public string SubsistemasNombre { get; set; }
         [Display(Name = "Ubicacion")]
-        [Required(ErrorMessage = "Seleccione una ubicacion")]
+
         public string UbicacionesNombre { get; set; }
+
         [Display(Name = "Estacion")]
-        [Required(ErrorMessage = "Seleccione una estacion")]
         public string EstacionesNombre { get; set; }
 
-        [Display(Name = "Operador cierre")]
-        public string OperadorCierreNombre { get; set; }
 
-        [Display(Name = "Cod. Operador cierre")]
-        public string OperadorCierreCodigo { get; set; }
 
-        [Display(Name = "Mantenedor cierre")]
-        public string MantenedorReparoNombre { get; set; }
 
-        [Display(Name = "Cod. Mantenedor cierre")]
-        public string MantenedorReparoCodigo { get; set; }
-
+        [Display(Name = "Operador")]
+        [Required]
         public string OperadorReporte { get; set; }
-        public string CodigoOperadorReporte { get; set; }
-       
 
+        [Display(Name = "Cod. Operador")]
+        [Required]
+        public string CodigoOperadorReporte { get; set; }
+
+        [Display(Name = "Mantenedor")]
         public string MantenedorNotificar { get; set; }
+
+        [Display(Name = "Mant. Reparo")]
         public string MantenedorReparo { get; set; }
 
+        [Display(Name = "Operador Cierre")]
         public string OperadorCierre { get; set; }
 
+        [Display(Name = "Cod. Operador Cierre")]
         public string CodigoOperadorCierre { get; set; }
 
 

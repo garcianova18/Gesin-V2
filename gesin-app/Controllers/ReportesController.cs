@@ -550,7 +550,6 @@ namespace gesin_app.Controllers
                         {
                             reporte.IdEstadoOt = 1;
                         }
-
                         reportemodel.IdSubsistema = subsistema.Id;
                         reportemodel.IdEstacion = estacion.Id;
                         reportemodel.IdUbicacion = ubicacion.Id;

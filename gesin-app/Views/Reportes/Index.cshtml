@@ -195,7 +195,7 @@
                             <th>@Html.DisplayNameFor(model => model.fechaaveriaGuardarMostrar)</th>
                             <th>@Html.DisplayNameFor(model => model.SubsistemasNombre)</th>
                             <th>@Html.DisplayNameFor(model => model.EstacionesNombre)</th>
-                            <th>@Html.DisplayNameFor(model => model.UbicacionesNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.Ubicacion)</th>
                             <th><div class="Columna-descripcion">@Html.DisplayNameFor(model => model.Descripcion)</div></th>
                             <th>@Html.DisplayNameFor(model => model.SistemasNombre)</th>
                             <th>@Html.DisplayNameFor(model => model.CriticidadNombre)</th>
@@ -914,7 +914,7 @@
                 id:idreportes,
                 subsistemasNombre: subsistemas.value,
                 estacionesNombre: estaciones.value,
-                ubicacionesNombre: ubicaciones.value,
+                ubicacion: ubicaciones.value,
                 descripcion: descripcion.value,
                 operadorReporte: nombreoperador.value,
                 codigoOperadorReporte: codigooperador.value,
@@ -1110,7 +1110,7 @@
                 let Idreportes = document.getElementById("idreportes").value = data.id;
                 let subsistemas = document.getElementById("subsistemas").value = data.subsistemasNombre;
                 let estaciones = document.getElementById("estaciones").value = data.estacionesNombre;
-                let ubicaciones = document.getElementById("ubicaciones").value = data.ubicacionesNombre;
+                let ubicaciones = document.getElementById("ubicaciones").value = data.ubicacion;
                 let descripcion = document.getElementById("descripcion").value = data.descripcion;
                 let codigooperador = document.getElementById("codigooperador").value = data.codigoOperadorReporte;
                 let nombreoperador = document.getElementById("nombreoperador").value = data.operadorReporte;
@@ -1197,7 +1197,7 @@
                                 <td>${data[i].fechaaveriaGuardarMostrar}</td>
                                 <td>${data[i].subsistemasNombre}</td>
                                 <td>${data[i].estacionesNombre}</td>
-                                <td>${data[i].ubicacionesNombre}</td>
+                                <td>${data[i].ubicacion}</td>
                                 <td>${data[i].descripcion}</td>
                                 <td>${data[i].sistemasNombre}</td>
                                 <td>${data[i].criticidadNombre}</td>
@@ -1239,7 +1239,7 @@
                                 <td>${data[i].fechaaveriaGuardarMostrar}</td>
                                 <td>${data[i].subsistemasNombre}</td>
                                 <td>${data[i].estacionesNombre}</td>
-                                <td>${data[i].ubicacionesNombre}</td>
+                                <td>${data[i].ubicacion}</td>
                                 <td>${data[i].descripcion}</td>
                                 <td>${data[i].sistemasNombre}</td>
                                 <td>${data[i].criticidadNombre}</td>
@@ -1281,7 +1281,7 @@
                                 <td>${data[i].fechaaveriaGuardarMostrar}</td>
                                 <td>${data[i].subsistemasNombre}</td>
                                 <td>${data[i].estacionesNombre}</td>
-                                <td>${data[i].ubicacionesNombre}</td>
+                                <td>${data[i].ubicacion}</td>
                                 <td>${data[i].descripcion}</td>
                                 <td>${data[i].sistemasNombre}</td>
                                 <td>${data[i].criticidadNombre}</td>
@@ -1318,7 +1318,7 @@
                                     <td>${data[i].fechaaveriaGuardarMostrar}</td>
                                     <td>${data[i].subsistemasNombre}</td>
                                     <td>${data[i].estacionesNombre}</td>
-                                    <td>${data[i].ubicacionesNombre}</td>
+                                    <td>${data[i].ubicacion}</td>
                                     <td>${data[i].descripcion}</td>
                                     <td>${data[i].sistemasNombre}</td>
                                     <td>${data[i].criticidadNombre}</td>
@@ -1355,7 +1355,7 @@
                                 <td>${data[i].fechaaveriaGuardarMostrar}</td>
                                 <td>${data[i].subsistemasNombre}</td>
                                 <td>${data[i].estacionesNombre}</td>
-                                <td>${data[i].ubicacionesNombre}</td>
+                                <td>${data[i].ubicacion}</td>
                                 <td>${data[i].descripcion}</td>
                                 <td>${data[i].sistemasNombre}</td>
                                 <td>${data[i].criticidadNombre}</td>
@@ -1393,7 +1393,7 @@
                                 <td>${data[i].fechaaveriaGuardarMostrar}</td>
                                 <td>${data[i].subsistemasNombre}</td>
                                 <td>${data[i].estacionesNombre}</td>
-                                <td>${data[i].ubicacionesNombre}</td>
+                                <td>${data[i].ubicacion}</td>
                                 <td>${data[i].descripcion}</td>
                                 <td>${data[i].sistemasNombre}</td>
                                 <td>${data[i].criticidadNombre}</td>
@@ -1430,7 +1430,7 @@
                                 <td>${data[i].fechaaveriaGuardarMostrar}</td>
                                 <td>${data[i].subsistemasNombre}</td>
                                 <td>${data[i].estacionesNombre}</td>
-                                <td>${data[i].ubicacionesNombre}</td>
+                                <td>${data[i].ubicacion}</td>
                                 <td>${data[i].descripcion}</td>
                                 <td>${data[i].sistemasNombre}</td>
                                 <td>${data[i].criticidadNombre}</td>
@@ -1468,7 +1468,7 @@
                                 <td>${data[i].fechaaveriaGuardarMostrar}</td>
                                 <td>${data[i].subsistemasNombre}</td>
                                 <td>${data[i].estacionesNombre}</td>
-                                <td>${data[i].ubicacionesNombre}</td>
+                                <td>${data[i].ubicacion}</td>
                                 <td>${data[i].descripcion}</td>
                                 <td>${data[i].sistemasNombre}</td>
                                 <td>${data[i].criticidadNombre}</td>

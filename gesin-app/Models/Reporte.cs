@@ -9,7 +9,7 @@ namespace gesin_app.Models
     {
         public int Id { get; set; }
         public int IdSubsistema { get; set; }
-        public int IdUbicacion { get; set; }
+        public string Ubicacion { get; set; }
         public int IdEstacion { get; set; }
         public string OperadorReporte { get; set; }
         public string Descripcion { get; set; }
@@ -30,15 +30,13 @@ namespace gesin_app.Models
         public string CodigoOperadorReporte { get; set; }
         public string CodigoOperadorCierre { get; set; }
 
-        
-
         public virtual Criticidad Criticidad { get; set; }
         public virtual Estacion Estaciones { get; set; }
         public virtual EstadoOt EstadoOT { get; set; }
         public virtual Sistema Sistemas { get; set; }
         public virtual Subsistema Subsistemas { get; set; }
-        public virtual Ubicacion Ubicaciones { get; set; }
         public virtual Usuario Usuarios { get; set; }
         public virtual Usuario UsuarioActualizo { get; set; }
+
     }
 }

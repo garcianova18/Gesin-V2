@@ -513,7 +513,7 @@ namespace gesin_app.Controllers
                 //var operadorreporte = Db.Personas.FirstOrDefault(o => o.Codigo == reporte.OperadorreporteCodigo);
                 var subsistema = Db.Subsistemas.FirstOrDefault(o => o.Nombre == reporte.SubsistemasNombre);
                 var estacion = Db.Estacions.FirstOrDefault(o => o.Nombre == reporte.EstacionesNombre);
-                var ubicacion = Db.Ubicacions.FirstOrDefault(o => o.Nombre == reporte.UbicacionesNombre);
+                //var ubicacion = Db.Ubicacions.FirstOrDefault(o => o.Nombre == reporte.UbicacionesNombre);
                 //var mantenedornotificar = Db.Personas.FirstOrDefault(m => m.Nombre == reporte.MantenedorNotificarNombre);
                 //var mantenedorreparo = Db.Personas.FirstOrDefault(m => m.Nombre == reporte.MantenedorReparoNombre);
                 //var operadorcierre = Db.Personas.FirstOrDefault(o => o.Codigo == reporte.OperadorCierreCodigo);
@@ -552,8 +552,8 @@ namespace gesin_app.Controllers
                         }
 
                         reportemodel.IdSubsistema = subsistema.Id;
-                        reportemodel.IdEstacion = estacion.Id;
-                        reportemodel.IdUbicacion = ubicacion.Id;
+                        reportemodel.IdEstacion = estacion.Id;  
+                        reportemodel.Ubicacion = reporte.Ubicacion;
                         reportemodel.Descripcion = reporte.Descripcion;
                         reportemodel.CodigoOperadorReporte = reporte.CodigoOperadorReporte;
                         reportemodel.OperadorReporte = reporte.OperadorReporte;
@@ -604,7 +604,7 @@ namespace gesin_app.Controllers
                         reportemodel.Id = reporte.Id;
                         reportemodel.IdSubsistema = subsistema.Id;
                         reportemodel.IdEstacion = estacion.Id;
-                        reportemodel.IdUbicacion = ubicacion.Id;
+                        reportemodel.Ubicacion = reporte.Ubicacion;
                         reportemodel.Descripcion = reporte.Descripcion;
                         reportemodel.CodigoOperadorReporte = reporte.CodigoOperadorReporte;
                         reportemodel.OperadorReporte = reporte.OperadorReporte;

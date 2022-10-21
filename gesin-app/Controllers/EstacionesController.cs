@@ -14,14 +14,14 @@ namespace gesin_app.Controllers
     {
 
         private readonly GesinV2Context Db;
-        
+
 
         public EstacionesController(GesinV2Context context)
         {
             Db = context;
-          
+
         }
-        public  IActionResult Index()
+        public IActionResult Index()
         {
 
 
@@ -37,7 +37,7 @@ namespace gesin_app.Controllers
 
 
         [HttpPost]
-        public ActionResult CrearEditar( [FromBody] Estacion estacion)
+        public ActionResult CrearEditar([FromBody] Estacion estacion)
         {
             if (estacion.Nombre == "")
             {
@@ -111,14 +111,14 @@ namespace gesin_app.Controllers
                 return Ok(buscarestacion);
             }
 
-            
+
             return Ok(0);
 
 
         }
 
 
-        public ActionResult Eliminar (int? id)
+        public ActionResult Eliminar(int? id)
         {
 
             if (id == null)
@@ -128,7 +128,7 @@ namespace gesin_app.Controllers
             }
 
             var buscarestacion = Db.Estacions.Find(id);
-           
+
             if (buscarestacion != null)
             {
                 var buscarreportes = Db.Reportes.FirstOrDefault(r => r.IdEstacion == buscarestacion.Id);
@@ -147,7 +147,7 @@ namespace gesin_app.Controllers
 
                     return Ok(2);
                 }
-               
+
             }
 
 

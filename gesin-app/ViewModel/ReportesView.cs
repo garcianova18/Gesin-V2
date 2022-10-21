@@ -10,7 +10,7 @@ namespace gesin_app.ViewModel
     {
         public int Id { get; set; }
         public int IdSubsistema { get; set; }
-        public int IdUbicacion { get; set; }
+        public string Ubicacion { get; set; }
         public int IdEstacion { get; set; }
 
         [Required]

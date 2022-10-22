@@ -546,9 +546,13 @@ namespace gesin_app.Controllers
                         Reporte reportemodel = new Reporte();
 
 
-                        if (reporte.IdEstadoOt == 0 || reporte.IdEstadoOt == 8)
+                        if (reporte.IdEstadoOt == 0 )
                         {
-                            reporte.IdEstadoOt = 1;
+                            reporte.IdEstadoOt = 8;
+                        }
+                       else if (reporte.IdSistemas == 5)
+                        {
+                            reporte.IdEstadoOt = 8;
                         }
 
                         reportemodel.IdSubsistema = subsistema.Id;
@@ -597,7 +601,14 @@ namespace gesin_app.Controllers
 
                      reporte.IdUsuarioActualizo = Convert.ToInt32(userName[2].Value);
 
-
+                        if (reporte.IdEstadoOt == 0)
+                        {
+                            reporte.IdEstadoOt = 8;
+                        }
+                        else if (reporte.IdSistemas == 5)
+                        {
+                            reporte.IdEstadoOt = 8;
+                        }
 
                         Reporte reportemodel = new Reporte();
 

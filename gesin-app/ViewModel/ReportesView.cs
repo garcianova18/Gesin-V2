@@ -77,10 +77,10 @@ namespace gesin_app.ViewModel
         public string CriticidadNombre { get; set; }
         [Display(Name = "Estado")]
         public string EstadoOtNombre { get; set; }
-        [Display(Name = "Mantenedor")]
-       
-      
-       
+
+
+
+        [Display(Name = "S.M")]
         public string SistemasNombre { get; set; }
         [Display(Name = "Subsistema")]
 

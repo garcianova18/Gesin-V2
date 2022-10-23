@@ -658,7 +658,7 @@ namespace gesin_app.Controllers
 
                     await hubContext.Clients.All.SendAsync("recibir");
 
-
+                        
 
                         return Ok(2);
 
@@ -781,12 +781,36 @@ namespace gesin_app.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<ActionResult> ConfigStyle([FromBody] ConfigUsuario background_color)
+        {
+            var userName = HttpContext.User.Claims.ToList();
 
+
+
+
+            background_color.Idusuario = Convert.ToInt32(userName[2].Value);
+            background_color.Id = 1;
+            try
+            {
+                Db.ConfigUsuarios.Add(background_color);
+                await Db.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+
+                
+            }
+           
+
+            return Ok(background_color);
+
+
+         }
 
     }
 
    
-
 
 
 }

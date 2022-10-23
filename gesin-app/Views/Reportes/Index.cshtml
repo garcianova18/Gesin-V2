@@ -2020,36 +2020,86 @@
     //funcion para cambiar el fondo de color en el area de averias reportes
     //esta misma guarda en Localstore el color obtenido
 
-    let inputColor = document.getElementById("inputcolor");
+    //let inputColor = document.getElementById("inputcolor");
 
-    function guardarLocalstore() {
+    //function guardarLocalstore() {
 
-        let obtenerColor = inputColor.value;
+    //    let obtenerColor = inputColor.value;
 
-        localStorage.setItem("color", obtenerColor)
+    //    localStorage.setItem("color", obtenerColor)
 
-        let area_averias = document.getElementById("area_averias");
+    //    let area_averias = document.getElementById("area_averias");
 
-        area_averias.style.backgroundColor = `${obtenerColor}`;
+    //    area_averias.style.backgroundColor = `${obtenerColor}`;
 
-    }
+    //}
 
-    inputColor.addEventListener("change", guardarLocalstore)
+    //inputColor.addEventListener("change", guardarLocalstore)
 
 
 
 
     //funcion que recupera el color de localstore y lo muestra en el are de averias
     //esta funcion es llamada en el envento onload que se ejecuta al cargarse el contenido
-    function ObtenerLocalstore() {
+    //function ObtenerLocalstore() {
 
 
-        let colorRecuperado = localStorage.getItem("color")
+    //    let colorRecuperado = localStorage.getItem("color")
+
+    //    let area_averias = document.getElementById("area_averias");
+
+    //    area_averias.style.backgroundColor = `${colorRecuperado}`;
+    //}
+
+
+
+    let inputColor = document.getElementById("inputcolor");
+
+    function guardarStyle() {
+
+        let obtenerColor = inputColor.value;
+
 
         let area_averias = document.getElementById("area_averias");
 
-        area_averias.style.backgroundColor = `${colorRecuperado}`;
+        area_averias.style.backgroundColor = `${obtenerColor}`;
+
+        const url = "/Reportes/ConfigStyle/?background_color=" + obtenerColor;
+
+        fetch(url,{
+            
+            method: 'POST',
+
+            body: JSON.stringify({
+
+                background: "ffff"
+              
+
+
+            }),
+            headers:{
+                            'Content-Type': 'application/json'
+             }
+
+
+        })
+      
+
+
+
+
     }
+
+    inputColor.addEventListener("change", guardarStyle)
+
+
+
+
+
+
+
+
+
 
 
 

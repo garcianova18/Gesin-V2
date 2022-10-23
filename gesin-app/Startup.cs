@@ -1,3 +1,4 @@
+using gesin_app.Controllers;
 using gesin_app.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -40,8 +41,8 @@ namespace gesin_app
 
 
                 });
-                
-               
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +71,8 @@ namespace gesin_app
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Acceso}/{action=Index}/{id?}");
+
+                endpoints.MapHub<GesinHub>("/GesinHub");
             });
 
         }

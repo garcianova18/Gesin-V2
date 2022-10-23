@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 
 namespace gesin_app.Controllers
 {
@@ -21,11 +22,13 @@ namespace gesin_app.Controllers
 
         private readonly GesinV2Context Db;
         private readonly IMapper mapper;
+        private readonly IHubContext<GesinHub> hubContext;
 
-        public ReportesController(GesinV2Context context, IMapper mapper)
+        public ReportesController(GesinV2Context context, IMapper mapper, IHubContext<GesinHub> hubContext)
         {
             Db = context;
             this.mapper = mapper;
+            this.hubContext = hubContext;
         }
         public async Task< IActionResult >Index(ReportesView reporteview)
         {
@@ -204,7 +207,7 @@ namespace gesin_app.Controllers
             }
 
 
-            return Json(reportesArray.Take(5));
+            return Json(reportesArray);
         }
 
 
@@ -550,13 +553,13 @@ namespace gesin_app.Controllers
                         {
                             reporte.IdEstadoOt = 8;
                         }
-                       //else if (reporte.IdSistemas == 5)
-                       // {
-                       //     reporte.IdEstadoOt = 8;
-                       // }
+                        //else if (reporte.IdSistemas == 5)
+                        // {
+                        //     reporte.IdEstadoOt = 8;
+                        // }
 
                         reportemodel.IdSubsistema = subsistema.Id;
-                        reportemodel.IdEstacion = estacion.Id;  
+                        reportemodel.IdEstacion = estacion.Id;
                         reportemodel.Ubicacion = reporte.Ubicacion;
                         reportemodel.Descripcion = reporte.Descripcion;
                         reportemodel.CodigoOperadorReporte = reporte.CodigoOperadorReporte;
@@ -576,11 +579,17 @@ namespace gesin_app.Controllers
                         reportemodel.MantenedorReparo = reporte.MantenedorReparo;
                         reportemodel.IdUsuarios = reporte.IdUsuarios;
 
-                     
+                        //var mapReporte = mapper.Map<Reporte>(reporte);
+                        //mapReporte.IdEstacion = estacion.Id;
+                        //mapReporte.IdSubsistema = subsistema.Id;
+                        //mapReporte.Fechaaveria = Convert.ToDateTime(fechareporte);
+                        //mapReporte.Fechanotificacion = fechanotificacion;
+                        //mapReporte.Fechainicio = fechainicio;
+                        //mapReporte.Fechafinal = fechafinal;
 
                         Db.Reportes.Add(reportemodel);
                        await Db.SaveChangesAsync();
-
+                        await hubContext.Clients.All.SendAsync("recibir");
 
                         
 
@@ -635,13 +644,23 @@ namespace gesin_app.Controllers
                         reportemodel.IdUsuarios = reporte.IdUsuarios;
                         reportemodel.IdUsuarioActualizo = reporte.IdUsuarioActualizo;
 
-                    Db.Reportes.Update(reportemodel);
+                        var mapReporte = mapper.Map<Reporte>(reporte);
+                        mapReporte.IdEstacion = estacion.Id;
+                        mapReporte.IdSubsistema = subsistema.Id;
+                        mapReporte.Fechaaveria = Convert.ToDateTime(fechareporte);
+                        mapReporte.Fechanotificacion = fechanotificacion;
+                        mapReporte.Fechainicio = fechainicio;
+                        mapReporte.Fechafinal = fechafinal;
+
+                        Db.Reportes.Update(reportemodel);
 
                    await Db.SaveChangesAsync();
 
+                    await hubContext.Clients.All.SendAsync("recibir");
 
 
-                    return Ok(2);
+
+                        return Ok(2);
 
 
                 }

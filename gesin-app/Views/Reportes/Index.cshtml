@@ -613,6 +613,7 @@
     <script src="https://kit.fontawesome.com/c6f899d35a.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
 
 </body>
 
@@ -621,12 +622,26 @@
 
 <script>
 
-    window.onload = function () {
+    let conexion = new signalR.HubConnectionBuilder().withUrl("/GesinHub").build();
 
-        let url = "Reportes/Listarasincrono"
+    conexion.start();
+
+
+    conexion.on("recibir", () => ListarTodo());
+
+
+
+    let ListarTodo = () => {
+
+        let url = "Reportes/Listarasincrono";
         Listardata(url)
 
-        ObtenerLocalstore()
+    }
+
+    window.onload = function () {
+
+        ListarTodo();
+        ObtenerLocalstore();
 
         let reutilizarenviar = document.getElementById("reutilizarenviar");
 
@@ -764,51 +779,51 @@
 
 
 
-    const check = document.getElementById("reutilizar");
+    //const check = document.getElementById("reutilizar");
 
 
-        function chekiar(){
+    //    function chekiar(){
 
            
 
-            let idreportes = Number(document.getElementById("idreportes").value);
+    //        let idreportes = Number(document.getElementById("idreportes").value);
 
         
 
-            if (check.checked && idreportes >=0)
-            {
+    //        if (check.checked && idreportes >=0)
+    //        {
 
-              // document.getElementById("enviar").value = " Agregar";
+    //          // document.getElementById("enviar").value = " Agregar";
                
-               //llamamos la funcion buscarot para que verifique si ya existe este nuemero  de ot en ese campo y ponerla duplicada
-               // o dejarla como esta
-               buscarot();
+    //           //llamamos la funcion buscarot para que verifique si ya existe este nuemero  de ot en ese campo y ponerla duplicada
+    //           // o dejarla como esta
+    //           EstadoRegistro();
                         
-            }
+    //        }
                 
 
-            else{
+    //        //else{
 
                 
 
-                    if(idreportes == 0){
+    //        //        if(idreportes == 0){
 
-                       document.getElementById("enviar").value = "agregar";
-                    }
+    //        //           document.getElementById("enviar").value = "agregar";
+    //        //        }
 
-                    else{
+    //        //        else{
 
-                        document.getElementById("enviar").value = "Actualizar";
-                    }
+    //        //            document.getElementById("enviar").value = "Actualizar";
+    //        //        }
                     
                      
-            }
+    //        //}
 
 
 
-        }
+    //    }
 
-    check.addEventListener("change", chekiar);
+    //check.addEventListener("change", chekiar);
 
 
 
@@ -844,7 +859,7 @@
             let codigooperadorfinal =  document.getElementById("codigooperadorfinal").value;
             let mantenedorcierre = document.getElementById("mantenedorcierre").value;
             let usuario = Number( document.getElementById("usuario").value);
-
+        document.getElementById("ot").style.backgroundColor = "";
            
              subsistemas.value == ""? subsistemas.classList.add("error"): subsistemas.classList.remove("error") ;
              estaciones.value == ""? estaciones.classList.add("error"): estaciones.classList.remove("error");
@@ -857,17 +872,18 @@
              sistema.value =="" ? sistema.classList.add("error"): sistema.classList.remove("error");
 
              //con esto decimos que si el boton que disparo el evento submit o enviar el formulario fue
-             // el btn reutilizar averia, cuanto tenemos un registro cargado para actualizar
+             // el btn reutilizar Registro, cuanto tenemos un registro cargado para actualizar
              // entoces este no se actualizara si no se creara uno nuevo
              if(e.submitter.id =="reutilizarenviar"){
 
                  idreportes = 0;
                  alert(idreportes);
+            
 
              }
 
 
-                const check = document.getElementById("reutilizar");
+                //const check = document.getElementById("reutilizar");
 
                 
 
@@ -982,6 +998,9 @@
                         timer: 3000
                     })
 
+
+                   
+               
 
                     //limpiamos todos los campos
 
@@ -1159,17 +1178,17 @@
                 // y si no esta duplicada gargue en color blanco
                 //  de no llamar este metodo para que recalcule no me carga el gris y si pongo el gris al cargar una sin duplicidad despues de cargar una duplicadad me le pone el gris
 
-               buscarot();
+               EstadoRegistro();
                
                 
 
                document.getElementById("enviar").value = "Actualizar";
                
 
-                if (check.checked) {
+               // if (check.checked) {
 
-                 check.checked = false;
-               }
+               //  check.checked = false;
+               //}
 
                
             })
@@ -1832,7 +1851,7 @@
 
     function mantenedorestado() {
 
-        buscarot();
+        EstadoRegistro();
     }
         mantenedornotificar.addEventListener("keyup", mantenedorestado)
 
@@ -1843,7 +1862,8 @@
     const ot = document.getElementById("ot");
 
 
-    const buscarot = () => {
+    const EstadoRegistro = () => {
+
 
         
        
@@ -1863,6 +1883,7 @@
                       const estadoot = document.getElementById("estado");
                       const codigooperadorfinal =  document.getElementById("codigooperadorfinal");
                        ot.style.backgroundColor = "grey";
+
                     if(codigooperadorfinal.value !="" ){
 
                         //cerrada
@@ -1941,22 +1962,22 @@
 
     }
 
-    ot.addEventListener('keyup', buscarot)
+    ot.addEventListener('keyup', EstadoRegistro)
 
     let codigooperadorfinal =  document.getElementById("codigooperadorfinal");
 
 
-    //funcion para disparar el evento de cerrar OT
+    //funcion para disparar el evento de cerrar OT este asu vez sipara el de estadoregistro
 
-   let EstadoOTCerrado = () => buscarot();
+    let EstadoOTCerrado = () => EstadoRegistro();
 
    codigooperadorfinal.addEventListener('keyup', EstadoOTCerrado);
 
-    //-----------funcion para Limpiar los capos del filtrado-----------------------
+    //-----------funcion para Limpiar los campos del filtrado-----------------------
 
     const btnlimpiar = document.getElementById("limpiar")
 
-    function Limpiar() {
+    function LimpiarFiltros() {
 
         document.getElementById("filtroOt").value = "";
         document.getElementById("filtrofecha").value = "";
@@ -1969,10 +1990,10 @@
         let url = "Reportes/Listarasincrono"
         Listardata(url)
        
-
+        LimpiarFiltros
     }
 
-    btnlimpiar.addEventListener("click", Limpiar);
+    btnlimpiar.addEventListener("click", LimpiarFiltros);
 
 
 
@@ -2069,9 +2090,10 @@
 
         document.getElementById("ot").style.backgroundColor = "";
         reutilizarenviar.style.display ="none";
+        document.getElementById("enviar").value = "Agregar";
 
-        // llamamos el metodo limpiar paraqu nos limpie los filtro de busqueda
-        Limpiar();
+        // llamamos el metodo limpiarFiltros para que nos limpie los filtro de busqueda
+        LimpiarFiltros();
        
       
         // aqui le quitamos la clase error encaso de que las tengan
@@ -2086,17 +2108,17 @@
         sistema.classList.remove("error");
 
         // llamamos este metodo para que limpie el boton crear si este este con ese nombre actualizar
-        chekiar();
+        //chekiar();
                 
 
         const check = document.getElementById("reutilizar");
         //// si el checkbox reutilizar averia esta activada la desactivamos
         if (check.checked) {
-
+            alert("klk")
            check.checked = false;
 
            // volvemos a llamar este metodo para que limpie el boton de crear si tiene el nombre actualizar u otro
-            chekiar()
+            //chekiar()
             
         }
 

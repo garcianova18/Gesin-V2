@@ -550,10 +550,10 @@ namespace gesin_app.Controllers
                         {
                             reporte.IdEstadoOt = 8;
                         }
-                       else if (reporte.IdSistemas == 5)
-                        {
-                            reporte.IdEstadoOt = 8;
-                        }
+                       //else if (reporte.IdSistemas == 5)
+                       // {
+                       //     reporte.IdEstadoOt = 8;
+                       // }
 
                         reportemodel.IdSubsistema = subsistema.Id;
                         reportemodel.IdEstacion = estacion.Id;  
@@ -605,10 +605,10 @@ namespace gesin_app.Controllers
                         {
                             reporte.IdEstadoOt = 8;
                         }
-                        else if (reporte.IdSistemas == 5)
-                        {
-                            reporte.IdEstadoOt = 8;
-                        }
+                        //else if (reporte.IdSistemas == 5)
+                        //{
+                        //    reporte.IdEstadoOt = 8;
+                        //}
 
                         Reporte reportemodel = new Reporte();
 

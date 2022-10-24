@@ -13,6 +13,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\img\greg-rosenke-6QnEf_b47eA-unsplash.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\img\greg-rosenke-6QnEf_b47eA-unsplash.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.15" />

@@ -187,7 +187,7 @@
 
                 <table class="table table-sm table-hover table-bordered text-center  ">
 
-                    <thead class="cabecera-tabla text-white  " style="font-size:14px">
+                    <thead class="cabecera-tabla text-white  " style="font-size:14px" id="head_table">
 
                         <tr>
                             <th>#@ViewBag.conteo</th>
@@ -1807,40 +1807,52 @@
         const subsistemacascada = document.getElementById("subsistemas");
 
       function descripcionCascada(){
+            
 
            const subsistemas = document.getElementById("subsistemas");
+
+           
 
             if (subsistemas.value != "") {
 
 
            
 
-            let url = "/Reportes/Descripcion/?subsistema=" + subsistemas.value;
-            fetch(url)
-                .then(res => res.json())
-                .then(data => {
+                let url = "/Reportes/Descripcion/?subsistema=" + subsistemas.value;
+                fetch(url)
+                    .then(res => res.json())
+                    .then(data => {
+                       
+                        let listcascada = document.getElementById("listcascada");
 
-                    const listcascada = document.getElementById("listcascada");
+                        let opcion = "";
+                      
+                        for (let i = 0; i < data.length; i++) {
 
+                            opcion +=`
 
-                    for (let i = 0; i < data.length; i++) {
+                                <option>${data[i].value}</option>
+                            
+                                    
+                            `
+                           
+                          // Element = document.createElement("option");
 
-                        let Element = document.createElement("option");
-                        let valor = document.createTextNode(`${data[i].value}`);
+                          // let valor = document.createTextNode(`${data[i].value}`);
+                           
+                          // Element.appendChild(valor);
 
-                        Element.appendChild(valor);
-
-                        listcascada.appendChild(Element);
-
-                    }
+                          //listcascada.appendChild(Element);
+                       
+                        }
     
+                        
+                         listcascada.innerHTML = opcion;
+
+                    })
 
 
-
-                })
-
-
-                 }
+            }
 
        }
 
@@ -2061,7 +2073,6 @@
 
         let obtenerColor = inputColor.value;
 
-     
 
         const url = "/Reportes/ConfigStyle/background_color" 
 
@@ -2108,9 +2119,14 @@
 
 
             let area_averias = document.getElementById("area_averias");
-             
-            area_averias.style.backgroundColor = `${data.background}`;
+                area_averias.style.backgroundColor = `${data.background}`;
 
+            let head_table =document.getElementById("head_table");
+                head_table.style.backgroundColor = `${data.background}`;
+
+
+             let inputColor = document.getElementById("inputcolor");
+                 inputColor.value = `${data.background}`;
         })
 
 

@@ -401,7 +401,7 @@ namespace gesin_app.Controllers
 
         }
 
-        //metodo para cargar los activos segun la descripcion
+        //metodo para cargar los activos segun el subsistema esto para crear combolist en cascada
 
         public IActionResult Descripcion(string subsistema)
         {

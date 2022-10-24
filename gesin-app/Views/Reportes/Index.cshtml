@@ -642,14 +642,15 @@
     }
 
     window.onload = function () {
-
+        
         ListarTodo();
-        ObtenerLocalstore();
+       
 
         let reutilizarenviar = document.getElementById("reutilizarenviar");
 
         reutilizarenviar.style.display ="none";
-     
+
+       recuperarStyle();
 
     }
       
@@ -1086,7 +1087,7 @@
                         let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = "";
                         let mantenedorcierre = document.getElementById("mantenedorcierre").value = "";
                         document.getElementById("enviar").value = "Agregar";
-         
+                        reutilizarenviar.style.display ="none";
 
                     }
 
@@ -2054,17 +2055,15 @@
 
 
     let inputColor = document.getElementById("inputcolor");
+   
 
     function guardarStyle() {
 
         let obtenerColor = inputColor.value;
 
+     
 
-        let area_averias = document.getElementById("area_averias");
-
-        area_averias.style.backgroundColor = `${obtenerColor}`;
-
-        const url = "/Reportes/ConfigStyle/?background_color=" + obtenerColor;
+        const url = "/Reportes/ConfigStyle/background_color" 
 
         fetch(url,{
             
@@ -2072,15 +2071,22 @@
 
             body: JSON.stringify({
 
-                background: "ffff"
+                background: obtenerColor
               
 
 
             }),
-            headers:{
-                            'Content-Type': 'application/json'
-             }
+            headers:{ 'Content-Type': 'application/json'}
 
+
+        })
+        .then(res=> res.json())
+        .then(data=>{
+
+                
+
+               recuperarStyle();
+                             
 
         })
       
@@ -2093,7 +2099,22 @@
     inputColor.addEventListener("change", guardarStyle)
 
 
+    const recuperarStyle = ()=>{
 
+        const url = "/Reportes/RecuperarStyle"
+        fetch(url)
+        .then(res => res.json())
+        .then(data =>{
+
+
+            let area_averias = document.getElementById("area_averias");
+             
+            area_averias.style.backgroundColor = `${data.background}`;
+
+        })
+
+
+    }
 
 
 
@@ -2167,7 +2188,7 @@
         const check = document.getElementById("reutilizar");
         //// si el checkbox reutilizar averia esta activada la desactivamos
         if (check.checked) {
-            alert("klk")
+          
            check.checked = false;
 
            // volvemos a llamar este metodo para que limpie el boton de crear si tiene el nombre actualizar u otro

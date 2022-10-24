@@ -11,6 +11,6 @@ namespace gesin_app.Models
         public string Background { get; set; }
         public int Idusuario { get; set; }
 
-        public virtual Usuario IdNavigation { get; set; }
+        public virtual Usuario IdusuarioNavigation { get; set; }
     }
 }

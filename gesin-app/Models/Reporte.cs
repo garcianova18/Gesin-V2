@@ -37,6 +37,5 @@ namespace gesin_app.Models
         public virtual Subsistema Subsistemas { get; set; }
         public virtual Usuario Usuarios { get; set; }
         public virtual Usuario UsuarioActualizo { get; set; }
-
     }
 }

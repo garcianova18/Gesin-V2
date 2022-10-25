@@ -1,5 +1,6 @@
 using gesin_app.Controllers;
 using gesin_app.Models;
+using gesin_app.Servicios;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,6 +44,8 @@ namespace gesin_app
                 });
 
             services.AddSignalR();
+
+            services.AddScoped(typeof(IrepositoryGeneric<>), typeof(RepositoryGeneric<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
+using gesin_app.Servicios;
 
 namespace gesin_app.Controllers
 {
@@ -23,12 +24,13 @@ namespace gesin_app.Controllers
         private readonly GesinV2Context Db;
         private readonly IMapper mapper;
         private readonly IHubContext<GesinHub> hubContext;
-
-        public ReportesController(GesinV2Context context, IMapper mapper, IHubContext<GesinHub> hubContext)
+        private readonly IrepositoryGeneric<Reporte> repository;
+        public ReportesController(GesinV2Context context, IMapper mapper, IHubContext<GesinHub> hubContext, IrepositoryGeneric<Reporte> irepository)
         {
             Db = context;
             this.mapper = mapper;
             this.hubContext = hubContext;
+            this.repository = irepository;
         }
         public async Task< IActionResult >Index(ReportesView reporteview)
         {
@@ -77,7 +79,7 @@ namespace gesin_app.Controllers
 
 
             //con esta linea nos envitamos estar usando include para poder incluir toda la data relacionada que en este caso es mucha
-            IQueryable<ReportesView> reportes = Db.Reportes.ProjectTo<ReportesView>(mapper.ConfigurationProvider).OrderByDescending(r => r.Id);
+            var reportes = Db.Reportes.ProjectTo<ReportesView>(mapper.ConfigurationProvider);
 
 
             //para realizar el fintrado combinado
@@ -189,7 +191,7 @@ namespace gesin_app.Controllers
 
                 #endregion
 
-              
+              // aqui estamos comparando estas propiedades para si viene null no me nuestre eso en el front y me lo muestre vacio
 
                 item.MantenedorNotificar = item.MantenedorNotificar == null ? item.MantenedorNotificar = "" : item.MantenedorNotificar;
               
@@ -207,7 +209,7 @@ namespace gesin_app.Controllers
             }
 
 
-            return Json(reportesArray);
+            return Json(reportesArray.OrderByDescending(r=> r.Id));
         }
 
 
@@ -498,7 +500,7 @@ namespace gesin_app.Controllers
 
         //Metodo para crear y Editar los reportes
         [HttpPost]
-        public async Task< IActionResult> CrearEditarReportes([FromBody] ReportesView reporte)
+        public async Task< IActionResult> CrearEditarReportes([FromBody] ReportesCreateView reporte)
         {
 
             if (reporte !=null )
@@ -511,7 +513,8 @@ namespace gesin_app.Controllers
             
           
 
-                //aqui buscamos el id de cada uno de esto ya que por usar datalist no podemos traer su  id desde la vista pero traemos lo que se digite en el campo lo buscamos y estraemos su id para luego gardar en base de datos
+                //----aqui buscamos el id de cada uno de esto ya que por usar datalist no podemos traer su  id desde la vista
+                //----pero traemos lo que se digite en el campo lo buscamos y estraemos su id para luego gardar en base de datos
 
                 //var operadorreporte = Db.Personas.FirstOrDefault(o => o.Codigo == reporte.OperadorreporteCodigo);
                 var subsistema = Db.Subsistemas.FirstOrDefault(o => o.Nombre == reporte.SubsistemasNombre);
@@ -553,47 +556,26 @@ namespace gesin_app.Controllers
                         {
                             reporte.IdEstadoOt = 8;
                         }
-                        //else if (reporte.IdSistemas == 5)
-                        // {
-                        //     reporte.IdEstadoOt = 8;
-                        // }
+                       
+                       
+                     
+                            var mapReporte = mapper.Map<Reporte>(reporte);
 
-                        reportemodel.IdSubsistema = subsistema.Id;
-                        reportemodel.IdEstacion = estacion.Id;
-                        reportemodel.Ubicacion = reporte.Ubicacion;
-                        reportemodel.Descripcion = reporte.Descripcion;
-                        reportemodel.CodigoOperadorReporte = reporte.CodigoOperadorReporte;
-                        reportemodel.OperadorReporte = reporte.OperadorReporte;
-                        reportemodel.Fechaaveria = Convert.ToDateTime(fechareporte);
-                        reportemodel.IdCriticidad = reporte.IdCriticidad;
-                        reportemodel.IdSistemas = reporte.IdSistemas;
-                        reportemodel.IdEstadoOt = reporte.IdEstadoOt;
-                        reportemodel.Ot = reporte.Ot;
-                        reportemodel.Comentario = reporte.Comentario;
-                        reportemodel.Fechanotificacion = fechanotificacion;
-                        reportemodel.MantenedorNotificar = reporte.MantenedorNotificar;
-                        reportemodel.Fechainicio = fechainicio;
-                        reportemodel.Fechafinal = fechafinal;
-                        reportemodel.OperadorCierre = reporte.OperadorCierre;
-                        reportemodel.CodigoOperadorCierre = reporte.CodigoOperadorCierre;
-                        reportemodel.MantenedorReparo = reporte.MantenedorReparo;
-                        reportemodel.IdUsuarios = reporte.IdUsuarios;
+                            mapReporte.IdSubsistema = subsistema.Id;
+                            mapReporte.IdEstacion = estacion.Id;
+                            mapReporte.Fechaaveria = Convert.ToDateTime(fechareporte);
+                            mapReporte.Fechanotificacion = fechanotificacion;
+                            mapReporte.Fechainicio = fechainicio;
+                            mapReporte.Fechafinal = fechafinal;
+                       
 
-                        //var mapReporte = mapper.Map<Reporte>(reporte);
-                        //mapReporte.IdEstacion = estacion.Id;
-                        //mapReporte.IdSubsistema = subsistema.Id;
-                        //mapReporte.Fechaaveria = Convert.ToDateTime(fechareporte);
-                        //mapReporte.Fechanotificacion = fechanotificacion;
-                        //mapReporte.Fechainicio = fechainicio;
-                        //mapReporte.Fechafinal = fechafinal;
+                        var reporteCreate = await repository.CreateAsync(mapReporte);
 
-                        Db.Reportes.Add(reportemodel);
-                       await Db.SaveChangesAsync();
                         await hubContext.Clients.All.SendAsync("recibir");
 
                         
 
-                        return Ok(1);
+                        return Ok(reporteCreate);
 
 
                      }
@@ -614,37 +596,10 @@ namespace gesin_app.Controllers
                         {
                             reporte.IdEstadoOt = 8;
                         }
-                        //else if (reporte.IdSistemas == 5)
-                        //{
-                        //    reporte.IdEstadoOt = 8;
-                        //}
 
-                        Reporte reportemodel = new Reporte();
-
-                        reportemodel.Id = reporte.Id;
-                        reportemodel.IdSubsistema = subsistema.Id;
-                        reportemodel.IdEstacion = estacion.Id;
-                        reportemodel.Ubicacion = reporte.Ubicacion;
-                        reportemodel.Descripcion = reporte.Descripcion;
-                        reportemodel.CodigoOperadorReporte = reporte.CodigoOperadorReporte;
-                        reportemodel.OperadorReporte = reporte.OperadorReporte;
-                        reportemodel.Fechaaveria = Convert.ToDateTime(fechareporte);
-                        reportemodel.IdCriticidad = reporte.IdCriticidad;
-                        reportemodel.IdSistemas = reporte.IdSistemas;
-                        reportemodel.IdEstadoOt = reporte.IdEstadoOt;
-                        reportemodel.Ot = reporte.Ot;
-                        reportemodel.Comentario = reporte.Comentario;
-                        reportemodel.Fechanotificacion = fechanotificacion;
-                        reportemodel.MantenedorNotificar = reporte.MantenedorNotificar;
-                        reportemodel.Fechainicio = fechainicio;
-                        reportemodel.Fechafinal = fechafinal;
-                        reportemodel.OperadorCierre = reporte.OperadorCierre;
-                        reportemodel.CodigoOperadorCierre = reporte.CodigoOperadorCierre;
-                        reportemodel.MantenedorReparo = reporte.MantenedorReparo;
-                        reportemodel.IdUsuarios = reporte.IdUsuarios;
-                        reportemodel.IdUsuarioActualizo = reporte.IdUsuarioActualizo;
 
                         var mapReporte = mapper.Map<Reporte>(reporte);
+
                         mapReporte.IdEstacion = estacion.Id;
                         mapReporte.IdSubsistema = subsistema.Id;
                         mapReporte.Fechaaveria = Convert.ToDateTime(fechareporte);
@@ -652,15 +607,13 @@ namespace gesin_app.Controllers
                         mapReporte.Fechainicio = fechainicio;
                         mapReporte.Fechafinal = fechafinal;
 
-                        Db.Reportes.Update(reportemodel);
-
-                   await Db.SaveChangesAsync();
+                        var reporteUpdate = await repository.UpdateAsync(mapReporte);
 
                     await hubContext.Clients.All.SendAsync("recibir");
 
                         
 
-                        return Ok(2);
+                        return Ok(reporteUpdate);
 
 
                 }
@@ -716,13 +669,18 @@ namespace gesin_app.Controllers
 
         //Metodo para recuperar la informacion y luego editar
         [HttpGet]
-        public IActionResult BuscarEditar(int? id)
+        public async Task< IActionResult >BuscarEditar(int id)
         {
 
 
-            var cargarreporte = Db.Reportes.ProjectTo<ReportesView>(mapper.ConfigurationProvider).FirstOrDefault(p => p.Id == id);
+            var cargarreporte = Db.Reportes.ProjectTo<ReportesView>
+                (mapper.ConfigurationProvider).FirstOrDefault(p => p.Id == id);
+
+            //var buscarreporte = await Db.Reportes.Include(e => e.Estaciones).Include(s=>s.Subsistemas) .FirstOrDefaultAsync(i => i.Id == id);
 
 
+
+            //var cargarreporte = mapper.Map<ReportesView>(buscarreporte);
 
             var fechaaveriaconvertida = cargarreporte.Fechaaveria.ToString("dd/MM/yyyy HH:mm");
 

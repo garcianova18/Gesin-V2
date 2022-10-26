@@ -57,22 +57,22 @@ namespace gesin_app.ViewModel
 
         public int? IdUsuarioActualizo { get; set; }
 
-   
-
-    
-       
-
-
-
-
-
-
-
-  
-
-
         
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

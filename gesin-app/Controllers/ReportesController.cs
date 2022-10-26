@@ -665,15 +665,13 @@ namespace gesin_app.Controllers
         }
 
 
-
-
         //Metodo para recuperar la informacion y luego editar
         [HttpGet]
-        public async Task< IActionResult >BuscarEditar(int id)
+        public IActionResult BuscarEditar(int id)
         {
 
 
-            var cargarreporte = Db.Reportes.ProjectTo<ReportesView>
+            var cargarreporte =  Db.Reportes.ProjectTo<ReportesView>
                 (mapper.ConfigurationProvider).FirstOrDefault(p => p.Id == id);
 
             //var buscarreporte = await Db.Reportes.Include(e => e.Estaciones).Include(s=>s.Subsistemas) .FirstOrDefaultAsync(i => i.Id == id);

@@ -425,11 +425,11 @@
 
                                 <div class="col-4  gx-2">
 
-                                    <input type="submit" class="form-control form-control-sm btn btn-sm btn-success" value="Agregar" id="enviar" >
+                                    <input type="submit"  class="form-control form-control-sm btn btn-sm btn-success" value="Agregar" id="enviar" >
 
                                 </div>
                             </div>
-
+                            s
 
 
                         </div>
@@ -561,7 +561,8 @@
 
                                         <div class="col-4 ">
 
-                                            <input class=" form-control form-control-sm btn btn-sm btn-primary text-white " value="nuevo registro" id="btn_nuevoregistro" />
+                                            <input type="reset" class=" form-control form-control-sm btn btn-sm btn-primary text-white " value="nuevo registro" id="btn_nuevoregistro" />
+
 
                                         </div>
 
@@ -839,7 +840,10 @@
     function CrearEditarReportes(e) {
        
              e.preventDefault();
+            
              console.log(e.submitter.id)
+
+          
             
             let idreportes = Number(document.getElementById("idreportes").value); 
             let subsistemas = document.getElementById("subsistemas");
@@ -863,7 +867,7 @@
             let codigooperadorfinal =  document.getElementById("codigooperadorfinal").value;
             let mantenedorcierre = document.getElementById("mantenedorcierre").value;
             let usuario = Number( document.getElementById("usuario").value);
-        document.getElementById("ot").style.backgroundColor = "";
+                document.getElementById("ot").style.backgroundColor = "";
            
              subsistemas.value == ""? subsistemas.classList.add("error"): subsistemas.classList.remove("error") ;
              estaciones.value == ""? estaciones.classList.add("error"): estaciones.classList.remove("error");
@@ -885,6 +889,9 @@
             
 
              }
+
+            
+
 
 
                 //const check = document.getElementById("reutilizar");
@@ -1003,42 +1010,12 @@
                     })
 
 
-                   
-               
-
-                    //limpiamos todos los campos
-
-                    function Limpiar() {
-
-                        let idreportes = document.getElementById("idreportes").value = "";
-                        let subsistemas = document.getElementById("subsistemas").value = "";
-                        let estaciones = document.getElementById("estaciones").value = "";
-                        let ubicaciones = document.getElementById("ubicaciones").value = "";
-                        let descripcion = document.getElementById("descripcion").value = "";
-                        let codigooperador = document.getElementById("codigooperador").value = "";
-                        let nombreoperador = document.getElementById("nombreoperador").value ="";
-                        let fechareportes = document.getElementById("fechareporte").value = "";
-                        let criticidad = document.getElementById("criticidad").value = "";
-                        let sistema = document.getElementById("sistema").value = "";
-                        let estadoot = document.getElementById("estado").value = "";
-                        let ot = document.getElementById("ot").value = "";
-                        let comentario = document.getElementById("comentario").value = "";
-                        let fechanotificacion = document.getElementById("fechanotificacion").value = "";
-                        let mantenedornotificar = document.getElementById("mantenedornotificar").value = "";
-                        let fechainicio = document.getElementById("fechainicio").value = "";
-                        let fechafinal = document.getElementById("fechainicio").value = "";
-                        let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = "";
-                        let mantenedorcierre = document.getElementById("mantenedorcierre").value = "";
-                    }
-
-
-
                     const check = document.getElementById("reutilizar")
 
-
+                    // si el chekbox no esta chekiado entonces resetiamos/ limpiamos el formulario
                     if (!check.checked) {
 
-                        Limpiar();
+                       form.reset();
 
                     }
 
@@ -1063,43 +1040,19 @@
                     })
 
 
-                    //creamos la funcion limpiar pero esta no se ejecuta hasta ser llamada
+                    
 
-                    function Limpiar() {
-
-                        let idreportes = document.getElementById("idreportes").value = "";
-                        let subsistemas = document.getElementById("subsistemas").value = "";
-                        let estaciones = document.getElementById("estaciones").value = "";
-                        let ubicaciones = document.getElementById("ubicaciones").value = "";
-                        let descripcion = document.getElementById("descripcion").value = "";
-                        let codigooperador = document.getElementById("codigooperador").value = "";
-                        let nombreoperador = document.getElementById("nombreoperador").value = "";
-                        let fechareportes = document.getElementById("fechareporte").value = "";
-                        let criticidad = document.getElementById("criticidad").value = "";
-                        let sistema = document.getElementById("sistema").value = "";
-                        let estadoot = document.getElementById("estado").value = "";
-                        let ot = document.getElementById("ot").value = "";
-                        let comentario = document.getElementById("comentario").value = "";
-                        let fechanotificacion = document.getElementById("fechanotificacion").value = "";
-                        let mantenedornotificar = document.getElementById("mantenedornotificar").value = "";
-                        let fechainicio = document.getElementById("fechainicio").value = "";
-                        let fechafinal = document.getElementById("fechainicio").value = "";
-                        let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = "";
-                        let mantenedorcierre = document.getElementById("mantenedorcierre").value = "";
-                        let descripcioncascada = document.getElementById("descripcioncascada").value = "";
-                        document.getElementById("enviar").value = "Agregar";
-                        reutilizarenviar.style.display ="none";
-
-                    }
-
+                  
 
 
                     const check = document.getElementById("reutilizar")
 
 
                     if (!check.checked) {
-                        // aqui ejecutamo la funcion limpiar
-                        Limpiar();
+                        
+                        form.reset();
+                        document.getElementById("enviar").value = "Agregar";
+                        reutilizarenviar.style.display ="none";
 
                     }
 
@@ -2136,89 +2089,24 @@
 
 
 
+    const btn_nuevoregistro = document.getElementById("formulario");
 
-
-
-
-
-    const btn_nuevoregistro = document.getElementById("btn_nuevoregistro");
-
-    const LimpiarFormulario = () => {
+    const NuevoRegistro_LipiarCampos = () => {
       
-        
-        let idreportes = document.getElementById("idreportes");
-        let subsistemas = document.getElementById("subsistemas");
-        let estaciones = document.getElementById("estaciones");
-        let ubicaciones = document.getElementById("ubicaciones");
-        let descripcion = document.getElementById("descripcion");
-        let codigooperador = document.getElementById("codigooperador");
-        let nombreoperador = document.getElementById("nombreoperador");
-        let fechareportes = document.getElementById("fechareporte");
-        let criticidad = document.getElementById("criticidad");
-        let sistema = document.getElementById("sistema");
 
-        idreportes.value = "";
-        subsistemas.value = "";
-        estaciones.value = "";
-        ubicaciones.value = "";
-        descripcion.value = "";
-        codigooperador.value = "";
-        nombreoperador.value = "";
-        fechareportes.value = "";
-        criticidad.value = "";
-        sistema.value = "";
 
-        let estadoot = document.getElementById("estado").value = "";
-        let ot = document.getElementById("ot").value = "";
-        let comentario = document.getElementById("comentario").value = "";
-        let fechanotificacion = document.getElementById("fechanotificacion").value = "";
-        let mantenedornotificar = document.getElementById("mantenedornotificar").value = "";
-        let fechainicio = document.getElementById("fechainicio").value = "";
-        let fechafinal = document.getElementById("fechafinal").value = "";
-        let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = "";
-        let nombreoperadorfinal = document.getElementById("nombreoperadorfinal").value = "";
-        let mantenedorcierre = document.getElementById("mantenedorcierre").value = "";
-        let descripcioncascada = document.getElementById("descripcioncascada").value = "";
-        document.getElementById("ot").style.backgroundColor = "";
         reutilizarenviar.style.display ="none";
+
         document.getElementById("enviar").value = "Agregar";
 
         // llamamos el metodo limpiarFiltros para que nos limpie los filtro de busqueda
         LimpiarFiltros();
-       
-      
-        // aqui le quitamos la clase error encaso de que las tengan
-        subsistemas.classList.remove("error");
-        estaciones.classList.remove("error");
-        ubicaciones.classList.remove("error");
-        descripcion.classList.remove("error");
-        codigooperador.classList.remove("error");
-        nombreoperador.classList.remove("error");
-        fechareportes.classList.remove("error");
-        criticidad.classList.remove("error");
-        sistema.classList.remove("error");
-
-        // llamamos este metodo para que limpie el boton crear si este este con ese nombre actualizar
-        //chekiar();
-                
-
-        const check = document.getElementById("reutilizar");
-        //// si el checkbox reutilizar averia esta activada la desactivamos
-        if (check.checked) {
           
-           check.checked = false;
-
-           // volvemos a llamar este metodo para que limpie el boton de crear si tiene el nombre actualizar u otro
-            //chekiar()
-            
-        }
-
-
 
     }
 
 
-    btn_nuevoregistro.addEventListener("click", LimpiarFormulario)
+    btn_nuevoregistro.addEventListener("reset", NuevoRegistro_LipiarCamposs)
 
 
 

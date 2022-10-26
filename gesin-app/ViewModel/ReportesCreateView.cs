@@ -7,9 +7,9 @@ namespace gesin_app.ViewModel
     public class ReportesCreateView
     {
         public int Id { get; set; }
-        public string SubsistemasNombre { get; set; }
+        public string Subsistema{ get; set; }
 
-        public string EstacionesNombre { get; set; }
+        public string Estacion { get; set; }
 
         public string Ubicacion { get; set; }
 

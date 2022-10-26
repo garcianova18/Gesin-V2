@@ -23,13 +23,15 @@ namespace gesin_app.Models
         public string MantenedorNotificar { get; set; }
         public DateTime? Fechainicio { get; set; }
         public DateTime? Fechafinal { get; set; }
-        public int? IdUsuarios { get; set; }
+        public int IdUsuarios { get; set; }
         public string MantenedorReparo { get; set; }
         public string OperadorCierre { get; set; }
         public int? IdUsuarioActualizo { get; set; }
         public string CodigoOperadorReporte { get; set; }
         public string CodigoOperadorCierre { get; set; }
 
+
+        //Propiedades de navegacion
         public virtual Criticidad Criticidad { get; set; }
         public virtual Estacion Estaciones { get; set; }
         public virtual EstadoOt EstadoOT { get; set; }

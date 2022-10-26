@@ -38,7 +38,7 @@ namespace gesin_app.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-BP6RUJQ\\SQLEXPRESS; Database=GesinV2; Trusted_Connection = true;");
+                optionsBuilder.UseSqlServer("Server= MCFLOW-PC\\SQLEXPRESS; Initial catalog =GesinV2 ; Trusted_Connection = true;");
             }
         }
 
@@ -61,11 +61,13 @@ namespace gesin_app.Models
             {
                 entity.ToTable("Config_Usuario");
 
-                entity.Property(e => e.Background).HasMaxLength(20);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
-                entity.HasOne(d => d.IdusuarioNavigation)
-                    .WithMany(p => p.ConfigUsuarios)
-                    .HasForeignKey(d => d.Idusuario)
+                entity.Property(e => e.Background).HasMaxLength(60);
+
+                entity.HasOne(d => d.IdNavigation)
+                    .WithOne(p => p.ConfigUsuario)
+                    .HasForeignKey<ConfigUsuario>(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Config_Usuario_Usuario");
             });
@@ -88,14 +90,14 @@ namespace gesin_app.Models
 
                 entity.Property(e => e.Nombre)
                     .IsRequired()
-                    .HasMaxLength(20);
+                    .HasMaxLength(100);
             });
 
             modelBuilder.Entity<Estacion>(entity =>
             {
                 entity.ToTable("Estacion");
 
-                entity.Property(e => e.Nombre).HasMaxLength(20);
+                entity.Property(e => e.Nombre).HasMaxLength(100);
             });
 
             modelBuilder.Entity<EstadoOt>(entity =>
@@ -113,7 +115,7 @@ namespace gesin_app.Models
 
                 entity.Property(e => e.Funcion1)
                     .IsRequired()
-                    .HasMaxLength(20)
+                    .HasMaxLength(100)
                     .HasColumnName("Funcion");
             });
 
@@ -141,37 +143,38 @@ namespace gesin_app.Models
             {
                 entity.ToTable("Persona");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Codigo)
                     .IsRequired()
-                    .HasMaxLength(10);
+                    .HasMaxLength(20);
 
                 entity.Property(e => e.IdEmpresaMantenedora).HasColumnName("IdEmpresa_mantenedora");
 
                 entity.Property(e => e.Nombre)
                     .IsRequired()
-                    .HasMaxLength(20);
+                    .HasMaxLength(60);
 
                 entity.HasOne(d => d.IdEmpresaMantenedoraNavigation)
                     .WithMany(p => p.Personas)
                     .HasForeignKey(d => d.IdEmpresaMantenedora)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Persona_Empresa_Mantenedora");
             });
 
             modelBuilder.Entity<Reporte>(entity =>
             {
                 entity.Property(e => e.CodigoOperadorCierre)
-                    .HasMaxLength(100)
+                    .HasMaxLength(50)
                     .HasColumnName("CodigoOperador_Cierre");
 
                 entity.Property(e => e.CodigoOperadorReporte)
-                    .HasMaxLength(100)
+                    .HasMaxLength(50)
                     .HasColumnName("CodigoOperador_reporte");
 
-                entity.Property(e => e.Comentario).HasMaxLength(200);
+                entity.Property(e => e.Comentario).HasMaxLength(400);
 
-                entity.Property(e => e.Descripcion).HasMaxLength(200);
+                entity.Property(e => e.Descripcion)
+                    .IsRequired()
+                    .HasMaxLength(400);
 
                 entity.Property(e => e.Fechaaveria).HasColumnType("datetime");
 
@@ -186,20 +189,20 @@ namespace gesin_app.Models
                 entity.Property(e => e.IdUsuarioActualizo).HasColumnName("IdUsuario_Actualizo");
 
                 entity.Property(e => e.MantenedorNotificar)
-                    .HasMaxLength(100)
+                    .HasMaxLength(50)
                     .HasColumnName("Mantenedor_notificar");
 
                 entity.Property(e => e.MantenedorReparo)
-                    .HasMaxLength(100)
+                    .HasMaxLength(50)
                     .HasColumnName("Mantenedor_reparo");
 
                 entity.Property(e => e.OperadorCierre)
-                    .HasMaxLength(100)
+                    .HasMaxLength(50)
                     .HasColumnName("Operador_Cierre");
 
                 entity.Property(e => e.OperadorReporte)
                     .IsRequired()
-                    .HasMaxLength(100)
+                    .HasMaxLength(50)
                     .HasColumnName("Operador_reporte");
 
                 entity.Property(e => e.Ot).HasColumnName("OT");
@@ -236,16 +239,17 @@ namespace gesin_app.Models
                     .WithMany(p => p.Reportes)
                     .HasForeignKey(d => d.IdSubsistema)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Reportes_Subsistema");
+                    .HasConstraintName("FK_Reportes_Subsistemas");
 
                 entity.HasOne(d => d.UsuarioActualizo)
                     .WithMany(p => p.ReporteIdUsuarioActualizoNavigations)
                     .HasForeignKey(d => d.IdUsuarioActualizo)
                     .HasConstraintName("FK_Reportes_Usuario_actualizo");
 
-                entity.HasOne(d => d.Usuarios)
+                entity.HasOne(d => d.Usuarios   )
                     .WithMany(p => p.ReporteIdUsuariosNavigations)
                     .HasForeignKey(d => d.IdUsuarios)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Reportes_Usuario");
             });
 
@@ -273,18 +277,16 @@ namespace gesin_app.Models
 
                 entity.Property(e => e.Nombre)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(100);
             });
 
             modelBuilder.Entity<Ubicacion>(entity =>
             {
                 entity.ToTable("Ubicacion");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Nombre)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(100);
             });
 
             modelBuilder.Entity<Usuario>(entity =>

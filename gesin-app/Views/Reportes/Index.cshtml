@@ -894,17 +894,6 @@
 
 
 
-                //const check = document.getElementById("reutilizar");
-
-                
-
-                //if(check.checked){
-
-                //    idreportes = 0;
-
-                     
-
-                //}
 
             // cuando se aya enviado el formulario entonces me valida nuevamente los campos
             //esto es para que una vez esten lleno se quite en automatico el color rojo sin tener que enviar
@@ -958,8 +947,8 @@
             body: JSON.stringify({
 
                 id:idreportes,
-                subsistemasNombre: subsistemas.value,
-                estacionesNombre: estaciones.value,
+                subsistema: subsistemas.value,
+                estacion: estaciones.value,
                 ubicacion: ubicaciones.value,
                 descripcion: descripcion.value,
                 operadorReporte: nombreoperador.value,
@@ -2091,7 +2080,7 @@
 
     const btn_nuevoregistro = document.getElementById("formulario");
 
-    const NuevoRegistro_LipiarCampos = () => {
+    const NuevoRegistroLimpiarForm = () => {
       
 
 
@@ -2106,7 +2095,7 @@
     }
 
 
-    btn_nuevoregistro.addEventListener("reset", NuevoRegistro_LipiarCamposs)
+    btn_nuevoregistro.addEventListener("reset", NuevoRegistroLimpiarForm)
 
 
 

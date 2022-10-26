@@ -517,8 +517,8 @@ namespace gesin_app.Controllers
                 //----pero traemos lo que se digite en el campo lo buscamos y estraemos su id para luego gardar en base de datos
 
                 //var operadorreporte = Db.Personas.FirstOrDefault(o => o.Codigo == reporte.OperadorreporteCodigo);
-                var subsistema = Db.Subsistemas.FirstOrDefault(o => o.Nombre == reporte.SubsistemasNombre);
-                var estacion = Db.Estacions.FirstOrDefault(o => o.Nombre == reporte.EstacionesNombre);
+                var subsistema = Db.Subsistemas.FirstOrDefault(o => o.Nombre == reporte.Subsistema);
+                var estacion = Db.Estacions.FirstOrDefault(o => o.Nombre == reporte.Estacion);
                 //var ubicacion = Db.Ubicacions.FirstOrDefault(o => o.Nombre == reporte.UbicacionesNombre);
                 //var mantenedornotificar = Db.Personas.FirstOrDefault(m => m.Nombre == reporte.MantenedorNotificarNombre);
                 //var mantenedorreparo = Db.Personas.FirstOrDefault(m => m.Nombre == reporte.MantenedorReparoNombre);

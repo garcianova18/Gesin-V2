@@ -15,7 +15,7 @@ namespace gesin_app.Models
         public string Descripcion { get; set; }
         public DateTime Fechaaveria { get; set; }
         public int IdCriticidad { get; set; }
-        public int IdSistemas { get; set; }
+        public int IdSm { get; set; }
         public int? Ot { get; set; }
         public int IdEstadoOt { get; set; }
         public string Comentario { get; set; }
@@ -29,7 +29,8 @@ namespace gesin_app.Models
         public int? IdUsuarioActualizo { get; set; }
         public string CodigoOperadorReporte { get; set; }
         public string CodigoOperadorCierre { get; set; }
-
+        public int IdSistema { get; set; }
+        public int Idmantenedor { get; set; }
 
         //Propiedades de navegacion
         public virtual Criticidad Criticidad { get; set; }
@@ -39,5 +40,7 @@ namespace gesin_app.Models
         public virtual Subsistema Subsistemas { get; set; }
         public virtual Usuario Usuarios { get; set; }
         public virtual Usuario UsuarioActualizo { get; set; }
+        public virtual Sm Sm { get; set; }
+        public virtual Mantenedor Mantenedor { get; set; }
     }
 }

@@ -19,7 +19,15 @@ namespace gesin_app.Servicios
         public async Task<int> CreateAsync(T entidad)
         {
             Entidades.Add(entidad);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (System.Exception)
+            {
+
+                
+            }
 
             return 1;
         }

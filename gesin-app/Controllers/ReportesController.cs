@@ -64,6 +64,7 @@ namespace gesin_app.Controllers
 
             ViewBag.fitrousuario = Usuario();
 
+            ViewBag.sistema = Sistema();
 
             return View();
 
@@ -251,7 +252,7 @@ namespace gesin_app.Controllers
             return subsistema;
 
         }
-        //Listar subsistemas
+        //Listar ComboList subsistemas
         public List<Subsistema> ComboSubsistema()
         {
             var subsistema = Db.Subsistemas.ToList();
@@ -259,6 +260,25 @@ namespace gesin_app.Controllers
             return subsistema;
 
         }
+
+        //Listar sistemas
+        public List<Sistema> Sistema()
+        {
+
+            var sistema = Db.Sistemas.ToList();
+
+            return sistema;
+
+        }
+        //Listar ComboList Sistema
+        public List<Sistema> ComboSistema()
+        {
+            var sistema = Db.Sistemas.ToList();
+
+            return sistema;
+
+        }
+
         //Listar Ubicacion
         public List<Ubicacion> Ubicacion()
         {
@@ -316,10 +336,10 @@ namespace gesin_app.Controllers
 
         }
 
-        //Listar Sistemas
+        //Listar SM
         public List<SelectListItem> SM()
         {
-            var SM = Db.Sistemas.Select(e => new SelectListItem
+            var SM = Db.Sms.Select(e => new SelectListItem
             {
 
                 Text = e.Nombre,
@@ -426,6 +446,31 @@ namespace gesin_app.Controllers
 
         }
 
+        //metodo para cargar los subsistema segun el sistema  esto para crear combolist en cascada
+        public async Task< IActionResult >SubsistemaCascada(string sistema)
+        {
+
+            var idsistema = await Db.Sistemas.Where(s => s.Nombre == sistema).FirstOrDefaultAsync();
+
+           
+
+            var Subsistema = await Db.Subsistemas.Include(s=>s.IdSistemaNavigation).Where(o => o.IdSistema == idsistema.Id).Select(o => new
+            {
+
+                nombre = o.Nombre,
+                mantenedor = o.IdSistemaNavigation.IdMantenedorNavigation.Nombre,
+              
+                
+            }).ToListAsync();
+
+
+       
+
+            return Json(Subsistema);
+
+
+        }
+
 
         //metodo para el filtrado de estaciones
         public List<SelectListItem> Filtroestaciones()
@@ -497,10 +542,15 @@ namespace gesin_app.Controllers
         }
 
 
+        
+
 
         //Metodo para crear y Editar los reportes
         [HttpPost]
         public async Task< IActionResult> CrearEditarReportes([FromBody] ReportesCreateView reporte)
+        
+        
+        
         {
 
             if (reporte !=null )
@@ -510,13 +560,14 @@ namespace gesin_app.Controllers
                 var fechanotificacion = convertircadenafecha(reporte.Fechanotificacionguardarmostrar);
                 var fechainicio = convertircadenafecha(reporte.Fechainicioguardarmostrar);
                 var fechafinal = convertircadenafecha(reporte.Fechafinalguardarmostrar);
-            
-          
+
+
 
                 //----aqui buscamos el id de cada uno de esto ya que por usar datalist no podemos traer su  id desde la vista
                 //----pero traemos lo que se digite en el campo lo buscamos y estraemos su id para luego gardar en base de datos
 
                 //var operadorreporte = Db.Personas.FirstOrDefault(o => o.Codigo == reporte.OperadorreporteCodigo);
+                var sistema = Db.Sistemas.FirstOrDefault(o => o.Nombre == reporte.Sistema);
                 var subsistema = Db.Subsistemas.FirstOrDefault(o => o.Nombre == reporte.Subsistema);
                 var estacion = Db.Estacions.FirstOrDefault(o => o.Nombre == reporte.Estacion);
                 //var ubicacion = Db.Ubicacions.FirstOrDefault(o => o.Nombre == reporte.UbicacionesNombre);
@@ -560,7 +611,8 @@ namespace gesin_app.Controllers
                        
                      
                             var mapReporte = mapper.Map<Reporte>(reporte);
-
+                            mapReporte.IdSistema= sistema.Id;
+                            mapReporte.Idmantenedor = sistema.IdMantenedor;
                             mapReporte.IdSubsistema = subsistema.Id;
                             mapReporte.IdEstacion = estacion.Id;
                             mapReporte.Fechaaveria = Convert.ToDateTime(fechareporte);
@@ -598,10 +650,12 @@ namespace gesin_app.Controllers
                         }
 
 
+                        
                         var mapReporte = mapper.Map<Reporte>(reporte);
-
-                        mapReporte.IdEstacion = estacion.Id;
+                        mapReporte.IdSistema = sistema.Id;
+                        mapReporte.Idmantenedor = sistema.IdMantenedor;
                         mapReporte.IdSubsistema = subsistema.Id;
+                        mapReporte.IdEstacion = estacion.Id;
                         mapReporte.Fechaaveria = Convert.ToDateTime(fechareporte);
                         mapReporte.Fechanotificacion = fechanotificacion;
                         mapReporte.Fechainicio = fechainicio;
@@ -671,14 +725,15 @@ namespace gesin_app.Controllers
         {
 
 
-            var cargarreporte =  Db.Reportes.ProjectTo<ReportesView>
+            var cargarreporte = Db.Reportes.ProjectTo<ReportesView>
                 (mapper.ConfigurationProvider).FirstOrDefault(p => p.Id == id);
 
-            //var buscarreporte = await Db.Reportes.Include(e => e.Estaciones).Include(s=>s.Subsistemas) .FirstOrDefaultAsync(i => i.Id == id);
+            //var buscarreporte = Db.Reportes.Include(e => e.Estaciones).Include(s => s.Subsistemas).Include(s => s.Sistemas).FirstOrDefault(i => i.Id == id);
 
 
 
             //var cargarreporte = mapper.Map<ReportesView>(buscarreporte);
+
 
             var fechaaveriaconvertida = cargarreporte.Fechaaveria.ToString("dd/MM/yyyy HH:mm");
 

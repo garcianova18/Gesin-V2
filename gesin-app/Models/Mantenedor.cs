@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace gesin_app.Models
 {
-    public partial class Sistema
+    public partial class Mantenedor
     {
-        public Sistema()
+        public Mantenedor()
         {
+            Personas = new HashSet<Persona>();
             Reportes = new HashSet<Reporte>();
-            Subsistemas = new HashSet<Subsistema>();
+            Sistemas = new HashSet<Sistema>();
         }
 
         public int Id { get; set; }
         public string Nombre { get; set; }
-        public int IdMantenedor { get; set; }
 
-        public virtual Mantenedor IdMantenedorNavigation { get; set; }
+        public virtual ICollection<Persona> Personas { get; set; }
         public virtual ICollection<Reporte> Reportes { get; set; }
-        public virtual ICollection<Subsistema> Subsistemas { get; set; }
+        public virtual ICollection<Sistema> Sistemas { get; set; }
     }
 }

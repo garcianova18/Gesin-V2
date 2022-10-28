@@ -13,28 +13,24 @@ namespace gesin_app.ViewModel
         public string Ubicacion { get; set; }
         public int IdEstacion { get; set; }
 
-        [Required]
         public string Descripcion { get; set; }
 
         [DisplayFormat(DataFormatString = "{0: yyyy-MM-dd }", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
-        [Required]
         public DateTime Fechaaveria { get; set; }
 
         public int? IdUsuarios { get; set; }
 
-        [Required]
         [Display(Name ="Fecha Averia")]
         public string fechaaveriaGuardarMostrar { get; set; }
 
-        [Required]
         public int IdCriticidad { get; set; }
 
-        [Required]
-        public int IdSistemas { get; set; }
+        public int IdSm { get; set; }
+
         public int? Ot { get; set; }
 
-        [Required]
+
         public int IdEstadoOt { get; set; }
         public string Comentario { get; set; }
        
@@ -58,7 +54,7 @@ namespace gesin_app.ViewModel
         [Display(Name = "Fecha Inicio")]
         public string Fechainicioguardarmostrar { get; set; }
 
-
+        
 
         public DateTime? Fechafinal { get; set; }
 
@@ -78,9 +74,10 @@ namespace gesin_app.ViewModel
         [Display(Name = "Estado")]
         public string EstadoOtNombre { get; set; }
 
-
-
         [Display(Name = "S.M")]
+        public string SmNombre { get; set; }
+
+        [Display(Name = "Sistema")]
         public string SistemasNombre { get; set; }
         [Display(Name = "Subsistema")]
 
@@ -91,6 +88,9 @@ namespace gesin_app.ViewModel
 
         [Display(Name = "Estacion")]
         public string EstacionesNombre { get; set; }
+
+        [Display(Name = "Mantenedor")]
+        public string MantenedorNombre { get; set; }
 
 
 
@@ -103,7 +103,7 @@ namespace gesin_app.ViewModel
         [Required]
         public string CodigoOperadorReporte { get; set; }
 
-        [Display(Name = "Mantenedor")]
+        [Display(Name = "Mant. notificado")]
         public string MantenedorNotificar { get; set; }
 
         [Display(Name = "Mant. Reparo")]
@@ -112,7 +112,7 @@ namespace gesin_app.ViewModel
         [Display(Name = "Operador Cierre")]
         public string OperadorCierre { get; set; }
 
-        [Display(Name = "Cod. Operador Cierre")]
+        [Display(Name = "Cod. Op. Cierre")]
         public string CodigoOperadorCierre { get; set; }
 
 

@@ -17,6 +17,8 @@
 
     List<Persona> mantenedornotificar = ViewBag.mantenedornotificar;
 
+     List<Sistema> sistemas = ViewBag.sistema;
+
 }
 
 
@@ -185,21 +187,23 @@
 
 
 
-                <table class="table table-sm table-hover table-bordered text-center  ">
+                <table class="table table-sm table-hover table-bordered text-center align-middle ">
 
-                    <thead class="cabecera-tabla text-white  " style="font-size:14px" id="head_table">
+                    <thead class="cabecera-tabla text-white text-center align-middle    " style="font-size:14px" id="head_table">
 
                         <tr>
                             <th>#@ViewBag.conteo</th>
                             <th>@Html.DisplayNameFor(model => model.Ot)</th>
                             <th>@Html.DisplayNameFor(model => model.fechaaveriaGuardarMostrar)</th>
+                             <th>@Html.DisplayNameFor(model => model.SistemasNombre)</th>
                             <th>@Html.DisplayNameFor(model => model.SubsistemasNombre)</th>
                             <th>@Html.DisplayNameFor(model => model.EstacionesNombre)</th>
                             <th>@Html.DisplayNameFor(model => model.Ubicacion)</th>
                             <th><div class="Columna-descripcion">@Html.DisplayNameFor(model => model.Descripcion)</div></th>
-                            <th>@Html.DisplayNameFor(model => model.SistemasNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.SmNombre)</th>
                             <th>@Html.DisplayNameFor(model => model.CriticidadNombre)</th>
                             <th>@Html.DisplayNameFor(model => model.EstadoOtNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.MantenedorNombre)</th>
                             <th>@Html.DisplayNameFor(model => model.OperadorReporte)</th>
                             <th>@Html.DisplayNameFor(model => model.CodigoOperadorReporte)</th>
                             <th>@Html.DisplayNameFor(model => model.Fechanotificacion)</th>
@@ -292,6 +296,38 @@
 
 
                                 </div>
+                                 
+
+                                       <input id="idreportes" class="form-control form-control-sm" readonly="readonly" hidden >
+                                
+
+                                
+
+                                   <div class="col-12 col-md-6 mb-3">
+
+
+                                 
+                                        <input class=" sistema form-control form-control-sm campos_obligatorios " name="Id" list="Listsistemas" id="sistemas" placeholder="Sistemas">
+
+                                        <datalist id="Listsistemas">
+                                            @foreach (var item in sistemas)
+                                            {
+                                                <option> @item.Nombre</option>
+                                            }
+
+                                        </datalist>
+
+                                   
+
+                                     </div>
+                                
+                                   <div class="col-12  col-md-3 offset-md-3 mb-3">
+
+                                    <input type="text" class="form-control form-control-sm " id="mantenedor" placeholder="Mantenedor" disabled readonly  />
+
+
+                                    </div>
+
 
 
                                 <div class="col-12 col-md-4 mb-3">
@@ -302,14 +338,14 @@
                                     <input class=" subsistema form-control form-control-sm campos_obligatorios" name="Id" list="Listsubsistemas" id="subsistemas" placeholder="Subsistemas">
 
                                     <datalist id="Listsubsistemas">
-                                        @foreach (var item in subsistemas)
+                                       @* @foreach (var item in subsistemas)
                                         {
                                             <option> @item.Nombre</option>
-                                        }
+                                        }*@
 
                                     </datalist>
 
-                                    <input id="idreportes" class="form-control form-control-sm" hidden />
+                                   
 
                                 </div>
 
@@ -346,19 +382,19 @@
 
                                     </datalist>
                                 </div>
-                                <div class="col-12 col-md-4 ">
+                               @* <div class="col-12 col-md-4 ">
 
                                     <input id="usuario" class="form-control-sm" disabled hidden />
 
                                 </div>
-
+*@
 
 
                                 <!--ir-->
                                 <div class="col-12 mb-2">
 
 
-                                    <input class="form-control form-control-sm cascada" name="Id" list="listcascada" id="descripcioncascada" placeholder="Selecione un activo">
+                                    <input class="form-control form-control-sm cascada campos_obligatorios" name="Id" list="listcascada" id="descripcioncascada" placeholder="Selecione un activo">
 
                                     <datalist id="listcascada">
 
@@ -388,19 +424,19 @@
                                 </div>
                                 <div class="col-12 col-md-3 mb-2">
 
-                                    <input class="form-control form-control-sm campos_obligatorios" id="codigooperador" placeholder="Cod. Operador" onkeyup="buscaroperadorreporte()">
+                                    <input class="form-control form-control-sm campos_obligatorios" id="codigooperador" placeholder="Codigo. Op." onkeyup="buscaroperadorreporte()">
 
                                 </div>
 
                                 <div class="col-12 col-md-4 mb-2">
 
-                                    <input class="form-control form-control-sm campos_obligatorios" id="nombreoperador" placeholder="nombre">
+                                    <input class="form-control form-control-sm campos_obligatorios" id="nombreoperador" placeholder="Nombre Op.">
 
                                 </div>
 
                                 <div class="col-12 col-md-5 mb-3 ">
 
-                                    <input class="form-control form-control-sm campos_obligatorios" id="fechareporte" ondblclick="ObtenerfechaReporte()" maxlength="15" placeholder="Fecha">
+                                    <input class="form-control form-control-sm campos_obligatorios" id="fechareporte" ondblclick="ObtenerfechaReporte()" maxlength="15" placeholder="Fecha Averia">
 
                                 </div>
 
@@ -429,7 +465,7 @@
 
                                 </div>
                             </div>
-                            s
+                            
 
 
                         </div>
@@ -451,18 +487,18 @@
                                 </div>
 
                                 <div class=" col-12 col-md-5 mb-3 ">
-                                    <select name="Id" asp-items="@ViewBag.SM" class="form-select form-select-sm campos_obligatorios" id="sistema"></select>
+                                    <select name="Id" asp-items="@ViewBag.SM" class="form-select form-select-sm campos_obligatorios" id="sm"></select>
 
                                 </div>
 
                                 <div class="col-12">
 
                                     <div class="row">
-                                        <div class=" col-12 col-md-5 mb-3">
+                                        <div class=" col-12 col-md-4 mb-3">
                                             <select name="Id" asp-items="ViewBag.estadoOTs" class="form-select form-select-sm" id="estado"></select>
 
                                         </div>
-                                        <div class=" col-12 col-md-4 mb-3 offset-md-2">
+                                        <div class=" col-12 col-md-4 mb-3 ">
 
                                             <input type="number" class="form-control form-control-sm" id="ot" placeholder="#OT">
 
@@ -480,7 +516,7 @@
 
                                 <div class="col-12 col-md-5 mb-3">
 
-                                    <input class="form-control form-control-sm" id="fechanotificacion" ondblclick="ObtenerfechaNotificacion()" placeholder="Fecha">
+                                    <input class="form-control form-control-sm" id="fechanotificacion" ondblclick="ObtenerfechaNotificacion()" placeholder="Fecha Notif.">
 
                                 </div>
 
@@ -488,7 +524,7 @@
 
                                     @*<select name="Id" asp-items="@ViewBag.mantenedor" class="form-select form-select-sm" id="mantenedorreporte"></select>*@
 
-                                    <input class="form-control form-control-sm" name="Id" list="Litsmantenedornotificar" id="mantenedornotificar" placeholder="mantenedor">
+                                    <input class="form-control form-control-sm" name="Id" list="Litsmantenedornotificar" id="mantenedornotificar" placeholder="Mantenedor Notif.">
 
                                     <datalist id="Litsmantenedornotificar">
 
@@ -529,12 +565,12 @@
 
                                 <div class=" col-12 col-md-5 mb-3 ">
 
-                                    <input class="form-control form-control-sm" placeholder="Codigo OP" id="codigooperadorfinal">
+                                    <input class="form-control form-control-sm" placeholder="Codigo Op." id="codigooperadorfinal">
                                 </div>
 
                                 <div class=" col-12 col-md-5 mb-3  ">
 
-                                    <input class="form-control form-control-sm" placeholder="Nombre OP" id="nombreoperadorfinal">
+                                    <input class="form-control form-control-sm" placeholder="Nombre Op." id="nombreoperadorfinal">
                                 </div>
 
 
@@ -846,16 +882,17 @@
           
             
             let idreportes = Number(document.getElementById("idreportes").value); 
+            let sistema = document.getElementById("sistemas");
             let subsistemas = document.getElementById("subsistemas");
             let estaciones = document.getElementById("estaciones");
             let ubicaciones = document.getElementById("ubicaciones");
             let descripcion = document.getElementById("descripcion");
             let codigooperador = document.getElementById("codigooperador");
             let nombreoperador = document.getElementById("nombreoperador");
-
+            let descripcioncascada =document.getElementById("descripcioncascada");
             let fechareportes = document.getElementById("fechareporte");
             let criticidad = document.getElementById("criticidad");
-            let sistema = document.getElementById("sistema");
+            let Sm = document.getElementById("sm");
             let estadoot = document.getElementById("estado");
             let ot = Number(document.getElementById("ot").value);
             let comentario = document.getElementById("comentario").value;
@@ -868,7 +905,9 @@
             let mantenedorcierre = document.getElementById("mantenedorcierre").value;
             let usuario = Number( document.getElementById("usuario").value);
                 document.getElementById("ot").style.backgroundColor = "";
-           
+
+             //descripcioncascada.value == ""? descripcioncascada.classList.add("error"): descripcioncascada.classList.remove("error") ;
+             sistema.value == ""? sistema.classList.add("error"): sistema.classList.remove("error") ;
              subsistemas.value == ""? subsistemas.classList.add("error"): subsistemas.classList.remove("error") ;
              estaciones.value == ""? estaciones.classList.add("error"): estaciones.classList.remove("error");
              ubicaciones.value == ""? ubicaciones.classList.add("error"): ubicaciones.classList.remove("error");
@@ -877,7 +916,7 @@
              nombreoperador.value == "" ? nombreoperador.classList.add("error") : nombreoperador.classList.remove("error");
              Number( fechareportes.value) == 0? fechareportes.classList.add("error"): fechareportes.classList.remove("error");
              criticidad.value == ""? criticidad.classList.add("error"): criticidad.classList.remove("error");
-             sistema.value =="" ? sistema.classList.add("error"): sistema.classList.remove("error");
+             Sm.value =="" ? Sm.classList.add("error"): Sm.classList.remove("error");
 
              //con esto decimos que si el boton que disparo el evento submit o enviar el formulario fue
              // el btn reutilizar Registro, cuanto tenemos un registro cargado para actualizar
@@ -924,7 +963,7 @@
                         //ya que estos campos son combinados
                         if (e.target.id == "codigooperador") {
 
-                            nomoperador.classList.remove("error");
+                            nombreoperador.classList.remove("error");
                         }
 
                     }
@@ -947,6 +986,7 @@
             body: JSON.stringify({
 
                 id:idreportes,
+                sistema: sistema.value,
                 subsistema: subsistemas.value,
                 estacion: estaciones.value,
                 ubicacion: ubicaciones.value,
@@ -955,7 +995,7 @@
                 codigoOperadorReporte: codigooperador.value,
                 fechaaveriaGuardarMostrar: fechareportes.value,
                 idCriticidad: Number( criticidad.value),
-                idSistemas: Number( sistema.value),
+                idSm: Number( Sm.value),
                 idEstadoOt: Number( estadoot.value),
                 ot:ot,
                 comentario: comentario,
@@ -1062,20 +1102,22 @@
 
     function BuscarEditar(idreporte) {
 
-
        
+
+        let sistemas = document.getElementById("sistemas");
         let subsistemas = document.getElementById("subsistemas");
         let estaciones = document.getElementById("estaciones");
         let ubicaciones = document.getElementById("ubicaciones");
+        let descripcioncascada =document.getElementById("descripcioncascada");
         let descripcion = document.getElementById("descripcion");
         let codigooperador = document.getElementById("codigooperador");
         let fechareportes = document.getElementById("fechareporte");
         let criticidad = document.getElementById("criticidad");
-        let sistema = document.getElementById("sistema");
+        let sm = document.getElementById("sm");
         let nombreoperador = document.getElementById("nombreoperador");
        
-
-
+        descripcioncascada.classList.remove("error");
+        sistemas.classList.remove("error");
         subsistemas.classList.remove("error");
         estaciones.classList.remove("error");
         ubicaciones.classList.remove("error");
@@ -1083,7 +1125,7 @@
         codigooperador.classList.remove("error");
         fechareportes.classList.remove("error");
         criticidad.classList.remove("error");
-        sistema.classList.remove("error");
+        sm.classList.remove("error");
         nombreoperador.classList.remove("error");
 
 
@@ -1100,6 +1142,7 @@
                  
              
                 let Idreportes = document.getElementById("idreportes").value = data.id;
+                let sistemas = document.getElementById("sistemas").value = data.sistemasNombre;
                 let subsistemas = document.getElementById("subsistemas").value = data.subsistemasNombre;
                 let estaciones = document.getElementById("estaciones").value = data.estacionesNombre;
                 let ubicaciones = document.getElementById("ubicaciones").value = data.ubicacion;
@@ -1108,7 +1151,7 @@
                 let nombreoperador = document.getElementById("nombreoperador").value = data.operadorReporte;
                 let fechareportes = document.getElementById("fechareporte").value = data.fechaaveriaGuardarMostrar;
                 let criticidad = document.getElementById("criticidad").value = data.idCriticidad;
-                let sistema = document.getElementById("sistema").value = data.idSistemas;
+                let sm = document.getElementById("sm").value =data.idSm;
                 let estadoot = document.getElementById("estado").value = data.idEstadoOt;
                 let ot = document.getElementById("ot").value = data.ot;
                 let comentario = document.getElementById("comentario").value = data.comentario;
@@ -1121,13 +1164,15 @@
                 let mantenedorcierre = document.getElementById("mantenedorcierre").value = data.mantenedorReparo;
                 let usuario = document.getElementById("usuario").value = data.idUsuarios;
                 
-                //llamamos el metodo buscarot para que al cargar un registro si esta esta duplicada me cargue con color gris
+                //llamamos el metodo EstadoRegistro para que al cargar un registro si esta esta duplicada me cargue con color gris
                 // y si no esta duplicada gargue en color blanco
                 //  de no llamar este metodo para que recalcule no me carga el gris y si pongo el gris al cargar una sin duplicidad despues de cargar una duplicadad me le pone el gris
 
                EstadoRegistro();
-               
-                
+
+               //aqui llamamos a la funcion buscar sistema para que al cargar un registro este tambie me cargue los subsistemas
+                SubsistemaCascada();
+                descripcionCascada()
 
                document.getElementById("enviar").value = "Actualizar";
                
@@ -1183,52 +1228,53 @@
 
                                 <tr style ="background-color:#F8F2CD; font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
-                                    <td>${conteo + i}</td>
-                                    <td>${data[i].ot}</td>
-                                    <td>${data[i].fechaaveriaGuardarMostrar}</td>
-                                    <td>${data[i].subsistemasNombre}</td>
-                                    <td>${data[i].estacionesNombre}</td>
-                                    <td>${data[i].ubicacion}</td>
-                                    <td>${data[i].descripcion}</td>
-                                    <td>${data[i].sistemasNombre}</td>
-
-                                        
-                                            ${ data[i].criticidadNombre == "Bajo Impacto" ?
-
-                                            `
-                                                   <td style ="background-color:#8dff43">${data[i].criticidadNombre}</td>
-                                            `
-                                             :
-                                            `
-                                                <td style ="background-color:#CE2B08">${data[i].criticidadNombre}</td>
-                                            
-                                            `
-
-                                            }
-                                        
-                                        
-
-                                    
-                                    <td>${data[i].estadoOtNombre}</td>
-                                    <td>${data[i].operadorReporte}</td>
-                                    <td>${data[i].codigoOperadorReporte}</td>
-
-                                    <td>${data[i].fechanotificacionguardarmostrar}</td>
-                                    <td>${data[i].mantenedorNotificar}</td>
+                                         <td>${conteo + i}</td>
+                                            <td>${data[i].ot}</td>
+                                            <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                            <td>${data[i].sistemasNombre}</td>
+                                            <td>${data[i].subsistemasNombre}</td>
+                                            <td>${data[i].estacionesNombre}</td>
+                                            <td>${data[i].ubicacion}</td>
+                                            <td>${data[i].descripcion}</td>
+                                            <td>${data[i].smNombre}</td>
 
 
-                                    <td>${data[i].fechainicioguardarmostrar}</td>
-                                    <td>${data[i].mantenedorReparo}</td>
+                                                    ${data[i].criticidadNombre == "Bajo Impacto" ?
+
+                                `
+                                                           <td style ="background-color:#8dff43">${data[i].criticidadNombre}</td>
+                                                    `
+                                :
+                                `
+                                                        <td style ="background-color:#CE2B08">${data[i].criticidadNombre}</td>
+
+                                                    `
+
+                            }
 
 
-                                    <td>${data[i].operadorCierre}</td>
-                                    <td>${data[i].codigoOperadorCierre}</td>
-                                    <td>${data[i].fechafinalguardarmostrar}</td>
-                                    <td>${data[i].comentario}</td>
-                                    <td>${data[i].usuariosCodigo}</td>
-                                    <td>${data[i].usuariosNombre}</td>
-                                    <td>${data[i].usuarioActualizoNombre}</td>
 
+
+                                            <td>${data[i].estadoOtNombre}</td>
+                                            <td>${data[i].mantenedorNombre}</td>
+                                            <td>${data[i].operadorReporte}</td>
+                                            <td>${data[i].codigoOperadorReporte}</td>
+
+                                            <td>${data[i].fechanotificacionguardarmostrar}</td>
+                                            <td>${data[i].mantenedorNotificar}</td>
+
+
+                                            <td>${data[i].fechainicioguardarmostrar}</td>
+                                            <td>${data[i].mantenedorReparo}</td>
+
+
+                                            <td>${data[i].operadorCierre}</td>
+                                            <td>${data[i].codigoOperadorCierre}</td>
+                                            <td>${data[i].fechafinalguardarmostrar}</td>
+                                            <td>${data[i].comentario}</td>
+                                            <td>${data[i].usuariosCodigo}</td>
+                                            <td>${data[i].usuariosNombre}</td>
+                                            <td>${data[i].usuarioActualizoNombre}</td>
 
 
                                 </tr>
@@ -1242,126 +1288,15 @@
 
                                      <tr style ="background-color:#FFCBCB;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
-                                      <td>${conteo + i}</td>
-                                    <td>${data[i].ot}</td>
-                                    <td>${data[i].fechaaveriaGuardarMostrar}</td>
-                                    <td>${data[i].subsistemasNombre}</td>
-                                    <td>${data[i].estacionesNombre}</td>
-                                    <td>${data[i].ubicacion}</td>
-                                    <td>${data[i].descripcion}</td>
-                                    <td>${data[i].sistemasNombre}</td>
-
-                                        
-                                            ${ data[i].criticidadNombre == "Bajo Impacto" ?
-
-                                            `
-                                                   <td style ="background-color:#8dff43">${data[i].criticidadNombre}</td>
-                                            `
-                                             :
-                                            `
-                                                <td style ="background-color:#CE2B08">${data[i].criticidadNombre}</td>
-                                            
-                                            `
-
-                                            }
-                                        
-                                        
-
-                                    
-                                    <td>${data[i].estadoOtNombre}</td>
-                                    <td>${data[i].operadorReporte}</td>
-                                    <td>${data[i].codigoOperadorReporte}</td>
-
-                                    <td>${data[i].fechanotificacionguardarmostrar}</td>
-                                    <td>${data[i].mantenedorNotificar}</td>
-
-
-                                    <td>${data[i].fechainicioguardarmostrar}</td>
-                                    <td>${data[i].mantenedorReparo}</td>
-
-
-                                    <td>${data[i].operadorCierre}</td>
-                                    <td>${data[i].codigoOperadorCierre}</td>
-                                    <td>${data[i].fechafinalguardarmostrar}</td>
-                                    <td>${data[i].comentario}</td>
-                                    <td>${data[i].usuariosCodigo}</td>
-                                    <td>${data[i].usuariosNombre}</td>
-                                    <td>${data[i].usuarioActualizoNombre}</td>
-                                </tr>
-                                
-                            `
-
-                                : data[i].estadoOtNombre == "Creada Reportada" ?
-
-
-                            `
-
-                                  <tr style ="background-color:#D3F8FC;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
-
-                                     <td>${conteo + i}</td>
-                                    <td>${data[i].ot}</td>
-                                    <td>${data[i].fechaaveriaGuardarMostrar}</td>
-                                    <td>${data[i].subsistemasNombre}</td>
-                                    <td>${data[i].estacionesNombre}</td>
-                                    <td>${data[i].ubicacion}</td>
-                                    <td>${data[i].descripcion}</td>
-                                    <td>${data[i].sistemasNombre}</td>
-
-                                        
-                                            ${ data[i].criticidadNombre == "Bajo Impacto" ?
-
-                                            `
-                                                   <td style ="background-color:#8dff43">${data[i].criticidadNombre}</td>
-                                            `
-                                             :
-                                            `
-                                                <td style ="background-color:#CE2B08">${data[i].criticidadNombre}</td>
-                                            
-                                            `
-
-                                            }
-                                        
-                                        
-
-                                    
-                                    <td>${data[i].estadoOtNombre}</td>
-                                    <td>${data[i].operadorReporte}</td>
-                                    <td>${data[i].codigoOperadorReporte}</td>
-
-                                    <td>${data[i].fechanotificacionguardarmostrar}</td>
-                                    <td>${data[i].mantenedorNotificar}</td>
-
-
-                                    <td>${data[i].fechainicioguardarmostrar}</td>
-                                    <td>${data[i].mantenedorReparo}</td>
-
-
-                                    <td>${data[i].operadorCierre}</td>
-                                    <td>${data[i].codigoOperadorCierre}</td>
-                                    <td>${data[i].fechafinalguardarmostrar}</td>
-                                    <td>${data[i].comentario}</td>
-                                    <td>${data[i].usuariosCodigo}</td>
-                                    <td>${data[i].usuariosNombre}</td>
-                                    <td>${data[i].usuarioActualizoNombre}</td>
-                                </tr>
-                                
-                            `
-
-                                : data[i].estadoOtNombre == "Cerrada" ?
-
-
-                            `
-
-                                  <tr style ="background-color:#CEF8CD;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
-
-                                              <td>${conteo + i}</td>
+                                       <td>${conteo + i}</td>
                                         <td>${data[i].ot}</td>
                                         <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                        <td>${data[i].sistemasNombre}</td>
                                         <td>${data[i].subsistemasNombre}</td>
                                         <td>${data[i].estacionesNombre}</td>
                                         <td>${data[i].ubicacion}</td>
                                         <td>${data[i].descripcion}</td>
-                                        <td>${data[i].sistemasNombre}</td>
+                                        <td>${data[i].smNombre}</td>
 
 
                                                 ${data[i].criticidadNombre == "Bajo Impacto" ?
@@ -1381,6 +1316,123 @@
 
 
                                         <td>${data[i].estadoOtNombre}</td>
+                                        <td>${data[i].mantenedorNombre}</td>
+                                        <td>${data[i].operadorReporte}</td>
+                                        <td>${data[i].codigoOperadorReporte}</td>
+
+                                        <td>${data[i].fechanotificacionguardarmostrar}</td>
+                                        <td>${data[i].mantenedorNotificar}</td>
+
+
+                                        <td>${data[i].fechainicioguardarmostrar}</td>
+                                        <td>${data[i].mantenedorReparo}</td>
+
+
+                                        <td>${data[i].operadorCierre}</td>
+                                        <td>${data[i].codigoOperadorCierre}</td>
+                                        <td>${data[i].fechafinalguardarmostrar}</td>
+                                        <td>${data[i].comentario}</td>
+                                        <td>${data[i].usuariosCodigo}</td>
+                                        <td>${data[i].usuariosNombre}</td>
+                                        <td>${data[i].usuarioActualizoNombre}</td>
+                                </tr>
+                                
+                            `
+
+                                : data[i].estadoOtNombre == "Creada Reportada" ?
+
+
+                            `
+
+                                  <tr style ="background-color:#D3F8FC;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
+
+                                      <td>${conteo + i}</td>
+                                        <td>${data[i].ot}</td>
+                                        <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                        <td>${data[i].sistemasNombre}</td>
+                                        <td>${data[i].subsistemasNombre}</td>
+                                        <td>${data[i].estacionesNombre}</td>
+                                        <td>${data[i].ubicacion}</td>
+                                        <td>${data[i].descripcion}</td>
+                                        <td>${data[i].smNombre}</td>
+
+
+                                                ${data[i].criticidadNombre == "Bajo Impacto" ?
+
+                                            `
+                                                       <td style ="background-color:#8dff43">${data[i].criticidadNombre}</td>
+                                                `
+                                            :
+                                            `
+                                                    <td style ="background-color:#CE2B08">${data[i].criticidadNombre}</td>
+
+                                                `
+
+                                        }
+
+
+
+
+                                        <td>${data[i].estadoOtNombre}</td>
+                                        <td>${data[i].mantenedorNombre}</td>
+                                        <td>${data[i].operadorReporte}</td>
+                                        <td>${data[i].codigoOperadorReporte}</td>
+
+                                        <td>${data[i].fechanotificacionguardarmostrar}</td>
+                                        <td>${data[i].mantenedorNotificar}</td>
+
+
+                                        <td>${data[i].fechainicioguardarmostrar}</td>
+                                        <td>${data[i].mantenedorReparo}</td>
+
+
+                                        <td>${data[i].operadorCierre}</td>
+                                        <td>${data[i].codigoOperadorCierre}</td>
+                                        <td>${data[i].fechafinalguardarmostrar}</td>
+                                        <td>${data[i].comentario}</td>
+                                        <td>${data[i].usuariosCodigo}</td>
+                                        <td>${data[i].usuariosNombre}</td>
+                                        <td>${data[i].usuarioActualizoNombre}</td>
+                                </tr>
+                                
+                            `
+
+                                : data[i].estadoOtNombre == "Cerrada" ?
+
+
+                            `
+
+                                  <tr style ="background-color:#CEF8CD;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
+
+                                         <td>${conteo + i}</td>
+                                        <td>${data[i].ot}</td>
+                                        <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                        <td>${data[i].sistemasNombre}</td>
+                                        <td>${data[i].subsistemasNombre}</td>
+                                        <td>${data[i].estacionesNombre}</td>
+                                        <td>${data[i].ubicacion}</td>
+                                        <td>${data[i].descripcion}</td>
+                                        <td>${data[i].smNombre}</td>
+
+
+                                                ${data[i].criticidadNombre == "Bajo Impacto" ?
+
+                                            `
+                                                       <td style ="background-color:#8dff43">${data[i].criticidadNombre}</td>
+                                                `
+                                            :
+                                            `
+                                                    <td style ="background-color:#CE2B08">${data[i].criticidadNombre}</td>
+
+                                                `
+
+                                        }
+
+
+
+
+                                        <td>${data[i].estadoOtNombre}</td>
+                                        <td>${data[i].mantenedorNombre}</td>
                                         <td>${data[i].operadorReporte}</td>
                                         <td>${data[i].codigoOperadorReporte}</td>
 
@@ -1410,33 +1462,35 @@
 
                                  <tr style ="background-color:#CECECE;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
-                                         <td>${conteo + i}</td>
+                                        <td>${conteo + i}</td>
                                         <td>${data[i].ot}</td>
                                         <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                        <td>${data[i].sistemasNombre}</td>
                                         <td>${data[i].subsistemasNombre}</td>
                                         <td>${data[i].estacionesNombre}</td>
                                         <td>${data[i].ubicacion}</td>
                                         <td>${data[i].descripcion}</td>
-                                        <td>${data[i].sistemasNombre}</td>
+                                        <td>${data[i].smNombre}</td>
 
 
                                                 ${data[i].criticidadNombre == "Bajo Impacto" ?
 
-                                                `
+                                            `
                                                        <td style ="background-color:#8dff43">${data[i].criticidadNombre}</td>
                                                 `
-                                                :
-                                                `
+                                            :
+                                            `
                                                     <td style ="background-color:#CE2B08">${data[i].criticidadNombre}</td>
 
                                                 `
 
-                                            }
+                                        }
 
 
 
 
                                         <td>${data[i].estadoOtNombre}</td>
+                                        <td>${data[i].mantenedorNombre}</td>
                                         <td>${data[i].operadorReporte}</td>
                                         <td>${data[i].codigoOperadorReporte}</td>
 
@@ -1465,52 +1519,55 @@
                             `
 
                                  <tr style ="background-color:#F3A9FF;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
+                                
+                                 
+                                         <td>${conteo + i}</td>
+                                                <td>${data[i].ot}</td>
+                                                <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                                <td>${data[i].sistemasNombre}</td>
+                                                <td>${data[i].subsistemasNombre}</td>
+                                                <td>${data[i].estacionesNombre}</td>
+                                                <td>${data[i].ubicacion}</td>
+                                                <td>${data[i].descripcion}</td>
+                                                <td>${data[i].smNombre}</td>
 
-                                                  <td>${conteo + i}</td>
-                                            <td>${data[i].ot}</td>
-                                            <td>${data[i].fechaaveriaGuardarMostrar}</td>
-                                            <td>${data[i].subsistemasNombre}</td>
-                                            <td>${data[i].estacionesNombre}</td>
-                                            <td>${data[i].ubicacion}</td>
-                                            <td>${data[i].descripcion}</td>
-                                            <td>${data[i].sistemasNombre}</td>
 
-
-                                                    ${data[i].criticidadNombre == "Bajo Impacto" ?
+                                                        ${data[i].criticidadNombre == "Bajo Impacto" ?
 
                                                     `
-                                                           <td style ="background-color:#8dff43">${data[i].criticidadNombre}</td>
-                                                    `
+                                                               <td style ="background-color:#8dff43">${data[i].criticidadNombre}</td>
+                                                        `
                                                     :
                                                     `
-                                                        <td style ="background-color:#CE2B08">${data[i].criticidadNombre}</td>
+                                                            <td style ="background-color:#CE2B08">${data[i].criticidadNombre}</td>
 
-                                                    `
+                                                        `
 
                                                 }
 
 
 
 
-                                            <td>${data[i].estadoOtNombre}</td>
-                                            <td>${data[i].operadorReporte}</td>
-                                            <td>${data[i].codigoOperadorReporte}</td>
+                                                <td>${data[i].estadoOtNombre}</td>
+                                                <td>${data[i].mantenedorNombre}</td>
+                                                <td>${data[i].operadorReporte}</td>
+                                                <td>${data[i].codigoOperadorReporte}</td>
 
-                                            <td>${data[i].fechanotificacionguardarmostrar}</td>
-                                            <td>${data[i].mantenedorNotificar}</td>
-
-
-                                            <td>${data[i].fechainicioguardarmostrar}</td>
-                                            <td>${data[i].mantenedorReparo}</td>
+                                                <td>${data[i].fechanotificacionguardarmostrar}</td>
+                                                <td>${data[i].mantenedorNotificar}</td>
 
 
-                                            <td>${data[i].operadorCierre}</td>
-                                            <td>${data[i].codigoOperadorCierre}</td>
-                                            <td>${data[i].fechafinalguardarmostrar}</td>
-                                            <td>${data[i].comentario}</td>
-                                            <td>${data[i].usuariosCodigo}</td>
-                                            <td>${data[i].usuariosNombre}</td>
-                                            <td>${data[i].usuarioActualizoNombre}</td>
+                                                <td>${data[i].fechainicioguardarmostrar}</td>
+                                                <td>${data[i].mantenedorReparo}</td>
+
+
+                                                <td>${data[i].operadorCierre}</td>
+                                                <td>${data[i].codigoOperadorCierre}</td>
+                                                <td>${data[i].fechafinalguardarmostrar}</td>
+                                                <td>${data[i].comentario}</td>
+                                                <td>${data[i].usuariosCodigo}</td>
+                                                <td>${data[i].usuariosNombre}</td>
+                                                <td>${data[i].usuarioActualizoNombre}</td>
                                 </tr>
                                 
                             `
@@ -1524,14 +1581,15 @@
                                  <tr style ="background-color:#FDFF8B;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
                                     
-                                              <td>${conteo + i}</td>
+                                         <td>${conteo + i}</td>
                                         <td>${data[i].ot}</td>
                                         <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                        <td>${data[i].sistemasNombre}</td>
                                         <td>${data[i].subsistemasNombre}</td>
                                         <td>${data[i].estacionesNombre}</td>
                                         <td>${data[i].ubicacion}</td>
                                         <td>${data[i].descripcion}</td>
-                                        <td>${data[i].sistemasNombre}</td>
+                                        <td>${data[i].smNombre}</td>
 
 
                                                 ${data[i].criticidadNombre == "Bajo Impacto" ?
@@ -1551,6 +1609,7 @@
 
 
                                         <td>${data[i].estadoOtNombre}</td>
+                                        <td>${data[i].mantenedorNombre}</td>
                                         <td>${data[i].operadorReporte}</td>
                                         <td>${data[i].codigoOperadorReporte}</td>
 
@@ -1581,14 +1640,15 @@
                                   <tr style ="background-color:#FFFF;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
 
                                     
-                                              <td>${conteo + i}</td>
+                                        <td>${conteo + i}</td>
                                         <td>${data[i].ot}</td>
                                         <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                        <td>${data[i].sistemasNombre}</td>
                                         <td>${data[i].subsistemasNombre}</td>
                                         <td>${data[i].estacionesNombre}</td>
                                         <td>${data[i].ubicacion}</td>
                                         <td>${data[i].descripcion}</td>
-                                        <td>${data[i].sistemasNombre}</td>
+                                        <td>${data[i].smNombre}</td>
 
 
                                                 ${data[i].criticidadNombre == "Bajo Impacto" ?
@@ -1608,6 +1668,7 @@
 
 
                                         <td>${data[i].estadoOtNombre}</td>
+                                        <td>${data[i].mantenedorNombre}</td>
                                         <td>${data[i].operadorReporte}</td>
                                         <td>${data[i].codigoOperadorReporte}</td>
 
@@ -1744,10 +1805,73 @@
         setInterval(reloj,1000)
 
 
+      //-----funcion para llenar el campo Subsistema cascada -----------------
+      //esta funcion la dispara el campo sistema con el evento change-----
+
+        const sistema = document.getElementById("sistemas");
+
+      function SubsistemaCascada(){
+            
+          alert("klk activado");
+
+           const sistemas = document.getElementById("sistemas");
+           
+        alert(sistemas.value)
+
+            if (sistemas.value != "") {
+
+
+           
+
+                let url = "/Reportes/SubsistemaCascada/?sistema=" + sistemas.value;
+                fetch(url)
+                    .then(res => res.json())
+                    .then(data => {
+
+                        const index = 1;
+                        document.getElementById("mantenedor").value = `${data[index].mantenedor}`
+
+                        let Listsubsistemas = document.getElementById("Listsubsistemas");
+                        
+                        let opcion = "";
+                      
+                        for (let i = 0; i < data.length; i++) {
+
+                            opcion +=`
+
+                                <option>${data[i].nombre}</option>
+                            
+                                    
+                            `
+                           
+                          // Element = document.createElement("option");
+
+                          // let valor = document.createTextNode(`${data[i].value}`);
+                           
+                          // Element.appendChild(valor);
+
+                          //listcascada.appendChild(Element);
+                       
+                        }
+    
+                        
+                         Listsubsistemas.innerHTML = opcion;
+
+                    })
+
+
+            }
+
+       }
+
+        sistema.addEventListener("change", SubsistemaCascada)
+
+
 
         //-----funcion para llenar el campo descripcion cascada-----------------
+          //esta funcion la dispara el campo Subsistema con el evento change-----
 
-        const subsistemacascada = document.getElementById("subsistemas");
+        const subsistema = document.getElementById("subsistemas");
 
       function descripcionCascada(){
             
@@ -1799,13 +1923,14 @@
 
        }
 
-        subsistemacascada.addEventListener("change", descripcionCascada)
+        subsistema.addEventListener("change", descripcionCascada)
 
 
 
         
 
-        //se ejecuta cuando hacemos un cambio en el campo mantenedor reporte si seleccionamos uno me cambia el estado a reportada
+        //esta funcion se ejecuta cuando hacemos un cambio en el campo mantenedor notificar reporte 
+        // si seleccionamos uno me cambia el estado a reportada
         const mantenedornotificar = document.getElementById("mantenedornotificar");
 
     function mantenedorestado() {
@@ -1817,6 +1942,7 @@
 
 
     //---------funcion para cambiar los estasdo de la ot segun algunas condiciones
+    //esta funcion la dispara el campo OT con el evento keyup
 
     const ot = document.getElementById("ot");
 
@@ -1957,15 +2083,22 @@
 
 
     // -------para auto completar la descripcion de la averia-------------------
+    //Esta funcion la dispara el campo selecion de activo con el evento change
 
 
     const descripcioncascada = document.getElementById("descripcioncascada");
 
     const obtenerdescricion = () => {
 
-        const descripcioncascadas = document.getElementById("descripcioncascada").value;
+        let descripcioncascadas = document.getElementById("descripcioncascada");
 
-        document.getElementById("descripcion").value = descripcioncascadas;
+       let descripcion = document.getElementById("descripcion").value = descripcioncascadas.value;
+
+        if (descripcion !=""){
+
+            
+           descripcioncascadas.value ="";
+        }
 
     }
 
@@ -1973,45 +2106,9 @@
 
 
 
-    //funcion para cambiar el fondo de color en el area de averias reportes
-    //esta misma guarda en Localstore el color obtenido
-
-    //let inputColor = document.getElementById("inputcolor");
-
-    //function guardarLocalstore() {
-
-    //    let obtenerColor = inputColor.value;
-
-    //    localStorage.setItem("color", obtenerColor)
-
-    //    let area_averias = document.getElementById("area_averias");
-
-    //    area_averias.style.backgroundColor = `${obtenerColor}`;
-
-    //}
-
-    //inputColor.addEventListener("change", guardarLocalstore)
-
-
-
-
-    //funcion que recupera el color de localstore y lo muestra en el are de averias
-    //esta funcion es llamada en el envento onload que se ejecuta al cargarse el contenido
-    //function ObtenerLocalstore() {
-
-
-    //    let colorRecuperado = localStorage.getItem("color")
-
-    //    let area_averias = document.getElementById("area_averias");
-
-    //    area_averias.style.backgroundColor = `${colorRecuperado}`;
-    //}
-
-
-
     let inputColor = document.getElementById("inputcolor");
    
-
+    //esta funcion nos guarda el background color en la db
     function guardarStyle() {
 
         let obtenerColor = inputColor.value;
@@ -2052,7 +2149,7 @@
 
     inputColor.addEventListener("change", guardarStyle)
 
-
+      //esta funcion nos recupera el background color en la db
     const recuperarStyle = ()=>{
 
         const url = "/Reportes/RecuperarStyle"
@@ -2080,6 +2177,7 @@
 
     const btn_nuevoregistro = document.getElementById("formulario");
 
+    //funcion para limpiar todo el formulario este funcion la dispara el boton nuevo registro
     const NuevoRegistroLimpiarForm = () => {
       
 
@@ -2090,6 +2188,33 @@
 
         // llamamos el metodo limpiarFiltros para que nos limpie los filtro de busqueda
         LimpiarFiltros();
+
+
+        //Limpiar el color de los campos requerido si estan con el erro de vacio
+
+        let sistemas = document.getElementById("sistemas");
+        let subsistemas = document.getElementById("subsistemas");
+        let estaciones = document.getElementById("estaciones");
+        let ubicaciones = document.getElementById("ubicaciones");
+        let descripcioncascada = document.getElementById("descripcioncascada");
+        let descripcion = document.getElementById("descripcion")
+        let codigooperador = document.getElementById("codigooperador");
+        let fechareportes = document.getElementById("fechareporte");
+        let criticidad = document.getElementById("criticidad");
+        let sistema = document.getElementById("sm");
+        let nombreoperador = document.getElementById("nombreoperador");
+             
+        sistemas.classList.remove("error");
+        subsistemas.classList.remove("error");
+        estaciones.classList.remove("error");
+        ubicaciones.classList.remove("error");
+        descripcioncascada.classList.remove("error");
+        descripcion.classList.remove("error");
+        codigooperador.classList.remove("error");
+        fechareportes.classList.remove("error");
+        criticidad.classList.remove("error");
+        sistema.classList.remove("error");
+        nombreoperador.classList.remove("error");
           
 
     }

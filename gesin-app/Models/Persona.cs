@@ -17,7 +17,7 @@ namespace gesin_app.Models
         public string Codigo { get; set; }
         public int IdEmpresaMantenedora { get; set; }
 
-        public virtual EmpresaMantenedora IdEmpresaMantenedoraNavigation { get; set; }
+        public virtual Mantenedor IdEmpresaMantenedoraNavigation { get; set; }
         public virtual ICollection<FuncionPersona> FuncionPersonas { get; set; }
     }
 }

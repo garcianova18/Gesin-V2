@@ -7,9 +7,13 @@ namespace gesin_app.ViewModel
     public class ReportesCreateView
     {
         public int Id { get; set; }
+
+        public string Sistema { get; set; }
+
         public string Subsistema{ get; set; }
 
         public string Estacion { get; set; }
+
 
         public string Ubicacion { get; set; }
 
@@ -30,7 +34,7 @@ namespace gesin_app.ViewModel
         public int IdCriticidad { get; set; }
 
         [Required]
-        public int IdSistemas { get; set; }
+        public int IdSm { get; set; }
 
         [Required]
         public int IdEstadoOt { get; set; }

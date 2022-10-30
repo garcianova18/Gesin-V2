@@ -59,7 +59,16 @@ namespace gesin_app.Servicios
         {
             Entidades.Update(entidad);
 
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
 
             return 2;
 

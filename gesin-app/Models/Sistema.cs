@@ -15,9 +15,7 @@ namespace gesin_app.Models
 
         public int Id { get; set; }
         public string Nombre { get; set; }
-        public int IdMantenedor { get; set; }
 
-        public virtual Mantenedor IdMantenedorNavigation { get; set; }
         public virtual ICollection<Reporte> Reportes { get; set; }
         public virtual ICollection<Subsistema> Subsistemas { get; set; }
     }

@@ -11,7 +11,7 @@ namespace gesin_app.Models
         {
             Personas = new HashSet<Persona>();
             Reportes = new HashSet<Reporte>();
-            Sistemas = new HashSet<Sistema>();
+            Subsistemas = new HashSet<Subsistema>();
         }
 
         public int Id { get; set; }
@@ -19,6 +19,6 @@ namespace gesin_app.Models
 
         public virtual ICollection<Persona> Personas { get; set; }
         public virtual ICollection<Reporte> Reportes { get; set; }
-        public virtual ICollection<Sistema> Sistemas { get; set; }
+        public virtual ICollection<Subsistema> Subsistemas { get; set; }
     }
 }

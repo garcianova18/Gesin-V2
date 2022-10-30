@@ -423,30 +423,34 @@ namespace gesin_app.Controllers
 
         }
 
-        //metodo para cargar los activos segun el subsistema esto para crear combolist en cascada
+        //metodo para cargar la descripcion de activos segun el subsistema esto para crear combolist en cascada
 
         public IActionResult Descripcion(string subsistema)
         {
 
             var idsubsistema = Db.Subsistemas.Where(s => s.Nombre == subsistema).FirstOrDefault();
 
-            //var operador = Db.Operadors.FirstOrDefault(o => o.Codigo == op);
+          
 
-            var descripcion = Db.Activos.Where(o => o.Idsubsistema == idsubsistema.Id).Select(o => new
+            var descripcion = Db.Activos.Where(sub => sub.Idsubsistema == idsubsistema.Id).Select(d => new
             {
-
-                value = o.Descripcion
+                descripcion = d.Descripcion,
+                mantenedor = d.IdsubsistemaNavigation.IdMantenedorNavigation.Nombre
+              
 
             }).ToList();
 
-
+            if (descripcion == null)
+            {
+                return Json("");
+            }
 
             return Json(descripcion);
 
 
         }
 
-        //metodo para cargar los subsistema segun el sistema  esto para crear combolist en cascada
+        //metodo para cargar los subsistema segun el sistema que se elija  esto para crear un combolist en cascada
         public async Task< IActionResult >SubsistemaCascada(string sistema)
         {
 
@@ -454,16 +458,18 @@ namespace gesin_app.Controllers
 
            
 
-            var Subsistema = await Db.Subsistemas.Include(s=>s.IdSistemaNavigation).Where(o => o.IdSistema == idsistema.Id).Select(o => new
+            var Subsistema = await Db.Subsistemas.Where(o => o.IdSistema == idsistema.Id).Select(o => new
             {
 
                 nombre = o.Nombre,
-                mantenedor = o.IdSistemaNavigation.IdMantenedorNavigation.Nombre,
-              
+                
                 
             }).ToListAsync();
 
-
+            if (Subsistema == null)
+            {
+                return Json("");
+            }
        
 
             return Json(Subsistema);
@@ -612,7 +618,7 @@ namespace gesin_app.Controllers
                      
                             var mapReporte = mapper.Map<Reporte>(reporte);
                             mapReporte.IdSistema= sistema.Id;
-                            mapReporte.Idmantenedor = sistema.IdMantenedor;
+                            mapReporte.Idmantenedor = subsistema.IdMantenedor;
                             mapReporte.IdSubsistema = subsistema.Id;
                             mapReporte.IdEstacion = estacion.Id;
                             mapReporte.Fechaaveria = Convert.ToDateTime(fechareporte);
@@ -653,7 +659,7 @@ namespace gesin_app.Controllers
                         
                         var mapReporte = mapper.Map<Reporte>(reporte);
                         mapReporte.IdSistema = sistema.Id;
-                        mapReporte.Idmantenedor = sistema.IdMantenedor;
+                        mapReporte.Idmantenedor = subsistema.IdMantenedor;
                         mapReporte.IdSubsistema = subsistema.Id;
                         mapReporte.IdEstacion = estacion.Id;
                         mapReporte.Fechaaveria = Convert.ToDateTime(fechareporte);

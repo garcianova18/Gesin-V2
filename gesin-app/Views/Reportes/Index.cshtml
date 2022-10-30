@@ -298,7 +298,7 @@
                                 </div>
                                  
 
-                                       <input id="idreportes" class="form-control form-control-sm" readonly="readonly" hidden >
+                                       <input id="idreportes" class="form-control form-control-sm" hidden readonly="readonly"   >
                                 
 
                                 
@@ -323,7 +323,7 @@
                                 
                                    <div class="col-12  col-md-3 offset-md-3 mb-3">
 
-                                    <input type="text" class="form-control form-control-sm " id="mantenedor" placeholder="Mantenedor" disabled readonly  />
+                                    <input type="text" class="form-control form-control-sm " id="mantenedor" placeholder="Mantenedor" disabled readonly="readonly"  />
 
 
                                     </div>
@@ -382,12 +382,12 @@
 
                                     </datalist>
                                 </div>
-                               @* <div class="col-12 col-md-4 ">
+                               <div class="col-12 col-md-4 ">
 
-                                    <input id="usuario" class="form-control-sm" disabled hidden />
+                                    <input id="usuario" class="form-control-sm"  hidden readonly="readonly" />
 
                                 </div>
-*@
+
 
 
                                 <!--ir-->
@@ -877,10 +877,10 @@
        
              e.preventDefault();
             
-             console.log(e.submitter.id)
+             //console.log(e.submitter.id)
 
           
-            
+             
             let idreportes = Number(document.getElementById("idreportes").value); 
             let sistema = document.getElementById("sistemas");
             let subsistemas = document.getElementById("subsistemas");
@@ -889,11 +889,11 @@
             let descripcion = document.getElementById("descripcion");
             let codigooperador = document.getElementById("codigooperador");
             let nombreoperador = document.getElementById("nombreoperador");
-            let descripcioncascada =document.getElementById("descripcioncascada");
             let fechareportes = document.getElementById("fechareporte");
             let criticidad = document.getElementById("criticidad");
             let Sm = document.getElementById("sm");
             let estadoot = document.getElementById("estado");
+
             let ot = Number(document.getElementById("ot").value);
             let comentario = document.getElementById("comentario").value;
             let fechanotificacion = document.getElementById("fechanotificacion").value;
@@ -906,6 +906,8 @@
             let usuario = Number( document.getElementById("usuario").value);
                 document.getElementById("ot").style.backgroundColor = "";
 
+           
+      
              //descripcioncascada.value == ""? descripcioncascada.classList.add("error"): descripcioncascada.classList.remove("error") ;
              sistema.value == ""? sistema.classList.add("error"): sistema.classList.remove("error") ;
              subsistemas.value == ""? subsistemas.classList.add("error"): subsistemas.classList.remove("error") ;
@@ -1130,7 +1132,7 @@
 
 
          reutilizarenviar.style.display ="block";
-
+         document.getElementById("enviar").value = "Actualizar";
         
         let url = "Reportes/BuscarEditar/?id=" + idreporte;
 
@@ -1168,13 +1170,13 @@
                 // y si no esta duplicada gargue en color blanco
                 //  de no llamar este metodo para que recalcule no me carga el gris y si pongo el gris al cargar una sin duplicidad despues de cargar una duplicadad me le pone el gris
 
-               EstadoRegistro();
+                 EstadoRegistro();
 
-               //aqui llamamos a la funcion buscar sistema para que al cargar un registro este tambie me cargue los subsistemas
+               //aqui llamamos  las funcion que carga el subsistema y la dewscripcion en cascada para que al cargar un registro este tambie me cargue los subsistemas
                 SubsistemaCascada();
                 descripcionCascada()
 
-               document.getElementById("enviar").value = "Actualizar";
+               
                
 
                // if (check.checked) {
@@ -1814,11 +1816,14 @@
             
           alert("klk activado");
 
+          document.getElementById("mantenedor").value ="";
+        document.getElementById("subsistemas").value = "";
+
            const sistemas = document.getElementById("sistemas");
            
         alert(sistemas.value)
 
-            if (sistemas.value != "") {
+          
 
 
            
@@ -1828,8 +1833,7 @@
                     .then(res => res.json())
                     .then(data => {
 
-                        const index = 1;
-                        document.getElementById("mantenedor").value = `${data[index].mantenedor}`
+                       
 
                         let Listsubsistemas = document.getElementById("Listsubsistemas");
                         
@@ -1860,7 +1864,7 @@
                     })
 
 
-            }
+           
 
        }
 
@@ -1880,7 +1884,7 @@
 
            
 
-            if (subsistemas.value != "") {
+           
 
 
            
@@ -1889,6 +1893,7 @@
                 fetch(url)
                     .then(res => res.json())
                     .then(data => {
+                      
                        
                         let listcascada = document.getElementById("listcascada");
 
@@ -1896,9 +1901,10 @@
                       
                         for (let i = 0; i < data.length; i++) {
 
+                            document.getElementById("mantenedor").value =`${data[i].mantenedor}`;
                             opcion +=`
 
-                                <option>${data[i].value}</option>
+                                <option>${data[i].descripcion}</option>
                             
                                     
                             `
@@ -1919,7 +1925,7 @@
                     })
 
 
-            }
+           
 
        }
 

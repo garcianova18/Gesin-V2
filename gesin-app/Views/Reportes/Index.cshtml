@@ -323,7 +323,7 @@
                                 
                                    <div class="col-12  col-md-3 offset-md-3 mb-3">
 
-                                    <input type="text" class="form-control form-control-sm " id="mantenedor" placeholder="Mantenedor" disabled readonly="readonly"  />
+                                    <input type="text" class="form-control form-control-sm " id="mantenedor" placeholder="Mantenedor" disabled readonly="readonly"   />
 
 
                                     </div>
@@ -498,7 +498,7 @@
                                             <select name="Id" asp-items="ViewBag.estadoOTs" class="form-select form-select-sm" id="estado"></select>
 
                                         </div>
-                                        <div class=" col-12 col-md-4 mb-3 ">
+                                        <div class=" col-12 col-md-4 offset-3 mb-3 gx-1 ">
 
                                             <input type="number" class="form-control form-control-sm" id="ot" placeholder="#OT">
 
@@ -820,52 +820,6 @@
 
 
 
-    //const check = document.getElementById("reutilizar");
-
-
-    //    function chekiar(){
-
-           
-
-    //        let idreportes = Number(document.getElementById("idreportes").value);
-
-        
-
-    //        if (check.checked && idreportes >=0)
-    //        {
-
-    //          // document.getElementById("enviar").value = " Agregar";
-               
-    //           //llamamos la funcion buscarot para que verifique si ya existe este nuemero  de ot en ese campo y ponerla duplicada
-    //           // o dejarla como esta
-    //           EstadoRegistro();
-                        
-    //        }
-                
-
-    //        //else{
-
-                
-
-    //        //        if(idreportes == 0){
-
-    //        //           document.getElementById("enviar").value = "agregar";
-    //        //        }
-
-    //        //        else{
-
-    //        //            document.getElementById("enviar").value = "Actualizar";
-    //        //        }
-                    
-                     
-    //        //}
-
-
-
-    //    }
-
-    //check.addEventListener("change", chekiar);
-
 
 
 
@@ -878,9 +832,8 @@
              e.preventDefault();
             
              //console.log(e.submitter.id)
-
           
-             
+         
             let idreportes = Number(document.getElementById("idreportes").value); 
             let sistema = document.getElementById("sistemas");
             let subsistemas = document.getElementById("subsistemas");
@@ -893,8 +846,8 @@
             let criticidad = document.getElementById("criticidad");
             let Sm = document.getElementById("sm");
             let estadoot = document.getElementById("estado");
-
-            let ot = Number(document.getElementById("ot").value);
+            alert(estadoot.value)
+            let ot = document.getElementById("ot");
             let comentario = document.getElementById("comentario").value;
             let fechanotificacion = document.getElementById("fechanotificacion").value;
             let mantenedornotificar = document.getElementById("mantenedornotificar").value;
@@ -904,10 +857,9 @@
             let codigooperadorfinal =  document.getElementById("codigooperadorfinal").value;
             let mantenedorcierre = document.getElementById("mantenedorcierre").value;
             let usuario = Number( document.getElementById("usuario").value);
-                document.getElementById("ot").style.backgroundColor = "";
 
-           
-      
+
+             ot.style.backgroundColor = "";
              //descripcioncascada.value == ""? descripcioncascada.classList.add("error"): descripcioncascada.classList.remove("error") ;
              sistema.value == ""? sistema.classList.add("error"): sistema.classList.remove("error") ;
              subsistemas.value == ""? subsistemas.classList.add("error"): subsistemas.classList.remove("error") ;
@@ -924,9 +876,11 @@
              // el btn reutilizar Registro, cuanto tenemos un registro cargado para actualizar
              // entoces este no se actualizara si no se creara uno nuevo
              if(e.submitter.id =="reutilizarenviar"){
+                  
 
                  idreportes = 0;
-                 alert(idreportes);
+                 
+                 
             
 
              }
@@ -999,7 +953,7 @@
                 idCriticidad: Number( criticidad.value),
                 idSm: Number( Sm.value),
                 idEstadoOt: Number( estadoot.value),
-                ot:ot,
+                ot:Number(ot.value) ,
                 comentario: comentario,
                 fechanotificacionguardarmostrar: fechanotificacion,
                 mantenedorNotificar: mantenedornotificar,
@@ -1166,23 +1120,23 @@
                 let mantenedorcierre = document.getElementById("mantenedorcierre").value = data.mantenedorReparo;
                 let usuario = document.getElementById("usuario").value = data.idUsuarios;
                 
-                //llamamos el metodo EstadoRegistro para que al cargar un registro si esta esta duplicada me cargue con color gris
-                // y si no esta duplicada gargue en color blanco
-                //  de no llamar este metodo para que recalcule no me carga el gris y si pongo el gris al cargar una sin duplicidad despues de cargar una duplicadad me le pone el gris
 
-                 EstadoRegistro();
+                //si estado OT es duplicada el campo ot lo ponemos de color gris 
+                if (estadoot == 7){
 
-               //aqui llamamos  las funcion que carga el subsistema y la dewscripcion en cascada para que al cargar un registro este tambie me cargue los subsistemas
+                    const otcolor = document.getElementById("ot")
+                    otcolor.style.backgroundColor = "grey";
+                }
+
+
+               //aqui llamamos  las funcion que carga el Listado de subsistema y de activo descripcion en cascada para que al cargar un registro este tambie me cargue los subsistemas
                 SubsistemaCascada();
-                descripcionCascada()
+                descripcionCascada();
 
                
                
 
-               // if (check.checked) {
-
-               //  check.checked = false;
-               //}
+              
 
                
             })
@@ -1463,7 +1417,7 @@
                             `
 
                                  <tr style ="background-color:#CECECE;  font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
-
+                                       
                                         <td>${conteo + i}</td>
                                         <td>${data[i].ot}</td>
                                         <td>${data[i].fechaaveriaGuardarMostrar}</td>
@@ -1473,7 +1427,7 @@
                                         <td>${data[i].ubicacion}</td>
                                         <td>${data[i].descripcion}</td>
                                         <td>${data[i].smNombre}</td>
-
+                                          
 
                                                 ${data[i].criticidadNombre == "Bajo Impacto" ?
 
@@ -1812,63 +1766,72 @@
 
         const sistema = document.getElementById("sistemas");
 
+         sistema.addEventListener("change", SubsistemaCascada)
+
       function SubsistemaCascada(){
             
-          alert("klk activado");
-
-          document.getElementById("mantenedor").value ="";
-        document.getElementById("subsistemas").value = "";
-
-           const sistemas = document.getElementById("sistemas");
-           
-        alert(sistemas.value)
-
           
 
+             
 
+         
            
 
-                let url = "/Reportes/SubsistemaCascada/?sistema=" + sistemas.value;
+             let Listsubsistemas = document.getElementById("Listsubsistemas");
+                 Listsubsistemas.innerHTML ="";
+
+             const sistemas = document.getElementById("sistemas");
+          
+            if(sistemas.value !=""){
+
+                 let url = "/Reportes/SubsistemaCascada/?sistema=" + sistemas.value;
                 fetch(url)
                     .then(res => res.json())
                     .then(data => {
 
-                       
-
-                        let Listsubsistemas = document.getElementById("Listsubsistemas");
-                        
-                        let opcion = "";
                       
                         for (let i = 0; i < data.length; i++) {
 
-                            opcion +=`
+                     
+                         let ElementOpcion = document.createElement("option");
 
-                                <option>${data[i].nombre}</option>
-                            
-                                    
-                            `
-                           
-                          // Element = document.createElement("option");
+                          let  TextOpcion = document.createTextNode(`${data[i].nombre}`) ;
 
-                          // let valor = document.createTextNode(`${data[i].value}`);
-                           
-                          // Element.appendChild(valor);
+                            ElementOpcion.appendChild(TextOpcion)
 
-                          //listcascada.appendChild(Element);
+                            Listsubsistemas.appendChild(ElementOpcion);
                        
                         }
     
-                        
-                         Listsubsistemas.innerHTML = opcion;
+                       
 
                     })
 
+
+            }
+            else{
+
+                //con esto decimos que si no se elige ningun sistema, el list de subsistema y de activo descripcion  estaran vacio
+                //tambien su input estaran vacios
+              
+
+                document.getElementById("mantenedor").value = "";
+                document.getElementById("subsistemas").value = "";
+
+               
+                 Listsubsistemas.innerHTML = "";
+                 descripcionCascada()
+            }
+
+           
+
+               
 
            
 
        }
 
-        sistema.addEventListener("change", SubsistemaCascada)
+       
 
 
 
@@ -1879,15 +1842,13 @@
 
       function descripcionCascada(){
             
+            
+            const subsistemas = document.getElementById("subsistemas");
+            const listcascada = document.getElementById("listcascada");
+                    
+                  listcascada.innerHTML="";
 
-           const subsistemas = document.getElementById("subsistemas");
-
-           
-
-           
-
-
-           
+            if(subsistemas.value !=""){
 
                 let url = "/Reportes/Descripcion/?subsistema=" + subsistemas.value;
                 fetch(url)
@@ -1895,35 +1856,35 @@
                     .then(data => {
                       
                        
-                        let listcascada = document.getElementById("listcascada");
-
-                        let opcion = "";
-                      
                         for (let i = 0; i < data.length; i++) {
 
                             document.getElementById("mantenedor").value =`${data[i].mantenedor}`;
-                            opcion +=`
-
-                                <option>${data[i].descripcion}</option>
+                             
                             
-                                    
-                            `
                            
-                          // Element = document.createElement("option");
+                          let ElementOpcion = document.createElement("option");
 
-                          // let valor = document.createTextNode(`${data[i].value}`);
+                          let TextOpcion = document.createTextNode(`${data[i].descripcion}`);
                            
-                          // Element.appendChild(valor);
+                           ElementOpcion.appendChild(TextOpcion);
 
-                          //listcascada.appendChild(Element);
+                           listcascada.appendChild(ElementOpcion);
                        
                         }
     
                         
-                         listcascada.innerHTML = opcion;
+                         
 
                     })
 
+            }
+            else{
+
+            listcascada.innerHTML = "";
+
+            }
+
+                
 
            
 
@@ -1951,28 +1912,31 @@
     //esta funcion la dispara el campo OT con el evento keyup
 
     const ot = document.getElementById("ot");
+     ot.addEventListener('keyup', EstadoRegistro)
 
+    function EstadoRegistro(){
 
-    const EstadoRegistro = () => {
 
 
         
        
-        const otvalue = Number( document.getElementById("ot").value);
+       
+        const ot = document.getElementById("ot");
+        const estadoot = document.getElementById("estado");
+        const codigooperadorfinal = document.getElementById("codigooperadorfinal");
+        const btnEnviar  = document.getElementById("enviar")
 
-        const url = "Reportes/BuscarOt/?ot=" + otvalue;
+        const url = "Reportes/BuscarOt/?ot=" + ot.value;
 
-        fetch(url)
+            fetch(url)
             .then(res => res.json())
             .then(data => {
 
-              
+                
                 // si existen ordenes con el mismo numero de ot entonces me cambia a estado duplicada y pone el color gris
                 if (data >= 1) {
 
-                    const ot = document.getElementById("ot");
-                      const estadoot = document.getElementById("estado");
-                      const codigooperadorfinal =  document.getElementById("codigooperadorfinal");
+                    
                        ot.style.backgroundColor = "grey";
 
                     if(codigooperadorfinal.value !="" ){
@@ -1986,8 +1950,10 @@
 
                        
                         // duplicada
-                        estadoot.value = 7;
+                      estadoot.value = 7;
                     }
+
+                   
 
                    
 
@@ -2051,14 +2017,15 @@
 
             })
 
+         
     }
 
-    ot.addEventListener('keyup', EstadoRegistro)
+   
 
     let codigooperadorfinal =  document.getElementById("codigooperadorfinal");
 
 
-    //funcion para disparar el evento de cerrar OT este asu vez sipara el de estadoregistro
+    //funcion para disparar el evento de cerrar OT este asu vez dispara el de estadoregistro
 
     let EstadoOTCerrado = () => EstadoRegistro();
 
@@ -2066,7 +2033,13 @@
 
     //-----------funcion para Limpiar los campos del filtrado-----------------------
 
-    const btnlimpiar = document.getElementById("limpiar")
+   
+    
+    const btnlimpiar = document.getElementById("limpiar");
+
+
+      btnlimpiar.addEventListener("click", LimpiarFiltros);
+
 
     function LimpiarFiltros() {
 
@@ -2084,15 +2057,16 @@
         LimpiarFiltros
     }
 
-    btnlimpiar.addEventListener("click", LimpiarFiltros);
-
+  
 
 
     // -------para auto completar la descripcion de la averia-------------------
-    //Esta funcion la dispara el campo selecion de activo con el evento change
+    //Esta funcion la dispara el campo selecion de activo descripcion con el evento change
 
 
     const descripcioncascada = document.getElementById("descripcioncascada");
+
+      
 
     const obtenerdescricion = () => {
 
@@ -2102,13 +2076,13 @@
 
         if (descripcion !=""){
 
-            
+            //para que el input de activo descripcion se mantena vacio
            descripcioncascadas.value ="";
         }
 
     }
 
-    descripcioncascada.addEventListener('change', obtenerdescricion);
+  descripcioncascada.addEventListener('change', obtenerdescricion);
 
 
 
@@ -2189,6 +2163,7 @@
 
 
         reutilizarenviar.style.display ="none";
+         ot.style.backgroundColor = "";
 
         document.getElementById("enviar").value = "Agregar";
 

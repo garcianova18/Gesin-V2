@@ -423,7 +423,7 @@ namespace gesin_app.Controllers
 
         }
 
-        //metodo para cargar la descripcion de activos segun el subsistema esto para crear combolist en cascada
+        //metodo para cargar la descripcion de activos y el mantenedor segun el subsistema esto para crear combolist en cascada con las descripciones
 
         public IActionResult Descripcion(string subsistema)
         {
@@ -440,10 +440,7 @@ namespace gesin_app.Controllers
 
             }).ToList();
 
-            if (descripcion == null)
-            {
-                return Json("");
-            }
+          
 
             return Json(descripcion);
 
@@ -526,7 +523,7 @@ namespace gesin_app.Controllers
 
     // con este metodo buscamo si existe por lo menos un registro con un numero de ot 
     //para pasar la al frontend y indicar si es duplicada en caso de que exista 1 por lo menos
-       public JsonResult BuscarOt(int? ot)
+       public int BuscarOt(int? ot)
         {
 
             if (ot == 0)
@@ -542,7 +539,7 @@ namespace gesin_app.Controllers
 
             
             
-            return Json(Ots);
+            return Ots;
             
 
         }
@@ -607,13 +604,22 @@ namespace gesin_app.Controllers
 
 
                         Reporte reportemodel = new Reporte();
+                            
+                      var CompararOT=  BuscarOt(reporte.Ot);
 
+                        //buscamos si existe el  numero de ot en la db
+                        //si existe entonces este registro se guardara con el estado de OT duplicado
 
-                        if (reporte.IdEstadoOt == 0 )
+                        if (CompararOT != 0 )
+                        {
+                            reporte.IdEstadoOt = 7;
+                        }
+
+                        //si el estado de OT es 0 el registro se guardara con el estado de OT sin estado
+                        if (reporte.IdEstadoOt == 0)
                         {
                             reporte.IdEstadoOt = 8;
                         }
-                       
                        
                      
                             var mapReporte = mapper.Map<Reporte>(reporte);

@@ -476,7 +476,7 @@
 
 
 
-                            <div class="row gx-md-2 d-flex justify-content-between mx-2 ">
+                            <div class="row gx-md-2 mx-2 ">
 
                                 <div class="col-12 pb-3 pt-2 text-white ">
                                     Reportes de Averias
@@ -486,26 +486,22 @@
 
                                 </div>
 
-                                <div class=" col-12 col-md-5 mb-3 ">
+                                <div class=" col-12 col-md-5 offset-md-2 mb-3 ">
                                     <select name="Id" asp-items="@ViewBag.SM" class="form-select form-select-sm campos_obligatorios" id="sm"></select>
 
                                 </div>
 
-                                <div class="col-12">
-
-                                    <div class="row">
-                                        <div class=" col-12 col-md-4 mb-3">
-                                            <select name="Id" asp-items="ViewBag.estadoOTs" class="form-select form-select-sm" id="estado"></select>
-
-                                        </div>
-                                        <div class=" col-12 col-md-4 offset-3 mb-3 gx-1 ">
-
-                                            <input type="number" class="form-control form-control-sm" id="ot" placeholder="#OT">
-
-                                        </div>
-                                    </div>
+                            
+                                <div class=" col-12 col-md-5 mb-3">
+                                    <select name="Id" asp-items="ViewBag.estadoOTs" class="form-select form-select-sm" id="estado"></select>
 
                                 </div>
+                                <div class=" col-12 col-md-4 offset-2 mb-3 ">
+
+                                    <input type="number" class="form-control form-control-sm" id="ot"  placeholder="#OT" min="0">
+
+                                </div>
+
 
 
                                 <div class="col-12 mb-3">
@@ -520,7 +516,7 @@
 
                                 </div>
 
-                                <div class="col-12 col-md-5 mb-3">
+                                <div class="col-12 col-md-5 offset-md-2 mb-3">
 
                                     @*<select name="Id" asp-items="@ViewBag.mantenedor" class="form-select form-select-sm" id="mantenedorreporte"></select>*@
 
@@ -604,7 +600,7 @@
 
                                         <div class="col-2" m>
 
-                                            <input type="color" id="inputcolor" value="#563d7c" title="Choose your color">
+                                            <input type="color" id="inputcolor" value="" title="Choose your color">
                                         </div>
 
 
@@ -933,96 +929,122 @@
 
             }
 
+           
+        //alert(fechareportes.value.length)
+        //  alert(isNaN(Date.parse(fechareportes.value)))
+
+        if(sistema.value =="" || subsistemas.value =="" ||estaciones.value==""||ubicaciones.value =="" ||descripcion.value==""
+        ||nombreoperador.value=="" || codigooperador.value=="" ||  fechareportes.value=="" || Number( criticidad.value) ==0 || Number( Sm.value)==0){
+
+                            Swal.fire({
+
+
+                                position: 'center-end',
+                                icon: 'warning',
+                                text: `Los Campos en rojos son obligatorios`,
+                                showConfirmButton: true,
+                                background: '#130a28',
+                                color:'#ffff'
+                                
+                                
+                               
+                            })
+
+        }
+        else{
+
             
+              if (Number(fechareportes.value.length) === 16 && isNaN(Date.parse(fechareportes.value))) {
 
-        let url ="Reportes/CrearEditarReportes/reporte"
+              
+                let url ="Reportes/CrearEditarReportes/reporte"
 
-        fetch(url, {
-            method: 'POST',
-            body: JSON.stringify({
+                fetch(url, {
+                    method: 'POST',
+                    body: JSON.stringify({
 
-                id:idreportes,
-                sistema: sistema.value,
-                subsistema: subsistemas.value,
-                estacion: estaciones.value,
-                ubicacion: ubicaciones.value,
-                descripcion: descripcion.value,
-                operadorReporte: nombreoperador.value,
-                codigoOperadorReporte: codigooperador.value,
-                fechaaveriaGuardarMostrar: fechareportes.value,
-                idCriticidad: Number( criticidad.value),
-                idSm: Number( Sm.value),
-                idEstadoOt: Number( estadoot.value),
-                ot:Number(ot.value) ,
-                comentario: comentario,
-                fechanotificacionguardarmostrar: fechanotificacion,
-                mantenedorNotificar: mantenedornotificar,
-                fechainicioguardarmostrar: fechainicio,
-                fechafinalguardarmostrar: fechafinal,
-                operadorCierre: nombreoperadorfinal,
-                codigoOperadorCierre: codigooperadorfinal,
-                mantenedorReparo: mantenedorcierre,
-                idUsuarios: usuario
+                        id:idreportes,
+                        sistema: sistema.value,
+                        subsistema: subsistemas.value,
+                        estacion: estaciones.value,
+                        ubicacion: ubicaciones.value,
+                        descripcion: descripcion.value,
+                        operadorReporte: nombreoperador.value,
+                        codigoOperadorReporte: codigooperador.value,
+                        fechaaveriaGuardarMostrar: fechareportes.value,
+                        idCriticidad: Number( criticidad.value),
+                        idSm: Number( Sm.value),
+                        idEstadoOt: Number( estadoot.value),
+                        ot:Number(ot.value) ,
+                        comentario: comentario,
+                        fechanotificacionguardarmostrar: fechanotificacion,
+                        mantenedorNotificar: mantenedornotificar,
+                        fechainicioguardarmostrar: fechainicio,
+                        fechafinalguardarmostrar: fechafinal,
+                        operadorCierre: nombreoperadorfinal,
+                        codigoOperadorCierre: codigooperadorfinal,
+                        mantenedorReparo: mantenedorcierre,
+                        idUsuarios: usuario
 
                 
 
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => {
 
-                //se creo un registro
-                if (data == 1) {
+                        //se creo un registro
+                        if (data == 1) {
 
                    
 
-                    let url = "Reportes/Listarasincrono";
-                    //llamamos al metodo listar para que vuelva a cargar la tabla
-                    Listardata(url);
+                            let url = "Reportes/Listarasincrono";
+                            //llamamos al metodo listar para que vuelva a cargar la tabla
+                            Listardata(url);
 
 
 
 
-                    Swal.fire({
-                        position: 'center-end',
-                        icon: 'success',
-                        title: 'Reporte agregado satisfactoriamente',
-                        showConfirmButton: false,
-                        timer: 1000
-                    })
+                            Swal.fire({
+                                position: 'center-end',
+                                icon: 'success',
+                                title: 'Reporte agregado satisfactoriamente',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
 
 
-                    const check = document.getElementById("reutilizar")
+                            const check = document.getElementById("reutilizar")
 
-                    // si el chekbox no esta chekiado entonces resetiamos/ limpiamos el formulario
-                    if (!check.checked) {
+                            // si el chekbox no esta chekiado entonces resetiamos/ limpiamos el formulario
+                            if (!check.checked) {
 
-                       form.reset();
+                               form.reset();
 
-                    }
+                            }
 
-                }
-                // se actualizo un registro
-                else if (data == 2) {
-
-
-
-                    let url = "Reportes/Listarasincrono";
-                    //llamamos al metodo listar para que vuelva a cargar la tabla
-                    Listardata(url);
+                        }
+                        // se actualizo un registro
+                        else if (data == 2) {
 
 
 
-                    Swal.fire({
-                        position: 'center-end',
-                        icon: 'success',
-                        title: 'Reporte Actualizado satisfactoriamente',
-                        showConfirmButton: false,
-                        timer: 1000
-                    })
+                            let url = "Reportes/Listarasincrono";
+                            //llamamos al metodo listar para que vuelva a cargar la tabla
+                            Listardata(url);
+
+
+
+                            Swal.fire({
+                                position: 'center-end',
+                                icon: 'success',
+                                title: 'Reporte Actualizado satisfactoriamente',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
 
 
                     
@@ -1030,22 +1052,49 @@
                   
 
 
-                    const check = document.getElementById("reutilizar")
+                            const check = document.getElementById("reutilizar")
 
 
-                    if (!check.checked) {
+                            if (!check.checked) {
                         
-                        form.reset();
-                        document.getElementById("enviar").value = "Agregar";
-                        reutilizarenviar.style.display ="none";
+                                form.reset();
+                                document.getElementById("enviar").value = "Agregar";
+                                reutilizarenviar.style.display ="none";
 
-                    }
+                            }
 
-                }
+                        }
 
 
 
-            })
+                    })
+
+            }
+            else{
+
+                
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                text: 'La Fecha introducida no es válida',
+                                showConfirmButton: true,
+                                background: '#130a28',
+                                color:'#ffff',
+                                
+                                //timer: 1000,
+                                footer: "Formato válido: DD-MM-YYYY hh:mm"
+                               
+                            })
+
+
+            }
+        }
+
+      
+
+
+            
+
 
 
 
@@ -1916,12 +1965,8 @@
 
     function EstadoRegistro(){
 
-
-
+        alert(ot.value)
         
-       
-       
-        const ot = document.getElementById("ot");
         const estadoot = document.getElementById("estado");
         const codigooperadorfinal = document.getElementById("codigooperadorfinal");
         const btnEnviar  = document.getElementById("enviar")

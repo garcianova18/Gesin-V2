@@ -1,4 +1,8 @@
-﻿
+﻿p .Erroralert {
+    color: #820a0a;
+    font-size: 50px;
+    padding: 25px;
+}
 .col-primaria-filtro {
     height: 07vh;
     background-color: rgba(0, 0, 0, 0.8);

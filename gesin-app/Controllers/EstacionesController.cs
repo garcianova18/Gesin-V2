@@ -120,6 +120,7 @@ namespace gesin_app.Controllers
 
         public ActionResult Eliminar(int? id)
         {
+            id = 40;
 
             if (id == null)
             {
@@ -131,10 +132,10 @@ namespace gesin_app.Controllers
 
             if (buscarestacion != null)
             {
-                var buscarreportes = Db.Reportes.FirstOrDefault(r => r.IdEstacion == buscarestacion.Id);
+                var buscarReporte = Db.Reportes.FirstOrDefault(r => r.IdEstacion == buscarestacion.Id);
 
                 // si existen reportes que contengan esta estacion no se eliminara dicha estacion de lo contrario podra ser eliminada
-                if (buscarreportes == null)
+                if (buscarReporte == null)
                 {
 
                     Db.Remove(buscarestacion);

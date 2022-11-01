@@ -32,11 +32,11 @@ namespace gesin_app.Servicios
             return 1;
         }
 
-        public async Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(T entidad )
         {
-            var buscarId = await GetByIdAsync(id);
+            
 
-            Entidades.Remove(buscarId);
+            Entidades.Remove(entidad);
            await _context.SaveChangesAsync();
 
             return 1;  

@@ -10,7 +10,7 @@ namespace gesin_app.Servicios
         Task<T> GetByIdAsync(int Id);
         Task<int> CreateAsync(T entidad );
         Task<int> UpdateAsync(T entidad);
-        Task<int> DeleteAsync(int id);
+        Task<int> DeleteAsync(T entidad);
 
 
 

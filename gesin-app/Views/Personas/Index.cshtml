@@ -1,0 +1,172 @@
+﻿@using gesin_app.Models
+@model IEnumerable<Persona>
+@{
+    ViewData["Title"] = "Index";
+
+    List<SelectListItem> Funciones = new List<SelectListItem>();
+
+    Funciones = ViewBag.funciones;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <style>
+
+        .btn-agregar {
+            font-size: 25px;
+        }
+
+        .btn-eliminar {
+            font-size: 25px;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="row">
+
+        <div class="col-12 d-flex justify-content-center mb-5">
+
+            <h3>Estaciones</h3>
+        </div>
+
+        <div class="col-12 d-flex justify-content-center mb-5">
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crear_estacion">
+
+                <div class="d-flex align-items-center">
+
+
+                    <div class="px-2">agregar</div> <i class="fa-solid fa-circle-plus btn-agregar"></i>
+
+
+                </div>
+
+            </button>
+
+            <!------------- Moda para crear una nueva estacion -------->
+            <div class="modal fade" id="crear_estacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Crear nueva estacion</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <form id="formEstaciones" method="post">
+
+                            <div class="modal-body">
+
+
+
+                                <label class="form-label">Nombre</label>
+                                <input id="nombreEstacion_crear" class="form-control" />
+                                <label class="form form-label">Funcion</label>
+                                <select asp-items="@Funciones"></select>
+
+                            </div>
+                            <div class="modal-footer " id="btnfooter">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <input type="submit" class="btn btn-primary" value="Agregar" id="btnenviar">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col col-sm-6 m-auto">
+
+
+
+
+            <table class="table table-sm table-bordered">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>@Html.DisplayNameFor(model => model.Id)</th>
+                        <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+
+                        <th>Operaciones</th>
+
+
+
+                    </tr>
+
+
+                </thead>
+
+                <tbody id="pintardata">
+
+                    <!--Aqi se va a cargar la data de manera asincrono-->
+
+                </tbody>
+
+
+
+            </table>
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+    <!------------------------Modal para editar una estacion ---------------------------->
+
+    <div class="modal fade" id="editarEstacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Editar Estacion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="formEstacionesEditar" method="post">
+                    <div class="modal-body">
+
+                        <input class=" form-control" id="idEstacionEditar" disabled hidden>
+
+                        <label class="form-label">Nombre</label>
+                        <input id="nombreEstacionEditar" class="form-control" />
+
+                    </div>
+                    <div class="modal-footer " id="btnfooter">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <input type="submit" class="btn btn-primary" value="Actualizar" id="btnenviar">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/c6f899d35a.js" crossorigin="anonymous"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+

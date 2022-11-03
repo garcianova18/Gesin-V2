@@ -66,6 +66,7 @@ namespace gesin_app.Controllers
 
             ViewBag.sistema = Sistema();
 
+
             return View();
 
 
@@ -361,21 +362,46 @@ namespace gesin_app.Controllers
 
 
         //Listar Mantenedor a notificar
-        public List<Persona> Mantenedornotificar()
+        public List<string> Mantenedornotificar()
         {
 
-            var mantenedor = (from p in Db.Personas
-                              join fp in Db.FuncionPersonas
-                              on p.Id equals (fp.IdPersona)
-                              join f in Db.Funcions
-                              on fp.IdFuncion equals (f.Id)
-                              where f.Id == 1
-                              select p).ToList();
+            //var mantenedor = (from p in Db.Personas
+            //                  join fp in Db.FuncionPersonas
+            //                  on p.Id equals (fp.IdPersona)
+            //                  join f in Db.Funcions
+            //                  on fp.IdFuncion equals (f.Id)
+            //                  where f.Id == 1
+            //                  select p).ToList();
+            
+
+            var persona = Db.Funcions.Where(n => n.Funcion1 == "Agente").Select(p => new MantenedorNotificarViewcs
+            {
+
+                ListadodeAgentes = p.FuncionPersonas.Select(n => n.IdPersonaNavigation.Nombre).ToList()
+
+            });
+
+            List<string> personaunidad = new List<string>();
+
+            foreach (var item in persona)
+            {
+                foreach (var klk in item.ListadodeAgentes)
+                {
+                    personaunidad.Add(klk);
+                }
+            }
+
+            //var mantenedor = Db.Mantenedors.Where(n => n.Nombre == "Exergia").Select(sub => new
+            //{
+
+            //    subsistema = sub.Subsistemas.Select(n => n.Nombre).ToList()
+            //}).ToList();
 
 
 
 
-            return mantenedor;
+            return personaunidad;
+
 
         }
 
@@ -439,6 +465,13 @@ namespace gesin_app.Controllers
               
 
             }).ToList();
+
+
+            //var mantenedor = Db.Mantenedors.Where(n => n.Nombre == "Exergia").Select(sub => new
+            //{
+
+            //    subsistema = sub.Subsistemas.Select(n => n.Nombre).ToList()
+            //}).ToList();
 
           
 
@@ -543,6 +576,9 @@ namespace gesin_app.Controllers
             
 
         }
+
+
+      
 
 
         

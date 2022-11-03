@@ -1,6 +1,8 @@
 ﻿using gesin_app.Models;
 using gesin_app.Servicios;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,6 +20,9 @@ namespace gesin_app.Controllers
         }
         public IActionResult Index()
         {
+
+            ViewBag.funciones = Funciones();
+
             return View();
         }
 
@@ -34,7 +39,7 @@ namespace gesin_app.Controllers
         {
             if (persona.Nombre == null)
             {
-                return Ok(4);
+                return Ok(0);
             }
              //buscamos si existe una con este mismo nombre 
             var BuscarEstacion =  context.Personas.Where(e => e.Nombre.Trim() == persona.Nombre.Trim()).Count();
@@ -71,7 +76,7 @@ namespace gesin_app.Controllers
                         var personaUpdate = await repository.UpdateAsync(persona);
 
 
-                        return Ok(2);
+                        return Ok(personaUpdate);
 
                     }
                 }
@@ -145,6 +150,21 @@ namespace gesin_app.Controllers
 
             return Json(buscarpersona);
 
+        }
+
+
+        public List<SelectListItem> Funciones()
+        {
+
+            var funciones = context.Funcions.Select(f => new SelectListItem
+            {
+                Text = f.Funcion1,
+                Value = f.Id.ToString()
+
+
+            }).ToList();
+
+            return funciones;
         }
     }
 }

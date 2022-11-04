@@ -8,6 +8,6 @@ namespace gesin_app.ViewModel
 
        
 
-       public List<string> ListadodeAgentes { get; set; }
+       public List<string> Nombres { get; set; }
     }
 }

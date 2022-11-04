@@ -9,12 +9,12 @@ namespace gesin_app.Models
     {
         public Funcion()
         {
-            FuncionPersonas = new HashSet<FuncionPersona>();
+            Personas = new HashSet<Persona>();
         }
 
         public int Id { get; set; }
-        public string Funcion1 { get; set; }
+        public string Nombre { get; set; }
 
-        public virtual ICollection<FuncionPersona> FuncionPersonas { get; set; }
+        public virtual ICollection<Persona> Personas { get; set; }
     }
 }

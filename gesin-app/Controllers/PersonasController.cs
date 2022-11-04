@@ -1,7 +1,11 @@
-﻿using gesin_app.Models;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using gesin_app.Models;
 using gesin_app.Servicios;
+using gesin_app.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,11 +16,13 @@ namespace gesin_app.Controllers
     {
         private readonly IrepositoryGeneric<Persona> repository;
         private readonly GesinV2Context context;
+        private readonly IMapper mapper;
 
-        public PersonasController(IrepositoryGeneric<Persona> repository,GesinV2Context context)
+        public PersonasController(IrepositoryGeneric<Persona> repository,GesinV2Context context, IMapper mapper)
         {
             this.repository = repository;
             this.context = context;
+            this.mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -28,9 +34,14 @@ namespace gesin_app.Controllers
 
         public async Task<ActionResult> ListarPersonas()
         {
-            var estaciones = await repository.GetAllAsync();
+            var persona = await repository.GetAllAsync();
 
-            return Json(estaciones);
+         
+
+           var  listaPersonas = await context.Personas.ProjectTo<PersonaView>(mapper.ConfigurationProvider).ToListAsync();
+          
+     
+            return Json(listaPersonas);
         }
 
 
@@ -158,7 +169,7 @@ namespace gesin_app.Controllers
 
             var funciones = context.Funcions.Select(f => new SelectListItem
             {
-                Text = f.Funcion1,
+                Text = f.Nombre,
                 Value = f.Id.ToString()
 
 

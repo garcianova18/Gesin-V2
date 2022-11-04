@@ -7,17 +7,11 @@ namespace gesin_app.Models
 {
     public partial class Persona
     {
-        public Persona()
-        {
-            FuncionPersonas = new HashSet<FuncionPersona>();
-        }
-
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Codigo { get; set; }
-        public int IdEmpresaMantenedora { get; set; }
+        public int IdFuncion { get; set; }
 
-        public virtual Mantenedor IdEmpresaMantenedoraNavigation { get; set; }
-        public virtual ICollection<FuncionPersona> FuncionPersonas { get; set; }
+        public virtual Funcion IdFuncionNavigation { get; set; }
     }
 }

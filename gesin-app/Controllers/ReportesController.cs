@@ -221,11 +221,9 @@ namespace gesin_app.Controllers
         {
 
             var mantenedor = (from p in Db.Personas
-                                     join fp in Db.FuncionPersonas
-                                     on p.Id equals (fp.IdPersona)
-                                     join f in Db.Funcions
-                                     on fp.IdFuncion equals (f.Id)
-                                     where f.Id == 2
+                                     join fp in Db.Funcions
+                                     on p.IdFuncion equals (fp.Id)
+                                     where fp.Id == 2
                                      select p).ToList();
 
             return mantenedor;
@@ -374,33 +372,18 @@ namespace gesin_app.Controllers
             //                  select p).ToList();
             
 
-            var persona = Db.Funcions.Where(n => n.Funcion1 == "Agente").Select(p => new MantenedorNotificarViewcs
+            var ListPersonas =  Db.Funcions.Where(n => n.Nombre == "Call Center").Select(p => new MantenedorNotificarViewcs
             {
 
-                ListadodeAgentes = p.FuncionPersonas.Select(n => n.IdPersonaNavigation.Nombre).ToList()
+                Nombres =  p.Personas.Select(p=> p.Nombre).ToList()
+              
 
-            });
-
-            List<string> personaunidad = new List<string>();
-
-            foreach (var item in persona)
-            {
-                foreach (var klk in item.ListadodeAgentes)
-                {
-                    personaunidad.Add(klk);
-                }
-            }
-
-            //var mantenedor = Db.Mantenedors.Where(n => n.Nombre == "Exergia").Select(sub => new
-            //{
-
-            //    subsistema = sub.Subsistemas.Select(n => n.Nombre).ToList()
-            //}).ToList();
+            }).ToList();
 
 
+            var personas = ListPersonas[0].Nombres;
 
-
-            return personaunidad;
+            return personas;
 
 
         }

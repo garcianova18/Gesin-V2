@@ -6,6 +6,8 @@
     List<SelectListItem> Funciones = new List<SelectListItem>();
 
     Funciones = ViewBag.funciones;
+
+   
 }
 
 <!DOCTYPE html>
@@ -21,6 +23,7 @@
             font-size: 25px;
         }
 
+
         .btn-eliminar {
             font-size: 25px;
         }
@@ -34,13 +37,13 @@
 
         <div class="col-12 d-flex justify-content-center mb-5">
 
-            <h3>Estaciones</h3>
+            <h3>Personas</h3>
         </div>
 
         <div class="col-12 d-flex justify-content-center mb-5">
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crear_estacion">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crear_persona">
 
                 <div class="d-flex align-items-center">
 
@@ -53,24 +56,42 @@
             </button>
 
             <!------------- Moda para crear una nueva estacion -------->
-            <div class="modal fade" id="crear_estacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade" id="crear_persona" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Crear nueva estacion</h5>
+                            <h5 class="modal-title" id="staticBackdropLabel">Agregar Personas</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
-                        <form id="formEstaciones" method="post">
+                        <form id="formPersona" method="post">
 
                             <div class="modal-body">
 
 
+                               <div class="row">
+                                    <div class="col-12 col-md-6 mb-3">
 
-                                <label class="form-label">Nombre</label>
-                                <input id="nombreEstacion_crear" class="form-control" />
-                                <label class="form form-label">Funcion</label>
-                                <select asp-items="@Funciones"></select>
+                                       
+                                        <input id="nombre" class="form-control form-control-sm" placeholder="Nombre" />
+
+                                    </div>
+
+                                    <div class="col-12 col-md-6 mb-3 ">
+
+                                        
+                                        <input id="codigo" class="form-control form-control-sm " placeholder="Codigo" />
+                                    </div>
+
+                                    <div class="col-12 col-md-6 offset-md-3 mb-3">
+
+
+                                        
+                                        <select class="form-control form-control-sm" id="funcion" asp-items="@Funciones"></select>
+                                    </div>
+
+
+                               </div>
 
                             </div>
                             <div class="modal-footer " id="btnfooter">
@@ -90,13 +111,13 @@
 
 
 
-            <table class="table table-sm table-bordered">
+            <table class="table table-sm table-bordered ">
 
-                <thead class="table-dark">
+                <thead class="table-dark text-center ">
 
                     <tr>
-
-                        <th>@Html.DisplayNameFor(model => model.Id)</th>
+                        
+                        <th>#</th>
                         <th>@Html.DisplayNameFor(model => model.Nombre)</th>
                         <th>@Html.DisplayNameFor(model => model.Codigo)</th>
                         <th>@Html.DisplayNameFor(model => model.IdFuncionNavigationNombre)</th>
@@ -195,15 +216,16 @@
                     const pintardata = document.getElementById("pintardata");
                     let filatabla = "";
 
+                    let conteo = 0;
+
                     for (var i = 0; i < data.length; i++) {
 
-
+                         conteo++;
 
                         filatabla += `
 
                                                 <tr>
-
-                                                <td>${data[i].id}</td>
+                                                <td>${conteo}</td>
                                                 <td>${data[i].nombre}</td>
                                                 <td>${data[i].codigo}</td>
                                                 <td>${data[i].idFuncionNavigationNombre}</td>
@@ -287,6 +309,106 @@
 
 
         }
+
+
+
+
+        //------- crear estaciones asincrono-----------
+
+        const formPersona = document.getElementById("formPersona");
+
+        formPersona.addEventListener("submit", crearpersonas);
+
+      function crearpersonas(e){
+
+
+            e.preventDefault();
+
+
+
+            const nombre= document.getElementById("nombre").value;
+             const codigo= document.getElementById("codigo").value;
+            const funcion = document.getElementById("funcion");
+
+            alert(funcion.value)
+
+            const url = "/Personas/CrearEditar/persona";
+
+            fetch(url, {
+
+                method: 'POST',
+                body: JSON.stringify({
+
+                    nombre: nombre,
+                    codigo: codigo,
+                    idFuncion: Number(funcion.value)
+
+
+
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+
+
+            })
+                .then(res => res.json())
+                .then(data => {
+
+                    if (data == 3) {
+
+                        Swal.fire('esta estacion ya existe')
+
+                    }
+                    else {
+
+
+
+                        if (data == 1) {
+
+
+
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Se ha agregado correctamente',
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                            pintardara();
+
+                            const nombreEstacion = document.getElementById("nombreEstacion").value = "";
+                            const idEstacion = document.getElementById("idEstacion").value = "";
+
+
+                        }
+
+
+
+
+                        else {
+
+
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Advertencia...',
+                                text: 'el campo nombre es obligatorio',
+                                //footer: '<a href="">Why do I have this issue?</a>'
+                            })
+
+                        }
+
+                    }
+
+
+
+                })
+
+        }
+
+      
 
 
     </script>

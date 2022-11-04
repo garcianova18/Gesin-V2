@@ -175,6 +175,12 @@ namespace gesin_app.Controllers
 
             }).ToList();
 
+
+            funciones.Insert(0, new SelectListItem
+            {
+                Text ="---seleccione una funcion----",
+                Value = ""
+            } );
             return funciones;
         }
     }

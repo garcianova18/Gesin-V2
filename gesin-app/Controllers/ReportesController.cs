@@ -375,7 +375,7 @@ namespace gesin_app.Controllers
             var ListPersonas =  Db.Funcions.Where(n => n.Nombre == "Call Center").Select(p => new MantenedorNotificarViewcs
             {
 
-                Nombres =  p.Personas.Select(p=> p.Nombre).ToList()
+               Nombres = p.Personas.Select(p=> p.Nombre).ToList()
               
 
             }).ToList();

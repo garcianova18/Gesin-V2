@@ -8,11 +8,13 @@
     ViewData["Title"] = "Index";
 
 
+
     List<Persona> mantenedorreparo = ViewBag.mantenedorreparo;
 
     List<Subsistema> subsistemas = ViewBag.subsistema;
 
     List<Estacion> estaciones = ViewBag.estaciones;
+
 
     List<Ubicacion> ubicaciones = ViewBag.ubicacion;
 
@@ -33,15 +35,42 @@
     <link rel="icon" href="/img/icono_gestiondeaverias.png" />
     <link rel="stylesheet" href="~/css/Index.css"/>
     <link rel="stylesheet" href="/css/Spinner.css" />
+     <link rel="stylesheet" href="/css/Spinner_tabla.css" />
+
+    <script src="/js/Recuperar_style_usuarios.js"></script>
+
     <title>GestionAverias</title>
 
    
 
 </head>
 
-<body id="cuerpo">
+<body id="cuerpo" class="cuerpo">
 
-    <div class="container-fluid">
+    <div class="spinner" id="spin_container">
+
+         <div class="sk-circle">
+
+
+
+              <div class="sk-circle1 sk-child"></div>
+              <div class="sk-circle2 sk-child"></div>
+              <div class="sk-circle3 sk-child"></div>
+              <div class="sk-circle4 sk-child"></div>
+              <div class="sk-circle5 sk-child"></div>
+              <div class="sk-circle6 sk-child"></div>
+              <div class="sk-circle7 sk-child"></div>
+              <div class="sk-circle8 sk-child"></div>
+              <div class="sk-circle9 sk-child"></div>
+              <div class="sk-circle10 sk-child"></div>
+              <div class="sk-circle11 sk-child"></div>
+              <div class="sk-circle12 sk-child"></div>
+        </div>
+
+
+    </div>
+
+    <div class=" container-fluid ocultar_contenido " id="container">
 
 
         <div class="row fila-primaria-padre ">
@@ -191,13 +220,13 @@
 
 
             <!---area de la tabla-->
-            <div class=" col-primaria col-primaria-tabla col-12">
+            <div class=" col-primaria col-primaria-tabla col-12 " id="contenedor_tabla">
 
+                <div  id="contenedor_spinner"></div>
 
+                <table class="table table-sm table-hover table-bordered text-center align-middle tabla " id="tabla">
 
-                <table class="table table-sm table-hover table-bordered text-center align-middle ">
-
-                    <thead class="cabecera-tabla text-white text-center align-middle    " style="font-size:14px" id="head_table">
+                    <thead class="cabecera-tabla text-white text-center align-middle" style="font-size:14px" id="head_table">
 
                         <tr>
                             <th>#@ViewBag.conteo</th>
@@ -234,7 +263,7 @@
                         </tr>
                     </thead>
 
-                    <tbody id="Pintardata">
+                    <tbody id="Pintardata" class="tabla">
 
                         @*@foreach (var item in Model)
                             {
@@ -652,161 +681,203 @@
 
 
 
+
+
     </div>
 
     <script src="https://kit.fontawesome.com/c6f899d35a.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
-
-</body>
-
-</html>
+    <script>
 
 
-<script>
+        let conexion = new signalR.HubConnectionBuilder().withUrl("/GesinHub").build();
 
-    let conexion = new signalR.HubConnectionBuilder().withUrl("/GesinHub").build();
-
-    conexion.start();
+        conexion.start();
 
 
-    conexion.on("recibir", () => ListarTodo());
-
-
-
-    let ListarTodo = () => {
-
-        let url = "Reportes/Listarasincrono";
-        Listardata(url)
-
-    }
-
-    window.onload = function () {
-        Spinner();
-        ListarTodo();
+        conexion.on("recibir", () => ListarTodo());
        
 
-        let reutilizarenviar = document.getElementById("reutilizarenviar");
 
-        reutilizarenviar.style.display ="none";
-
-       recuperarStyle();
-
-    }
+        let ListarTodo = () => {
 
 
+           
+            let url = "Reportes/Listarasincrono";
+            Listardata(url);
 
-    function Spinner(){
 
-        alert("klks")
-
-        const body = document.getElementById("cuerpo");
-
-        let spin = document.createElement("div")
-
-        spin.classList.add("sk-chase");
-
-        spin.innerHTML =`
             
-              <div class="sk-chase-dot"></div>
-              <div class="sk-chase-dot"></div>
-              <div class="sk-chase-dot"></div>
-              <div class="sk-chase-dot"></div>
-              <div class="sk-chase-dot"></div>
-              <div class="sk-chase-dot"></div>
+         
 
+           
+
+        }
         
+
+        window.onload = function () {
+            
+
+            const spin_container = document.getElementById("spin_container")
+
+            spin_container.style.display = "none";
+
+            const contenido = document.getElementById("container")
+
+            contenido.classList.remove("ocultar_contenido")
+           
+          
+            //ocultar btn reutilizar solo se muestra cuando se va a actualizar un registro
+            let reutilizarenviar = document.getElementById("reutilizarenviar");
+
+            reutilizarenviar.style.display = "none";
+
+            //mostrar contenido de la tabla
+
+           
+
+           ListarTodo();
+           
+           
         
-        
-        
-        `
-        
-        body.appendChild(spin)
+
+        }
+
+        function limpiarhtml(){
+
+             const contenedor_tabla = document.getElementById("contenedor_tabla")
+            while (contenedor_tabla.firstChild) {
+
+
+               contenedor_tabla.removeChild(contenedor_tabla.firstChild);
+            }
+        }
+
+        function Spinner() {
+
+            //const tabla = document.getElementById("tabla")
+
+            //tabla.classList.add("ocultar_contenido")
+
+
+            const contenedor_tabla = document.getElementById("contenedor_tabla")
+
+            let contenedor_spinner = document.getElementById("contenedor_spinner")
+
+            contenedor_spinner.classList.add("spin");
+
+            let elemento_spinner = document.createElement("div");
 
 
 
-    }
-      
+            elemento_spinner.classList.add("sk-chase");
+
+            elemento_spinner.innerHTML = `
+
+                           <div class="sk-chase-dot"></div>
+                           <div class="sk-chase-dot"></div>
+                           <div class="sk-chase-dot"></div>
+                           <div class="sk-chase-dot"></div>
+                           <div class="sk-chase-dot"></div>
+                           <div class="sk-chase-dot"></div>
 
 
 
-    function Fecha(fecha) {
-
-        let date = new Date()
 
 
+                     `
+            contenedor_spinner.appendChild(elemento_spinner)
 
-        let dias = date.getDate();
-        let meses = date.getMonth() + 1;
-        let anios = date.getFullYear();
-        let horas = date.getHours();
-        let minutos = date.getMinutes();
-
-       
-
-        
-        minutos = minutos <= 9 ? "0" + minutos : minutos;
-       
-        horas = horas <= 9 ? "0" + horas : horas;
-
-        meses = meses <= 9 ? "0" + meses : meses;
-
-        fecha.value = `${dias}/${meses}/${anios} ${horas}:${minutos}`
-
-    }
-
-    function ObtenerfechaReporte() {
-
-        let fechareportes = document.getElementById("fechareporte");
-
-        fechareportes.classList.remove("error");
-
-        Fecha(fechareportes)
-
-    }
-
-
-    function ObtenerfechaNotificacion() {
-
-        let fechanotificar = document.getElementById("fechanotificacion");
-
-        Fecha(fechanotificar)
-
-    }
-
-    let fechainicio = document.getElementById("fechainicio");
-
-    fechainicio.ondblclick = function (fechainicio) {
-
-        let fecha = document.getElementById("fechainicio");
-        Fecha(fecha)
-
-
-    }
-
-    let fechafinal = document.getElementById("fechafinal");
-
-
-    fechafinal.addEventListener("dblclick", function () {
-
-        let fecha = document.getElementById("fechafinal");
-
-        Fecha(fecha);
-    })
-
-
-    function Operador(codigooperador, nombreoperador) {
+            contenedor_tabla.appendChild(contenedor_spinner);
 
 
 
-             let url = "Reportes/Operador/?op=" + codigooperador;
+        }
 
-                 fetch(url)
+
+
+
+
+
+
+        function Fecha(fecha) {
+
+            let date = new Date()
+
+
+
+            let dias = date.getDate();
+            let meses = date.getMonth() + 1;
+            let anios = date.getFullYear();
+            let horas = date.getHours();
+            let minutos = date.getMinutes();
+
+
+
+
+            minutos = minutos <= 9 ? "0" + minutos : minutos;
+
+            horas = horas <= 9 ? "0" + horas : horas;
+
+            meses = meses <= 9 ? "0" + meses : meses;
+
+            fecha.value = `${dias}/${meses}/${anios} ${horas}:${minutos}`
+
+        }
+
+        function ObtenerfechaReporte() {
+
+            let fechareportes = document.getElementById("fechareporte");
+
+            fechareportes.classList.remove("error");
+
+            Fecha(fechareportes)
+
+        }
+
+
+        function ObtenerfechaNotificacion() {
+
+            let fechanotificar = document.getElementById("fechanotificacion");
+
+            Fecha(fechanotificar)
+
+        }
+
+        let fechainicio = document.getElementById("fechainicio");
+
+        fechainicio.ondblclick = function (fechainicio) {
+
+            let fecha = document.getElementById("fechainicio");
+            Fecha(fecha)
+
+
+        }
+
+        let fechafinal = document.getElementById("fechafinal");
+
+
+        fechafinal.addEventListener("dblclick", function () {
+
+            let fecha = document.getElementById("fechafinal");
+
+            Fecha(fecha);
+        })
+
+
+        function Operador(codigooperador, nombreoperador) {
+
+
+
+            let url = "Reportes/Operador/?op=" + codigooperador;
+
+            fetch(url)
                 .then(res => res.json())
                 .then(data => {
 
-              
+
 
                     nombreoperador.value = "";
                     nombreoperador.value = data[0].value;
@@ -814,46 +885,43 @@
                 })
 
 
-    }
+        }
 
 
-    function buscaroperadorreporte() {
+        function buscaroperadorreporte() {
 
-        let codOperador = document.getElementById("codigooperador").value;
-        let nomOperador = document.getElementById("nombreoperador");
+            let codOperador = document.getElementById("codigooperador").value;
+            let nomOperador = document.getElementById("nombreoperador");
 
-        Operador(codOperador, nomOperador);
-
-
-      
-
-    }
-
-    function buscaroperadorcierre() {
-
-        let codOperador = document.getElementById("codigooperadorfinal");
-        let nomOperadorfinal = document.getElementById("nombreoperadorfinal");
-
-        Operador(codOperador, nomOperadorfinal)
-
-    }
-
-
-    let codOperadorfinal = document.getElementById("codigooperadorfinal");
-
-    codOperadorfinal.onkeyup = function () {
-
-        let codigooperadorfinal = document.getElementById("codigooperadorfinal").value
-        let nombreoperadorfinal = document.getElementById("nombreoperadorfinal");
-
-        Operador(codigooperadorfinal, nombreoperadorfinal)
+            Operador(codOperador, nomOperador);
 
 
 
-    }
+
+        }
+
+        function buscaroperadorcierre() {
+
+            let codOperador = document.getElementById("codigooperadorfinal");
+            let nomOperadorfinal = document.getElementById("nombreoperadorfinal");
+
+            Operador(codOperador, nomOperadorfinal)
+
+        }
+
+
+        let codOperadorfinal = document.getElementById("codigooperadorfinal");
+
+        codOperadorfinal.onkeyup = function () {
+
+            let codigooperadorfinal = document.getElementById("codigooperadorfinal").value
+            let nombreoperadorfinal = document.getElementById("nombreoperadorfinal");
+
+            Operador(codigooperadorfinal, nombreoperadorfinal)
 
 
 
+        }
 
 
 
@@ -861,17 +929,20 @@
 
 
 
-    const form = document.getElementById("formulario");
 
 
-    function CrearEditarReportes(e) {
-       
-             e.preventDefault();
-            
-             //console.log(e.submitter.id)
-          
-         
-            let idreportes = Number(document.getElementById("idreportes").value); 
+
+        const form = document.getElementById("formulario");
+
+
+        function CrearEditarReportes(e) {
+
+            e.preventDefault();
+
+            //console.log(e.submitter.id)
+
+
+            let idreportes = Number(document.getElementById("idreportes").value);
             let sistema = document.getElementById("sistemas");
             let subsistemas = document.getElementById("subsistemas");
             let estaciones = document.getElementById("estaciones");
@@ -891,38 +962,38 @@
             let fechainicio = document.getElementById("fechainicio").value;
             let fechafinal = document.getElementById("fechainicio").value;
             let nombreoperadorfinal = document.getElementById("nombreoperadorfinal").value;
-            let codigooperadorfinal =  document.getElementById("codigooperadorfinal").value;
+            let codigooperadorfinal = document.getElementById("codigooperadorfinal").value;
             let mantenedorcierre = document.getElementById("mantenedorcierre").value;
-            let usuario = Number( document.getElementById("usuario").value);
+            let usuario = Number(document.getElementById("usuario").value);
 
 
-             ot.style.backgroundColor = "";
-             //descripcioncascada.value == ""? descripcioncascada.classList.add("error"): descripcioncascada.classList.remove("error") ;
-             sistema.value == ""? sistema.classList.add("error"): sistema.classList.remove("error") ;
-             subsistemas.value == ""? subsistemas.classList.add("error"): subsistemas.classList.remove("error") ;
-             estaciones.value == ""? estaciones.classList.add("error"): estaciones.classList.remove("error");
-             ubicaciones.value == ""? ubicaciones.classList.add("error"): ubicaciones.classList.remove("error");
-             descripcion.value == ""? descripcion.classList.add("error"): descripcion.classList.remove("error");
-             codigooperador.value == "" ? codigooperador.classList.add("error") : codigooperador.classList.remove("error");
-             nombreoperador.value == "" ? nombreoperador.classList.add("error") : nombreoperador.classList.remove("error");
-             Number( fechareportes.value) == 0? fechareportes.classList.add("error"): fechareportes.classList.remove("error");
-             criticidad.value == ""? criticidad.classList.add("error"): criticidad.classList.remove("error");
-             Sm.value =="" ? Sm.classList.add("error"): Sm.classList.remove("error");
+            ot.style.backgroundColor = "";
+            //descripcioncascada.value == ""? descripcioncascada.classList.add("error"): descripcioncascada.classList.remove("error") ;
+            sistema.value == "" ? sistema.classList.add("error") : sistema.classList.remove("error");
+            subsistemas.value == "" ? subsistemas.classList.add("error") : subsistemas.classList.remove("error");
+            estaciones.value == "" ? estaciones.classList.add("error") : estaciones.classList.remove("error");
+            ubicaciones.value == "" ? ubicaciones.classList.add("error") : ubicaciones.classList.remove("error");
+            descripcion.value == "" ? descripcion.classList.add("error") : descripcion.classList.remove("error");
+            codigooperador.value == "" ? codigooperador.classList.add("error") : codigooperador.classList.remove("error");
+            nombreoperador.value == "" ? nombreoperador.classList.add("error") : nombreoperador.classList.remove("error");
+            Number(fechareportes.value) == 0 ? fechareportes.classList.add("error") : fechareportes.classList.remove("error");
+            criticidad.value == "" ? criticidad.classList.add("error") : criticidad.classList.remove("error");
+            Sm.value == "" ? Sm.classList.add("error") : Sm.classList.remove("error");
 
-             //con esto decimos que si el boton que disparo el evento submit o enviar el formulario fue
-             // el btn reutilizar Registro, cuanto tenemos un registro cargado para actualizar
-             // entoces este no se actualizara si no se creara uno nuevo
-             if(e.submitter.id =="reutilizarenviar"){
-                  
+            //con esto decimos que si el boton que disparo el evento submit o enviar el formulario fue
+            // el btn reutilizar Registro, cuanto tenemos un registro cargado para actualizar
+            // entoces este no se actualizara si no se creara uno nuevo
+            if (e.submitter.id == "reutilizarenviar") {
 
-                 idreportes = 0;
-                 
-                 
-            
 
-             }
+                idreportes = 0;
 
-            
+
+
+
+            }
+
+
 
 
 
@@ -966,509 +1037,510 @@
                 //eventeo change aplicado al padre pero los hijos son quienes lo dispararan
                 divPadre.addEventListener("change", cambio);
 
-                
+
 
             }
 
-           
-        //alert(fechareportes.value.length)
-        //  alert(isNaN(Date.parse(fechareportes.value)))
 
-        if(sistema.value =="" || subsistemas.value =="" ||estaciones.value==""||ubicaciones.value =="" ||descripcion.value==""
-        ||nombreoperador.value=="" || codigooperador.value=="" ||  fechareportes.value=="" || Number( criticidad.value) ==0 || Number( Sm.value)==0){
+            //alert(fechareportes.value.length)
+            //  alert(isNaN(Date.parse(fechareportes.value)))
 
-                            Swal.fire({
+            if (sistema.value == "" || subsistemas.value == "" || estaciones.value == "" || ubicaciones.value == "" || descripcion.value == ""
+                || nombreoperador.value == "" || codigooperador.value == "" || fechareportes.value == "" || Number(criticidad.value) == 0 || Number(Sm.value) == 0) {
+
+                Swal.fire({
 
 
-                                position: 'center-end',
-                                icon: 'warning',
-                                text: `Los Campos en rojos son obligatorios`,
-                                showConfirmButton: true,
-                                background: '#130a28',
-                                color:'#ffff'
-                                
-                                
-                               
-                            })
+                    position: 'center-end',
+                    icon: 'warning',
+                    text: `Los Campos en rojos son obligatorios`,
+                    showConfirmButton: true,
+                    background: '#130a28',
+                    color: '#ffff'
 
-        }
-        else{
 
-            
-              if (Number(fechareportes.value.length) === 16 && isNaN(Date.parse(fechareportes.value))) {
 
-              
-                let url ="Reportes/CrearEditarReportes/reporte"
-
-                fetch(url, {
-                    method: 'POST',
-                    body: JSON.stringify({
-
-                        id:idreportes,
-                        sistema: sistema.value,
-                        subsistema: subsistemas.value,
-                        estacion: estaciones.value,
-                        ubicacion: ubicaciones.value,
-                        descripcion: descripcion.value,
-                        operadorReporte: nombreoperador.value,
-                        codigoOperadorReporte: codigooperador.value,
-                        fechaaveriaGuardarMostrar: fechareportes.value,
-                        idCriticidad: Number( criticidad.value),
-                        idSm: Number( Sm.value),
-                        idEstadoOt: Number( estadoot.value),
-                        ot:Number(ot.value) ,
-                        comentario: comentario,
-                        fechanotificacionguardarmostrar: fechanotificacion,
-                        mantenedorNotificar: mantenedornotificar,
-                        fechainicioguardarmostrar: fechainicio,
-                        fechafinalguardarmostrar: fechafinal,
-                        operadorCierre: nombreoperadorfinal,
-                        codigoOperadorCierre: codigooperadorfinal,
-                        mantenedorReparo: mantenedorcierre,
-                        idUsuarios: usuario
-
-                
-
-                    }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
                 })
-                    .then(res => res.json())
-                    .then(data => {
 
-                        //se creo un registro
-                        if (data == 1) {
-
-                   
-
-                            let url = "Reportes/Listarasincrono";
-                            //llamamos al metodo listar para que vuelva a cargar la tabla
-                            Listardata(url);
+            }
+            else {
 
 
+                if (Number(fechareportes.value.length) === 16 && isNaN(Date.parse(fechareportes.value))) {
 
 
-                            Swal.fire({
-                                position: 'center-end',
-                                icon: 'success',
-                                title: 'Reporte agregado satisfactoriamente',
-                                showConfirmButton: false,
-                                timer: 1000
-                            })
+                    let url = "Reportes/CrearEditarReportes/reporte"
+
+                    fetch(url, {
+                        method: 'POST',
+                        body: JSON.stringify({
+
+                            id: idreportes,
+                            sistema: sistema.value,
+                            subsistema: subsistemas.value,
+                            estacion: estaciones.value,
+                            ubicacion: ubicaciones.value,
+                            descripcion: descripcion.value,
+                            operadorReporte: nombreoperador.value,
+                            codigoOperadorReporte: codigooperador.value,
+                            fechaaveriaGuardarMostrar: fechareportes.value,
+                            idCriticidad: Number(criticidad.value),
+                            idSm: Number(Sm.value),
+                            idEstadoOt: Number(estadoot.value),
+                            ot: Number(ot.value),
+                            comentario: comentario,
+                            fechanotificacionguardarmostrar: fechanotificacion,
+                            mantenedorNotificar: mantenedornotificar,
+                            fechainicioguardarmostrar: fechainicio,
+                            fechafinalguardarmostrar: fechafinal,
+                            operadorCierre: nombreoperadorfinal,
+                            codigoOperadorCierre: codigooperadorfinal,
+                            mantenedorReparo: mantenedorcierre,
+                            idUsuarios: usuario
 
 
-                            const check = document.getElementById("reutilizar")
 
-                            // si el chekbox no esta chekiado entonces resetiamos/ limpiamos el formulario
-                            if (!check.checked) {
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                        .then(res => res.json())
+                        .then(data => {
 
-                               form.reset();
+                            //se creo un registro
+                            if (data == 1) {
+
+
+
+                                let url = "Reportes/Listarasincrono";
+                                //llamamos al metodo listar para que vuelva a cargar la tabla
+                                Listardata(url);
+
+
+
+
+                                Swal.fire({
+                                    position: 'center-end',
+                                    icon: 'success',
+                                    title: 'Reporte agregado satisfactoriamente',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                })
+
+
+                                const check = document.getElementById("reutilizar")
+
+                                // si el chekbox no esta chekiado entonces resetiamos/ limpiamos el formulario
+                                if (!check.checked) {
+
+                                    form.reset();
+
+                                }
+
+                            }
+                            // se actualizo un registro
+                            else if (data == 2) {
+
+
+
+                                let url = "Reportes/Listarasincrono";
+                                //llamamos al metodo listar para que vuelva a cargar la tabla
+                                Listardata(url);
+
+
+
+                                Swal.fire({
+                                    position: 'center-end',
+                                    icon: 'success',
+                                    title: 'Reporte Actualizado satisfactoriamente',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                })
+
+
+
+
+
+
+
+                                const check = document.getElementById("reutilizar")
+
+
+                                if (!check.checked) {
+
+                                    form.reset();
+                                    document.getElementById("enviar").value = "Agregar";
+                                    reutilizarenviar.style.display = "none";
+
+                                }
 
                             }
 
-                        }
-                        // se actualizo un registro
-                        else if (data == 2) {
 
 
+                        })
 
-                            let url = "Reportes/Listarasincrono";
-                            //llamamos al metodo listar para que vuelva a cargar la tabla
-                            Listardata(url);
-
-
-
-                            Swal.fire({
-                                position: 'center-end',
-                                icon: 'success',
-                                title: 'Reporte Actualizado satisfactoriamente',
-                                showConfirmButton: false,
-                                timer: 1000
-                            })
+                }
+                else {
 
 
-                    
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        text: 'La Fecha introducida no es válida',
+                        showConfirmButton: true,
+                        background: '#130a28',
+                        color: '#ffff',
 
-                  
-
-
-                            const check = document.getElementById("reutilizar")
-
-
-                            if (!check.checked) {
-                        
-                                form.reset();
-                                document.getElementById("enviar").value = "Agregar";
-                                reutilizarenviar.style.display ="none";
-
-                            }
-
-                        }
-
-
+                        //timer: 1000,
+                        footer: "Formato válido: DD-MM-YYYY hh:mm"
 
                     })
 
+
+                }
             }
-            else{
-
-                
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'error',
-                                text: 'La Fecha introducida no es válida',
-                                showConfirmButton: true,
-                                background: '#130a28',
-                                color:'#ffff',
-                                
-                                //timer: 1000,
-                                footer: "Formato válido: DD-MM-YYYY hh:mm"
-                               
-                            })
 
 
-            }
+
+
+
+
+
+
+
         }
 
-      
+        form.addEventListener("submit", CrearEditarReportes);
 
 
-            
+        // Buscar la data y cargarla al formulario para ediarla
+
+        function BuscarEditar(idreporte) {
+
+            const otcolor = document.getElementById("ot")
+            otcolor.style.backgroundColor = "";
+
+            let sistemas = document.getElementById("sistemas");
+            let subsistemas = document.getElementById("subsistemas");
+            let estaciones = document.getElementById("estaciones");
+            let ubicaciones = document.getElementById("ubicaciones");
+            let descripcioncascada = document.getElementById("descripcioncascada");
+            let descripcion = document.getElementById("descripcion");
+            let codigooperador = document.getElementById("codigooperador");
+            let fechareportes = document.getElementById("fechareporte");
+            let criticidad = document.getElementById("criticidad");
+            let sm = document.getElementById("sm");
+            let nombreoperador = document.getElementById("nombreoperador");
+
+            descripcioncascada.classList.remove("error");
+            sistemas.classList.remove("error");
+            subsistemas.classList.remove("error");
+            estaciones.classList.remove("error");
+            ubicaciones.classList.remove("error");
+            descripcion.classList.remove("error");
+            codigooperador.classList.remove("error");
+            fechareportes.classList.remove("error");
+            criticidad.classList.remove("error");
+            sm.classList.remove("error");
+            nombreoperador.classList.remove("error");
 
 
+            reutilizarenviar.style.display = "block";
+            document.getElementById("enviar").value = "Actualizar";
 
-
-    }
-
-    form.addEventListener("submit", CrearEditarReportes);
-
-
-    // Buscar la data y cargarla al formulario para ediarla
-
-    function BuscarEditar(idreporte) {
-
-       const otcolor = document.getElementById("ot")
-        otcolor.style.backgroundColor = "";
-
-        let sistemas = document.getElementById("sistemas");
-        let subsistemas = document.getElementById("subsistemas");
-        let estaciones = document.getElementById("estaciones");
-        let ubicaciones = document.getElementById("ubicaciones");
-        let descripcioncascada =document.getElementById("descripcioncascada");
-        let descripcion = document.getElementById("descripcion");
-        let codigooperador = document.getElementById("codigooperador");
-        let fechareportes = document.getElementById("fechareporte");
-        let criticidad = document.getElementById("criticidad");
-        let sm = document.getElementById("sm");
-        let nombreoperador = document.getElementById("nombreoperador");
-       
-        descripcioncascada.classList.remove("error");
-        sistemas.classList.remove("error");
-        subsistemas.classList.remove("error");
-        estaciones.classList.remove("error");
-        ubicaciones.classList.remove("error");
-        descripcion.classList.remove("error");
-        codigooperador.classList.remove("error");
-        fechareportes.classList.remove("error");
-        criticidad.classList.remove("error");
-        sm.classList.remove("error");
-        nombreoperador.classList.remove("error");
-
-
-         reutilizarenviar.style.display ="block";
-         document.getElementById("enviar").value = "Actualizar";
-        
-        let url = "Reportes/BuscarEditar/?id=" + idreporte;
-
-        fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                alert(JSON.stringify(data))
-
-                 
-             
-                let Idreportes = document.getElementById("idreportes").value = data.id;
-                let sistemas = document.getElementById("sistemas").value = data.sistemasNombre;
-                let subsistemas = document.getElementById("subsistemas").value = data.subsistemasNombre;
-                let estaciones = document.getElementById("estaciones").value = data.estacionesNombre;
-                let ubicaciones = document.getElementById("ubicaciones").value = data.ubicacion;
-                let descripcion = document.getElementById("descripcion").value = data.descripcion;
-                let codigooperador = document.getElementById("codigooperador").value = data.codigoOperadorReporte;
-                let nombreoperador = document.getElementById("nombreoperador").value = data.operadorReporte;
-                let fechareportes = document.getElementById("fechareporte").value = data.fechaaveriaGuardarMostrar;
-                let criticidad = document.getElementById("criticidad").value = data.idCriticidad;
-                let sm = document.getElementById("sm").value =data.idSm;
-                let estadoot = document.getElementById("estado").value = data.idEstadoOt;
-                let ot = document.getElementById("ot").value = data.ot;
-                let comentario = document.getElementById("comentario").value = data.comentario;
-                let fechanotificacion = document.getElementById("fechanotificacion").value = data.fechanotificacionguardarmostrar;
-                let mantenedornotificar = document.getElementById("mantenedornotificar").value = data.mantenedorNotificar;
-                let fechainicio = document.getElementById("fechainicio").value = data.fechainicioguardarmostrar;
-                let fechafinal = document.getElementById("fechafinal").value = data.fechafinalguardarmostrar;
-                let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = data.operadorCierre;
-                let nombreoperadorfinal = document.getElementById("nombreoperadorfinal").value = data.codigoOperadorCierre;
-                let mantenedorcierre = document.getElementById("mantenedorcierre").value = data.mantenedorReparo;
-                let usuario = document.getElementById("usuario").value = data.idUsuarios;
-                
-
-                //si estado OT es duplicada el campo ot lo ponemos de color gris 
-                if (estadoot == 7){
-
-                    
-                    otcolor.style.backgroundColor = "grey";
-                }
-
-
-               //aqui llamamos  las funcion que carga el Listado de subsistema y de activo descripcion en cascada para que al cargar un registro este tambie me cargue los subsistemas
-                SubsistemaCascada();
-                descripcionCascada();
-
-               
-               
-
-              
-
-               
-            })
-
-
-
-
-     }
-
-    //funcion para lista en la misma se cambia de color la fila de la tabla segun el estado de la ot
-
-         function Listardata(url) {
-
-      
+            let url = "Reportes/BuscarEditar/?id=" + idreporte;
 
             fetch(url)
-            .then(res => res.json())
-            .then(data => {
+                .then(res => res.json())
+                .then(data => {
+                    alert(JSON.stringify(data))
 
-               
 
-                let Pintardata = document.getElementById("Pintardata");
 
-               let filasTabla = "";
+                    let Idreportes = document.getElementById("idreportes").value = data.id;
+                    let sistemas = document.getElementById("sistemas").value = data.sistemasNombre;
+                    let subsistemas = document.getElementById("subsistemas").value = data.subsistemasNombre;
+                    let estaciones = document.getElementById("estaciones").value = data.estacionesNombre;
+                    let ubicaciones = document.getElementById("ubicaciones").value = data.ubicacion;
+                    let descripcion = document.getElementById("descripcion").value = data.descripcion;
+                    let codigooperador = document.getElementById("codigooperador").value = data.codigoOperadorReporte;
+                    let nombreoperador = document.getElementById("nombreoperador").value = data.operadorReporte;
+                    let fechareportes = document.getElementById("fechareporte").value = data.fechaaveriaGuardarMostrar;
+                    let criticidad = document.getElementById("criticidad").value = data.idCriticidad;
+                    let sm = document.getElementById("sm").value = data.idSm;
+                    let estadoot = document.getElementById("estado").value = data.idEstadoOt;
+                    let ot = document.getElementById("ot").value = data.ot;
+                    let comentario = document.getElementById("comentario").value = data.comentario;
+                    let fechanotificacion = document.getElementById("fechanotificacion").value = data.fechanotificacionguardarmostrar;
+                    let mantenedornotificar = document.getElementById("mantenedornotificar").value = data.mantenedorNotificar;
+                    let fechainicio = document.getElementById("fechainicio").value = data.fechainicioguardarmostrar;
+                    let fechafinal = document.getElementById("fechafinal").value = data.fechafinalguardarmostrar;
+                    let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = data.operadorCierre;
+                    let nombreoperadorfinal = document.getElementById("nombreoperadorfinal").value = data.codigoOperadorCierre;
+                    let mantenedorcierre = document.getElementById("mantenedorcierre").value = data.mantenedorReparo;
+                    let usuario = document.getElementById("usuario").value = data.idUsuarios;
 
-                for (var i = 0; i < data.length; i++) {
 
-                    let conteo = 1;
+                    //si estado OT es duplicada el campo ot lo ponemos de color gris
+                    if (estadoot == 7) {
 
-                    // si de cierre viene null aqui le decimos que sea igual a vacio,
-                  // esto mismo lo hacemos en el backend para otros campos
-                    if (data[i].operadorCierreNombre == null) {
 
-                        data[i].operadorCierreNombre = "";
-
+                        otcolor.style.backgroundColor = "grey";
                     }
 
-                    
-                    // funcion que contiene la data a pintar en la tabla
-                    function pintar(color){
 
-                        return  `
-
-                                <tr style ="background-color:${color}; font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
-
-                                         <td>${conteo + i}</td>
-                                            <td>${data[i].ot}</td>
-                                            <td>${data[i].fechaaveriaGuardarMostrar}</td>
-                                            <td>${data[i].sistemasNombre}</td>
-                                            <td>${data[i].subsistemasNombre}</td>
-                                            <td>${data[i].estacionesNombre}</td>
-                                            <td>${data[i].ubicacion}</td>
-                                            <td>${data[i].descripcion}</td>
-                                            <td>${data[i].smNombre}</td>
+                    //aqui llamamos  las funcion que carga el Listado de subsistema y de activo descripcion en cascada para que al cargar un registro este tambie me cargue los subsistemas
+                    SubsistemaCascada();
+                    descripcionCascada();
 
 
-                                                    ${data[i].criticidadNombre == "Bajo Impacto" ?
+
+
+
+
+
+                })
+
+
+
+
+        }
+
+        //funcion para lista en la misma se cambia de color la fila de la tabla segun el estado de la ot
+
+        function Listardata(url) {
+
+            Spinner();
+
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+
+
+
+                    let Pintardata = document.getElementById("Pintardata");
+
+                    let filasTabla = "";
+
+                    for (var i = 0; i < data.length; i++) {
+
+                        let conteo = 1;
+
+                        // si de cierre viene null aqui le decimos que sea igual a vacio,
+                        // esto mismo lo hacemos en el backend para otros campos
+                        if (data[i].operadorCierreNombre == null) {
+
+                            data[i].operadorCierreNombre = "";
+
+                        }
+
+
+                        // funcion que contiene la data a pintar en la tabla
+                        function pintar(color) {
+
+                            return `
+
+                                        <tr style ="background-color:${color}; font-size:14px" ondblclick="BuscarEditar(${data[i].id})">
+
+                                                 <td>${conteo + i}</td>
+                                                    <td>${data[i].ot}</td>
+                                                    <td>${data[i].fechaaveriaGuardarMostrar}</td>
+                                                    <td>${data[i].sistemasNombre}</td>
+                                                    <td>${data[i].subsistemasNombre}</td>
+                                                    <td>${data[i].estacionesNombre}</td>
+                                                    <td>${data[i].ubicacion}</td>
+                                                    <td>${data[i].descripcion}</td>
+                                                    <td>${data[i].smNombre}</td>
+
+
+                                                            ${data[i].criticidadNombre == "Bajo Impacto" ?
+
+                                    `
+                                                                   <td style ="background-color:#8dff43">${data[i].criticidadNombre}</td>
+                                                            `
+                                    :
+                                    `
+                                                                <td style ="background-color:#CE2B08">${data[i].criticidadNombre}</td>
+
+                                                            `
+
+                                }
+
+
+
+
+                                                    <td>${data[i].estadoOtNombre}</td>
+                                                    <td>${data[i].mantenedorNombre}</td>
+                                                    <td>${data[i].operadorReporte}</td>
+                                                    <td>${data[i].codigoOperadorReporte}</td>
+
+                                                    <td>${data[i].fechanotificacionguardarmostrar}</td>
+                                                    <td>${data[i].mantenedorNotificar}</td>
+
+
+                                                    <td>${data[i].fechainicioguardarmostrar}</td>
+                                                    <td>${data[i].mantenedorReparo}</td>
+
+
+                                                    <td>${data[i].operadorCierre}</td>
+                                                    <td>${data[i].codigoOperadorCierre}</td>
+                                                    <td>${data[i].fechafinalguardarmostrar}</td>
+                                                    <td>${data[i].comentario}</td>
+                                                    <td>${data[i].usuariosCodigo}</td>
+                                                    <td>${data[i].usuariosNombre}</td>
+                                                    <td>${data[i].usuarioActualizoNombre}</td>
+
+
+                                        </tr>
+
+                                    `
+
+
+
+
+
+
+                        }
+
+
+
+                        filasTabla += `
+
+                                     ${data[i].estadoOtNombre == "Creada" ?
 
                                 `
-                                                           <td style ="background-color:#8dff43">${data[i].criticidadNombre}</td>
-                                                    `
-                                :
-                                `
-                                                        <td style ="background-color:#CE2B08">${data[i].criticidadNombre}</td>
 
-                                                    `
-
-                            }
+                                       ${pintar("#F8F2CD")}
 
 
-
-
-                                            <td>${data[i].estadoOtNombre}</td>
-                                            <td>${data[i].mantenedorNombre}</td>
-                                            <td>${data[i].operadorReporte}</td>
-                                            <td>${data[i].codigoOperadorReporte}</td>
-
-                                            <td>${data[i].fechanotificacionguardarmostrar}</td>
-                                            <td>${data[i].mantenedorNotificar}</td>
-
-
-                                            <td>${data[i].fechainicioguardarmostrar}</td>
-                                            <td>${data[i].mantenedorReparo}</td>
-
-
-                                            <td>${data[i].operadorCierre}</td>
-                                            <td>${data[i].codigoOperadorCierre}</td>
-                                            <td>${data[i].fechafinalguardarmostrar}</td>
-                                            <td>${data[i].comentario}</td>
-                                            <td>${data[i].usuariosCodigo}</td>
-                                            <td>${data[i].usuariosNombre}</td>
-                                            <td>${data[i].usuarioActualizoNombre}</td>
-
-
-                                </tr>
-
-                            `
-                           
-
-
-
-
-
-                    }
-                    
-                   
-
-                    filasTabla += `
-
-                             ${data[i].estadoOtNombre == "Creada" ?
-
-                             `
-
-                               ${pintar("#F8F2CD")}
-                        
-                             
-                            `
+                                    `
 
                                 : data[i].estadoOtNombre == "Reportada" ?
 
 
+                                    `
+                                         ${pintar("#FFCBCB")}
+
+                                    `
+
+                                    : data[i].estadoOtNombre == "Creada Reportada" ?
+
+
+                                        `
+
+                                         ${pintar("#D3F8FC")}
+                                    `
+
+                                        : data[i].estadoOtNombre == "Cerrada" ?
+
+
+                                            `
+                                    ${pintar("#CEF8CD")}
+
+
+                                    `
+
+                                            : data[i].estadoOtNombre == "Duplicada" ?
+
+
+                                                `    ${pintar("#CECECE")}
+
+
+                                    `
+
+                                                : data[i].estadoOtNombre == "Falsa Averia" ?
+
+
+                                                    `
+                                    ${pintar("#F3A9FF")}
+
+
+                                    `
+
+
+                                                    : data[i].estadoOtNombre == "Reutilizar" ?
+
+
+                                                        `
+
+                                    ${pintar("#FDFF8B")}
+
+                                    `
+
+
+                                                        :
+
+                                                        `
+
+
+                                         ${pintar("#FFFFF")}
+                                   `
+                            }
+
+
+
+
                             `
-                                 ${pintar("#FFCBCB")}
-                                  
-                            `
-
-                                : data[i].estadoOtNombre == "Creada Reportada" ?
 
 
-                            `
 
-                                 ${pintar("#D3F8FC")}
-                            `
-
-                                : data[i].estadoOtNombre == "Cerrada" ?
-
-
-                            `
-                            ${pintar("#CEF8CD")}
-                                 
-                                
-                            `
-
-                                : data[i].estadoOtNombre == "Duplicada" ?
-
-
-                            `    ${pintar("#CECECE")}
-
-                                 
-                            `
-
-                               : data[i].estadoOtNombre == "Falsa Averia" ?
-
-
-                            `
-                            ${pintar("#F3A9FF")}
-                              
-                                
-                            `
-
-
-                                : data[i].estadoOtNombre == "Reutilizar" ?
-
-
-                            `
-                            
-                            ${pintar("#FDFF8B")}
-                                
-                            `
-
-
-                                :
-                                                    
-                            `
-
-                                
-                                 ${pintar("#FFFFF")}
-                           `
-                       }
-
-                       
-
-                          
-                    `
-
+                    }
                     
-
-                }
-
-                Pintardata.innerHTML = filasTabla;
-
-            })
-
-
+                    Pintardata.innerHTML = filasTabla;
+                    let contenedor_spinner = document.getElementById("contenedor_spinner")
+                    contenedor_spinner.style.display = "none"
+                })
+              
+           
         }
 
 
 
-    //funcion para que al filtrar por ot cuando se presione entre se realize el filtrado
+        //funcion para que al filtrar por ot cuando se presione entre se realize el filtrado
 
-   
-        function presionar_tecla(e){
+
+        function presionar_tecla(e) {
 
 
             let otfiltro = document.getElementById("filtroOt").value;
 
             let obtener_tecla = e.keyCode; // tambien puedo usar event
 
-                //aqui decimos que si la tecla presionada fue la tecla enter me ejecute el codigo dentro
-                    if (obtener_tecla == 13) {
+            //aqui decimos que si la tecla presionada fue la tecla enter me ejecute el codigo dentro
+            if (obtener_tecla == 13) {
 
-                        //este codigo me enviar a realizar el filtro
-                        let url = "Reportes/Listarasincrono/?Ot="+ otfiltro;
+                //este codigo me enviar a realizar el filtro
+                let url = "Reportes/Listarasincrono/?Ot=" + otfiltro;
 
-                        Listardata(url);
-                };
+                Listardata(url);
+            };
 
-   
+
         }
 
 
         let otfiltro = document.getElementById("filtroOt");
 
         //aqui le aplicamos que al presionar la tecla se ejecute la funcion obtener_tecla
-        otfiltro.onkeydown  = presionar_tecla;
-  
-   
-       
-    //--------funcion para filtrar---------------------------
+        otfiltro.onkeydown = presionar_tecla;
 
-        function filtrar (){
 
-    
-            let estaciones =  document.getElementById("fitroestaciones").value;
-            let subsistemas =  document.getElementById("filtrosubsistema").value;
+
+        //--------funcion para filtrar---------------------------
+
+        function filtrar() {
+
+
+            let estaciones = document.getElementById("fitroestaciones").value;
+            let subsistemas = document.getElementById("filtrosubsistema").value;
             let fecha = document.getElementById("filtrofecha").value;
             let estadoot = document.getElementById("filtroestadoot").value;
             let usuario = document.getElementById("fitrousuario").value;
 
             alert(usuario)
-            
+
             let url = "Reportes/Listarasincrono/?IdEstacion=" + estaciones + "&IdSubsistema=" + subsistemas + "&fechaaveriaGuardarMostrar=" + fecha
                 + "&IdEstadoOt=" + estadoot + "&IdUsuarios=" + usuario;
 
@@ -1478,7 +1550,7 @@
         }
 
 
- //------------funcion para mostrar la fecha y hora --------------------
+        //------------funcion para mostrar la fecha y hora --------------------
         function reloj() {
 
             let mostrarreloj = document.getElementById("reloj")
@@ -1499,11 +1571,11 @@
             segundos = (segundos <= 9 ? "0" + segundos : segundos);
             minutos = minutos <= 9 ? "0" + minutos : minutos;
 
-            
-            horas =  horas ==00 ? horas +12 : horas;
+
+            horas = horas == 00 ? horas + 12 : horas;
 
             //le restamos 12 para convertir el horario de 12 horas ya que viene en 24
-            horas =  horas >=13 ? horas -12 : horas;
+            horas = horas >= 13 ? horas - 12 : horas;
             horas = horas <= 9 ? "0" + horas : horas;
 
             meses = meses <= 9 ? "0" + meses : meses;
@@ -1515,450 +1587,457 @@
         }
 
         //lo que actualiza la hora cada segundo
-        setInterval(reloj,1000)
+        setInterval(reloj, 1000)
 
 
-      //-----funcion para llenar el campo Subsistema cascada -----------------
-      //esta funcion la dispara el campo sistema con el evento change-----
+        //-----funcion para llenar el campo Subsistema cascada -----------------
+        //esta funcion la dispara el campo sistema con el evento change-----
 
         const sistema = document.getElementById("sistemas");
 
-         sistema.addEventListener("change", SubsistemaCascada)
+        sistema.addEventListener("change", SubsistemaCascada)
 
-      function SubsistemaCascada(){
-            
-          
+        function SubsistemaCascada() {
 
-             
 
-         
-           
 
-             let Listsubsistemas = document.getElementById("Listsubsistemas");
-                 Listsubsistemas.innerHTML ="";
 
-             const sistemas = document.getElementById("sistemas");
-          
-            if(sistemas.value !=""){
 
-                 let url = "/Reportes/SubsistemaCascada/?sistema=" + sistemas.value;
+
+
+
+            let Listsubsistemas = document.getElementById("Listsubsistemas");
+            Listsubsistemas.innerHTML = "";
+
+            const sistemas = document.getElementById("sistemas");
+
+            if (sistemas.value != "") {
+
+                let url = "/Reportes/SubsistemaCascada/?sistema=" + sistemas.value;
                 fetch(url)
                     .then(res => res.json())
-                    .then(data =>  {
-
-                    
-                        data.forEach(element  =>{
+                    .then(data => {
 
 
-                         let ElementOpcion = document.createElement("option");
+                        data.forEach(element => {
 
-                          let  TextOpcion = document.createTextNode(`${element.nombre}`) ;
 
-                          
+                            let ElementOpcion = document.createElement("option");
+
+                            let TextOpcion = document.createTextNode(`${element.nombre}`);
+
+
                             ElementOpcion.appendChild(TextOpcion)
 
-                            
-                           
+
+
                             Listsubsistemas.appendChild(ElementOpcion);
-                       
+
                         })
-    
-                       
+
+
 
                     })
 
 
             }
-            else{
+            else {
 
                 //con esto decimos que si no se elige ningun sistema, el list de subsistema y de activo descripcion  estaran vacio
                 //tambien su input estaran vacios
-              
+
 
                 document.getElementById("mantenedor").value = "";
                 document.getElementById("subsistemas").value = "";
 
-               
-                 Listsubsistemas.innerHTML = "";
-                 descripcionCascada()
+
+                Listsubsistemas.innerHTML = "";
+                descripcionCascada()
             }
 
-           
 
-               
 
-           
 
-       }
 
-       
+
+
+        }
+
+
 
 
 
         //-----funcion para llenar el campo descripcion cascada-----------------
-          //esta funcion la dispara el campo Subsistema con el evento change-----
+        //esta funcion la dispara el campo Subsistema con el evento change-----
 
         const subsistema = document.getElementById("subsistemas");
 
-      function descripcionCascada(){
-            
-            
+        function descripcionCascada() {
+
+
             const subsistemas = document.getElementById("subsistemas");
             const listcascada = document.getElementById("listcascada");
-                    
-                  listcascada.innerHTML="";
 
-            if(subsistemas.value !=""){
+            listcascada.innerHTML = "";
+
+            if (subsistemas.value != "") {
 
                 let url = "/Reportes/Descripcion/?subsistema=" + subsistemas.value;
                 fetch(url)
                     .then(res => res.json())
                     .then(data => {
-                      
-                       
+
+
                         for (let i = 0; i < data.length; i++) {
 
-                            document.getElementById("mantenedor").value =`${data[i].mantenedor}`;
-                             
-                            
-                           
-                          let ElementOpcion = document.createElement("option");
+                            document.getElementById("mantenedor").value = `${data[i].mantenedor}`;
 
-                          let TextOpcion = document.createTextNode(`${data[i].descripcion}`);
-                           
-                           ElementOpcion.appendChild(TextOpcion);
 
-                           listcascada.appendChild(ElementOpcion);
-                       
+
+                            let ElementOpcion = document.createElement("option");
+
+                            let TextOpcion = document.createTextNode(`${data[i].descripcion}`);
+
+                            ElementOpcion.appendChild(TextOpcion);
+
+                            listcascada.appendChild(ElementOpcion);
+
                         }
-    
-                        
-                         
+
+
+
 
                     })
 
             }
-            else{
+            else {
 
-            listcascada.innerHTML = "";
+                listcascada.innerHTML = "";
 
             }
 
-                
 
-           
 
-       }
+
+
+        }
 
         subsistema.addEventListener("change", descripcionCascada)
 
 
 
-        
 
-        //esta funcion se ejecuta cuando hacemos un cambio en el campo mantenedor notificar reporte 
+
+        //esta funcion se ejecuta cuando hacemos un cambio en el campo mantenedor notificar reporte
         // si seleccionamos uno me cambia el estado a reportada
         const mantenedornotificar = document.getElementById("mantenedornotificar");
 
-    function mantenedorestado() {
+        function mantenedorestado() {
 
-        EstadoRegistro();
-    }
+            EstadoRegistro();
+        }
         mantenedornotificar.addEventListener("keyup", mantenedorestado)
 
 
 
-    //---------funcion para cambiar los estasdo de la ot segun algunas condiciones
-    //esta funcion la dispara el campo OT con el evento keyup
+        //---------funcion para cambiar los estasdo de la ot segun algunas condiciones
+        //esta funcion la dispara el campo OT con el evento keyup
 
-    const ot = document.getElementById("ot");
-     ot.addEventListener('keyup', EstadoRegistro)
+        const ot = document.getElementById("ot");
+        ot.addEventListener('keyup', EstadoRegistro)
 
-    function EstadoRegistro(){
+        function EstadoRegistro() {
 
-        alert(ot.value)
-        
-        const estadoot = document.getElementById("estado");
-        const codigooperadorfinal = document.getElementById("codigooperadorfinal");
-        const btnEnviar  = document.getElementById("enviar")
+            alert(ot.value)
 
-        const url = "Reportes/BuscarOt/?ot=" + ot.value;
+            const estadoot = document.getElementById("estado");
+            const codigooperadorfinal = document.getElementById("codigooperadorfinal");
+            const btnEnviar = document.getElementById("enviar")
+
+            const url = "Reportes/BuscarOt/?ot=" + ot.value;
 
             fetch(url)
-            .then(res => res.json())
-            .then(data => {
+                .then(res => res.json())
+                .then(data => {
 
-                
-                // si existen ordenes con el mismo numero de ot entonces me cambia a estado duplicada y pone el color gris
-                if (data >= 1) {
 
-                    
-                       ot.style.backgroundColor = "grey";
+                    // si existen ordenes con el mismo numero de ot entonces me cambia a estado duplicada y pone el color gris
+                    if (data >= 1) {
 
-                    if(codigooperadorfinal.value !="" ){
 
-                        //cerrada
-                        estadoot.value = 5;
-                        
+                        ot.style.backgroundColor = "grey";
+
+                        if (codigooperadorfinal.value != "") {
+
+                            //cerrada
+                            estadoot.value = 5;
+
+
+                        }
+                        else {
+
+
+                            // duplicada
+                            estadoot.value = 7;
+                        }
+
+
+
+
+
 
                     }
-                    else{
+                    // se ejecuta si no existen reportes con ot duplicada
 
-                       
-                        // duplicada
-                      estadoot.value = 7;
-                    }
+                    else if (data == 0) {
 
-                   
-
-                   
-
-
-                }
-                // se ejecuta si no existen reportes con ot duplicada
-
-                else if(data == 0) {
-                    
-                    const mantenedornotificar = document.getElementById("mantenedornotificar");
-                    const estadoot = document.getElementById("estado");
-                    const codigooperadorfinal =  document.getElementById("codigooperadorfinal");
-                    
-                     
-                     ot.style.backgroundColor = "";
-
-                     //aqui le decimos que si existe algun valor en el campo ot y no esta duplicado me cambie el estado a creada reportada
-                    if (ot.value != "" && mantenedornotificar.value == "" && codigooperadorfinal.value == "") {
-
-                        //creada
-                        estadoot.value = 1;
-
-                       
-                    }
-
-
-                    
-
-                    else if (ot.value == "" && mantenedornotificar.value !="" && codigooperadorfinal.value =="") {
-
-                        //reportada
-                        estadoot.value = 2;
-                        
-                    }
-
-                    else if (ot.value !="" && mantenedornotificar.value !="" && codigooperadorfinal.value ==""){
-                        
-                        //creada reportada
-                        estadoot.value = 3;
-
-                    }
-
-                    else if (codigooperadorfinal.value != "" && ot.value != "" && mantenedornotificar.value != "") {
-
-                        //cerrada
-                        estadoot.value = 5;
-
-                    }
-                  
-                    // si no existen valores en el campo ot evaluamos nuevamente
-                    else {
-                       
+                        const mantenedornotificar = document.getElementById("mantenedornotificar");
                         const estadoot = document.getElementById("estado");
+                        const codigooperadorfinal = document.getElementById("codigooperadorfinal");
 
-                        //sin estado
-                        estadoot.value = "";
+
+                        ot.style.backgroundColor = "";
+
+                        //aqui le decimos que si existe algun valor en el campo ot y no esta duplicado me cambie el estado a creada reportada
+                        if (ot.value != "" && mantenedornotificar.value == "" && codigooperadorfinal.value == "") {
+
+                            //creada
+                            estadoot.value = 1;
+
+
+                        }
+
+
+
+
+                        else if (ot.value == "" && mantenedornotificar.value != "" && codigooperadorfinal.value == "") {
+
+                            //reportada
+                            estadoot.value = 2;
+
+                        }
+
+                        else if (ot.value != "" && mantenedornotificar.value != "" && codigooperadorfinal.value == "") {
+
+                            //creada reportada
+                            estadoot.value = 3;
+
+                        }
+
+                        else if (codigooperadorfinal.value != "" && ot.value != "" && mantenedornotificar.value != "") {
+
+                            //cerrada
+                            estadoot.value = 5;
+
+                        }
+
+                        // si no existen valores en el campo ot evaluamos nuevamente
+                        else {
+
+                            const estadoot = document.getElementById("estado");
+
+                            //sin estado
+                            estadoot.value = "";
+                        }
+
+
                     }
 
-                    
-                }
-
-            })
-
-         
-    }
-
-   
-
-    let codigooperadorfinal =  document.getElementById("codigooperadorfinal");
+                })
 
 
-    //funcion para disparar el evento de cerrar OT este asu vez dispara el de estadoregistro
-
-    let EstadoOTCerrado = () => EstadoRegistro();
-
-   codigooperadorfinal.addEventListener('keyup', EstadoOTCerrado);
-
-    //-----------funcion para Limpiar los campos del filtrado-----------------------
-
-   
-    
-    const btnlimpiar = document.getElementById("limpiar");
-
-
-      btnlimpiar.addEventListener("click", LimpiarFiltros);
-
-
-    function LimpiarFiltros() {
-
-        document.getElementById("filtroOt").value = "";
-        document.getElementById("filtrofecha").value = "";
-        document.getElementById("fitroestaciones").value = "";
-        document.getElementById("filtrosubsistema").value = "";
-        document.getElementById("filtroestadoot").value = "";
-        document.getElementById("fitrousuario").value = "";
-
-
-        let url = "Reportes/Listarasincrono"
-        Listardata(url)
-       
-        LimpiarFiltros
-    }
-
-  
-
-
-    // -------para auto completar la descripcion de la averia-------------------
-    //Esta funcion la dispara el campo selecion de activo descripcion con el evento change
-
-
-    const descripcioncascada = document.getElementById("descripcioncascada");
-
-      
-
-    const obtenerdescricion = () => {
-
-        let descripcioncascadas = document.getElementById("descripcioncascada");
-
-       let descripcion = document.getElementById("descripcion").value = descripcioncascadas.value;
-
-        if (descripcion !=""){
-
-            //para que el input de activo descripcion se mantena vacio
-           descripcioncascadas.value ="";
         }
 
-    }
-
-  descripcioncascada.addEventListener('change', obtenerdescricion);
 
 
-
-    let inputColor = document.getElementById("inputcolor");
-   
-    //esta funcion nos guarda el background color en la db
-    function guardarStyle() {
-
-        let obtenerColor = inputColor.value;
+        let codigooperadorfinal = document.getElementById("codigooperadorfinal");
 
 
-        const url = "/Reportes/ConfigStyle/background_color" 
+        //funcion para disparar el evento de cerrar OT este asu vez dispara el de estadoregistro
 
-        fetch(url,{
-            
-            method: 'POST',
+        let EstadoOTCerrado = () => EstadoRegistro();
 
-            body: JSON.stringify({
+        codigooperadorfinal.addEventListener('keyup', EstadoOTCerrado);
 
-                background: obtenerColor
-              
+        //-----------funcion para Limpiar los campos del filtrado-----------------------
 
 
-            }),
-            headers:{ 'Content-Type': 'application/json'}
+
+        const btnlimpiar = document.getElementById("limpiar");
 
 
-        })
-        .then(res=> res.json())
-        .then(data=>{
+        btnlimpiar.addEventListener("click", LimpiarFiltros);
 
-                
 
-               recuperarStyle();
-                             
+        function LimpiarFiltros() {
 
-        })
-      
+            document.getElementById("filtroOt").value = "";
+            document.getElementById("filtrofecha").value = "";
+            document.getElementById("fitroestaciones").value = "";
+            document.getElementById("filtrosubsistema").value = "";
+            document.getElementById("filtroestadoot").value = "";
+            document.getElementById("fitrousuario").value = "";
+
+
+            let url = "Reportes/Listarasincrono"
+            Listardata(url)
+
+            LimpiarFiltros
+        }
 
 
 
 
-    }
-
-    inputColor.addEventListener("change", guardarStyle)
-
-      //esta funcion nos recupera el background color en la db
-    const recuperarStyle = ()=>{
-
-        const url = "/Reportes/RecuperarStyle"
-        fetch(url)
-        .then(res => res.json())
-        .then(data =>{
+        // -------para auto completar la descripcion de la averia-------------------
+        //Esta funcion la dispara el campo selecion de activo descripcion con el evento change
 
 
-            let area_averias = document.getElementById("area_averias");
-                area_averias.style.backgroundColor = `${data.background}`;
-
-            let head_table =document.getElementById("head_table");
-                head_table.style.backgroundColor = `${data.background}`;
-
-
-             let inputColor = document.getElementById("inputcolor");
-                 inputColor.value = `${data.background}`;
-        })
-
-
-    }
+        const descripcioncascada = document.getElementById("descripcioncascada");
 
 
 
+        const obtenerdescricion = () => {
 
-    const btn_nuevoregistro = document.getElementById("formulario");
+            let descripcioncascadas = document.getElementById("descripcioncascada");
 
-    //funcion para limpiar todo el formulario este funcion la dispara el boton nuevo registro
-    const NuevoRegistroLimpiarForm = () => {
-      
+            let descripcion = document.getElementById("descripcion").value = descripcioncascadas.value;
 
+            if (descripcion != "") {
 
-        reutilizarenviar.style.display ="none";
-         ot.style.backgroundColor = "";
+                //para que el input de activo descripcion se mantena vacio
+                descripcioncascadas.value = "";
+            }
 
-        document.getElementById("enviar").value = "Agregar";
+        }
 
-        // llamamos el metodo limpiarFiltros para que nos limpie los filtro de busqueda
-        LimpiarFiltros();
-
-
-        //Limpiar el color de los campos requerido si estan con el erro de vacio
-
-        let sistemas = document.getElementById("sistemas");
-        let subsistemas = document.getElementById("subsistemas");
-        let estaciones = document.getElementById("estaciones");
-        let ubicaciones = document.getElementById("ubicaciones");
-        let descripcioncascada = document.getElementById("descripcioncascada");
-        let descripcion = document.getElementById("descripcion")
-        let codigooperador = document.getElementById("codigooperador");
-        let fechareportes = document.getElementById("fechareporte");
-        let criticidad = document.getElementById("criticidad");
-        let sistema = document.getElementById("sm");
-        let nombreoperador = document.getElementById("nombreoperador");
-             
-        sistemas.classList.remove("error");
-        subsistemas.classList.remove("error");
-        estaciones.classList.remove("error");
-        ubicaciones.classList.remove("error");
-        descripcioncascada.classList.remove("error");
-        descripcion.classList.remove("error");
-        codigooperador.classList.remove("error");
-        fechareportes.classList.remove("error");
-        criticidad.classList.remove("error");
-        sistema.classList.remove("error");
-        nombreoperador.classList.remove("error");
-          
-
-    }
-
-
-    btn_nuevoregistro.addEventListener("reset", NuevoRegistroLimpiarForm)
+        descripcioncascada.addEventListener('change', obtenerdescricion);
 
 
 
-</script>
+        let inputColor = document.getElementById("inputcolor");
+
+        //esta funcion nos guarda el background color en la db
+        function guardarStyle() {
+
+            let obtenerColor = inputColor.value;
+
+
+            const url = "/Reportes/ConfigStyle/background_color"
+
+            fetch(url, {
+
+                method: 'POST',
+
+                body: JSON.stringify({
+
+                    background: obtenerColor
+
+
+
+                }),
+                headers: { 'Content-Type': 'application/json' }
+
+
+            })
+                .then(res => res.json())
+                .then(data => {
+
+
+
+                    recuperarStyle();
+
+
+                })
+
+
+
+
+
+        }
+
+        inputColor.addEventListener("change", guardarStyle)
+
+        ////esta funcion nos recupera el background color en la db
+        //const recuperarStyle = () => {
+
+        //    const url = "/Reportes/RecuperarStyle"
+        //    fetch(url)
+        //        .then(res => res.json())
+        //        .then(data => {
+
+
+        //            let area_averias = document.getElementById("area_averias");
+        //            area_averias.style.backgroundColor = `${data.background}`;
+
+        //            let head_table = document.getElementById("head_table");
+        //            head_table.style.backgroundColor = `${data.background}`;
+
+
+        //            let inputColor = document.getElementById("inputcolor");
+        //            inputColor.value = `${data.background}`;
+        //        })
+
+
+        //}
+
+
+
+
+        const btn_nuevoregistro = document.getElementById("formulario");
+
+        //funcion para limpiar todo el formulario este funcion la dispara el boton nuevo registro
+        const NuevoRegistroLimpiarForm = () => {
+
+
+
+            reutilizarenviar.style.display = "none";
+            ot.style.backgroundColor = "";
+
+            document.getElementById("enviar").value = "Agregar";
+
+            // llamamos el metodo limpiarFiltros para que nos limpie los filtro de busqueda
+            LimpiarFiltros();
+
+
+            //Limpiar el color de los campos requerido si estan con el erro de vacio
+
+            let sistemas = document.getElementById("sistemas");
+            let subsistemas = document.getElementById("subsistemas");
+            let estaciones = document.getElementById("estaciones");
+            let ubicaciones = document.getElementById("ubicaciones");
+            let descripcioncascada = document.getElementById("descripcioncascada");
+            let descripcion = document.getElementById("descripcion")
+            let codigooperador = document.getElementById("codigooperador");
+            let fechareportes = document.getElementById("fechareporte");
+            let criticidad = document.getElementById("criticidad");
+            let sistema = document.getElementById("sm");
+            let nombreoperador = document.getElementById("nombreoperador");
+
+            sistemas.classList.remove("error");
+            subsistemas.classList.remove("error");
+            estaciones.classList.remove("error");
+            ubicaciones.classList.remove("error");
+            descripcioncascada.classList.remove("error");
+            descripcion.classList.remove("error");
+            codigooperador.classList.remove("error");
+            fechareportes.classList.remove("error");
+            criticidad.classList.remove("error");
+            sistema.classList.remove("error");
+            nombreoperador.classList.remove("error");
+
+
+        }
+
+
+        btn_nuevoregistro.addEventListener("reset", NuevoRegistroLimpiarForm)
+
+
+
+    </script>
+    
+
+</body>
+
+</html>
+
+

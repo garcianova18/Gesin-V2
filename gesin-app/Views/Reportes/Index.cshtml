@@ -32,13 +32,14 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="icon" href="/img/icono_gestiondeaverias.png" />
     <link rel="stylesheet" href="~/css/Index.css"/>
+    <link rel="stylesheet" href="/css/Spinner.css" />
     <title>GestionAverias</title>
 
    
 
 </head>
 
-<body>
+<body id="cuerpo">
 
     <div class="container-fluid">
 
@@ -682,7 +683,7 @@
     }
 
     window.onload = function () {
-        
+        Spinner();
         ListarTodo();
        
 
@@ -691,6 +692,39 @@
         reutilizarenviar.style.display ="none";
 
        recuperarStyle();
+
+    }
+
+
+
+    function Spinner(){
+
+        alert("klks")
+
+        const body = document.getElementById("cuerpo");
+
+        let spin = document.createElement("div")
+
+        spin.classList.add("sk-chase");
+
+        spin.innerHTML =`
+            
+              <div class="sk-chase-dot"></div>
+              <div class="sk-chase-dot"></div>
+              <div class="sk-chase-dot"></div>
+              <div class="sk-chase-dot"></div>
+              <div class="sk-chase-dot"></div>
+              <div class="sk-chase-dot"></div>
+
+        
+        
+        
+        
+        `
+        
+        body.appendChild(spin)
+
+
 
     }
       

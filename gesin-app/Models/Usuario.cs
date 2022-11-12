@@ -9,6 +9,7 @@ namespace gesin_app.Models
     {
         public Usuario()
         {
+            ConfigUsuarios = new HashSet<ConfigUsuario>();
             ReporteIdUsuarioActualizoNavigations = new HashSet<Reporte>();
             ReporteIdUsuariosNavigations = new HashSet<Reporte>();
         }
@@ -23,7 +24,7 @@ namespace gesin_app.Models
         public DateTime? Fecha { get; set; }
 
         public virtual Rol IdRolNavigation { get; set; }
-        public virtual ConfigUsuario ConfigUsuario { get; set; }
+        public virtual ICollection<ConfigUsuario> ConfigUsuarios { get; set; }
         public virtual ICollection<Reporte> ReporteIdUsuarioActualizoNavigations { get; set; }
         public virtual ICollection<Reporte> ReporteIdUsuariosNavigations { get; set; }
     }

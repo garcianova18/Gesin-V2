@@ -830,15 +830,17 @@ namespace gesin_app.Controllers
             var userName = HttpContext.User.Claims.ToList();
 
             //le asignamo e usuario al nuestro objeto que viene desde el front
-            background_color.Idusuario = Convert.ToInt32(userName[2].Value);
+            background_color.IdUsuario = Convert.ToInt32(userName[2].Value);
 
             //aqui verifiamos si este usuario tiene ya un registro
-            var buscarId = await Db.ConfigUsuarios.FirstOrDefaultAsync(u => u.Idusuario == background_color.Idusuario);
+            var buscarId = await Db.ConfigUsuarios.FirstOrDefaultAsync(u => u.IdUsuario == background_color.IdUsuario);
 
             // si no existe registro Crear new
             if (buscarId == null)
             {
                 Db.ConfigUsuarios.Add(background_color);
+
+                
                 await Db.SaveChangesAsync();
 
                 return Ok(background_color);
@@ -860,11 +862,11 @@ namespace gesin_app.Controllers
         public async Task<ActionResult> RecuperarStyle()
         {
             var userName = HttpContext.User.Claims.ToList();
-            var recuperarStyle = await Db.ConfigUsuarios.FirstOrDefaultAsync(u => u.Idusuario == Convert.ToInt32(userName[2].Value));
+            var recuperarStyle = await Db.ConfigUsuarios.FirstOrDefaultAsync(u => u.IdUsuario == Convert.ToInt32(userName[2].Value));
 
             if (recuperarStyle == null)
             {
-                return Ok("#ffff");
+                return Ok("#ffffff");
             }
 
             return Ok(recuperarStyle);

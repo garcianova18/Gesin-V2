@@ -280,41 +280,10 @@
                             </tr>
                         </thead>
 
-                        <tbody id="Pintardata" class="tabla">
+                        <tbody id="Pintardata">
 
-                            @*@foreach (var item in Model)
-                            {
-                            <tr>
-
-                            <td>@Html.DisplayFor(model => item.Ot)</td>
-                            <td>@Html.DisplayFor(model => item.Fechaaveria)</td>
-                            <td>@Html.DisplayFor(model => item.SubsistemasNombre)</td>
-                            <td>@Html.DisplayFor(model => item.EstacionesNombre)</td>
-                            <td>@Html.DisplayFor(model => item.UbicacionesNombre)</td>
-                            <td>@Html.DisplayFor(model => item.Descripcion)</td>
-                            <td>@Html.DisplayFor(model => item.SistemasNombre)</td>
-                            <td>@Html.DisplayFor(model => item.CriticidadNombre)</td>
-                            <td>@Html.DisplayFor(model => item.EstadoOtNombre)</td>
-                            <td>@Html.DisplayFor(model => item.OperadorReporteNombre)</td>
-                            <td>@Html.DisplayFor(model => item.OperadorReporteCodigo)</td>
-                            <td>@Html.DisplayFor(model => item.Fechanotificacion)</td>
-                            <td>@Html.DisplayFor(model => item.MantenedorNotificarNombre)</td>
-                            <td>@Html.DisplayFor(model => item.MantenedorNotificarCodigo)</td>
-                            <td>@Html.DisplayFor(model => item.Fechainicio)</td>
-                            <td>@Html.DisplayFor(model => item.MantenedorReparoNombre)</td>
-                            <td>@Html.DisplayFor(model => item.MantenedorReparoCodigo)</td>
-                            <td>@Html.DisplayFor(model => item.OperadorCierreNombre)</td>
-                            <td>@Html.DisplayFor(model => item.OperadorCierreCodigo)</td>
-                            <td>@Html.DisplayFor(model => item.Fechafinal)</td>
-                            <td>@Html.DisplayFor(model => item.Comentario)</td>
-                            <td>@Html.DisplayFor(model => item.UsuariosCodigo)</td>
-                            <td>@Html.DisplayFor(model => item.UsuariosNombre)</td>
-
-
-                            </tr>
-                            }*@
-
-
+                          
+                            <!--El HTML y la data se pinta aqu con javascript-->
 
                         </tbody>
 
@@ -494,7 +463,7 @@
 
                                 <div class="col-12 col-md-5 mb-3 ">
 
-                                    <input class="form-control form-control-sm campos_obligatorios" id="fechareporte" ondblclick="ObtenerfechaReporte()" maxlength="15" placeholder="Fecha Averia">
+                                    <input class="form-control form-control-sm campos_obligatorios" id="fechareporte" ondblclick="ObtenerfechaReporte()" maxlength="16" placeholder="Fecha Averia">
 
                                 </div>
 
@@ -517,7 +486,7 @@
 
                                 </div>
 
-                                <div class="col-4  gx-2">
+                                <div class="col-4  gx-2 mb-md-3">
 
                                     <input type="submit"  class="form-control form-control-sm btn btn-sm btn-success" value="Agregar" id="enviar" >
 
@@ -707,6 +676,7 @@
     </div>
 
     <script src="https://kit.fontawesome.com/c6f899d35a.js" crossorigin="anonymous"></script>
+   @*<script src="~/js/fontawesome.js"></script>*@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
@@ -741,16 +711,18 @@
        
         function mostrar_spinnerTable(){
 
-         //llamamos la tabla para ocultarla
-        const tabla = document.getElementById("tabla");
+            const tabla = document.getElementById("tabla");
 
-        tabla.classList.add("ocultar_contenido");
+            tabla.classList.add("ocultar_contenido");
 
 
-        //llamamos el contenedor spinner para mostrarlo
+   
 
-        const contenedor_spinner = document.getElementById("contenedor_spinner");
-              contenedor_spinner.classList.add("spin");
+            const contenedor_spinner = document.getElementById("contenedor_spinner");
+                  contenedor_spinner.classList.add("spin");
+
+              //iniciamo removiendo esta clase para cada vez que se llame a esta funcion se quite esta clase
+              //ya que al ocultar el spinner se se agrega y si o se la quitamos no se volvera a mostrar
 
               contenedor_spinner.classList.remove("ocultar_contenido");
         }
@@ -763,19 +735,17 @@
         function ocultar_spinnertable(){
 
 
-        //llamamos elcontenedor spinner a mostrarlo
-
-        const contenedor_spinner = document.getElementById("contenedor_spinner");
+             const contenedor_spinner = document.getElementById("contenedor_spinner");
 
 
-            contenedor_spinner.classList.remove("spin");
+                contenedor_spinner.classList.remove("spin");
 
-           contenedor_spinner.classList.add("ocultar_contenido");
+               contenedor_spinner.classList.add("ocultar_contenido");
 
-             //llamamos la tabla para ocultarla
-         const tabla = document.getElementById("tabla");
+           
+             const tabla = document.getElementById("tabla");
 
-             tabla.classList.remove("ocultar_contenido");
+                 tabla.classList.remove("ocultar_contenido");
 
         
 
@@ -844,14 +814,11 @@
             let date = new Date()
 
 
-
             let dias = date.getDate();
             let meses = date.getMonth() + 1;
             let anios = date.getFullYear();
             let horas = date.getHours();
             let minutos = date.getMinutes();
-
-
 
 
             minutos = minutos <= 9 ? "0" + minutos : minutos;
@@ -959,12 +926,6 @@
 
 
         }
-
-
-
-
-
-
 
 
 
@@ -1100,9 +1061,11 @@
 
             }
             else {
+               
 
+               const fecha =isNaN(Date.parse(fechareportes.value));
 
-                if (Number(fechareportes.value.length) === 16 && isNaN(Date.parse(fechareportes.value))) {
+                if (fechareportes.value.length ==16 && !fecha) {
 
 
                     let url = "Reportes/CrearEditarReportes/reporte"

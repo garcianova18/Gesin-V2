@@ -9,8 +9,8 @@ namespace gesin_app.Models
     {
         public int Id { get; set; }
         public string Background { get; set; }
-        public int Idusuario { get; set; }
+        public int IdUsuario { get; set; }
 
-        public virtual Usuario IdNavigation { get; set; }
+        public virtual Usuario IdUsuarioNavigation { get; set; }
     }
 }

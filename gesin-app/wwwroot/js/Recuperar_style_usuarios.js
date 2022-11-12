@@ -10,7 +10,6 @@ const recuperarStyle = () => {
         .then(res => res.json())
         .then(data => {
 
-
             let area_averias = document.getElementById("area_averias");
             area_averias.style.backgroundColor = `${data.background}`;
 

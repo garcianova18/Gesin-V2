@@ -27,15 +27,16 @@
 
 <html lang="es">
 
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="icon" href="/img/icono_gestiondeaverias.png" />
-    <link rel="stylesheet" href="~/css/Index.css"/>
-    <link rel="stylesheet" href="/css/Spinner.css" />
+    <link rel="stylesheet" href="/css/Spinner_inicial.css" />
      <link rel="stylesheet" href="/css/Spinner_tabla.css" />
+      <link rel="stylesheet" href="~/css/Index.css"/>
 
     <script src="/js/Recuperar_style_usuarios.js"></script>
 
@@ -47,30 +48,24 @@
 
 <body id="cuerpo" class="cuerpo">
 
-    <div class="spinner" id="spin_container">
+<div id="spin_container">
 
-         <div class="sk-circle">
+         <div class="sk-chase">
 
+                    <div class="sk-chase-dot"></div>
+                    <div class="sk-chase-dot"></div>
+                    <div class="sk-chase-dot"></div>
+                    <div class="sk-chase-dot"></div>
+                    <div class="sk-chase-dot"></div>
+                    <div class="sk-chase-dot"></div>
 
-
-              <div class="sk-circle1 sk-child"></div>
-              <div class="sk-circle2 sk-child"></div>
-              <div class="sk-circle3 sk-child"></div>
-              <div class="sk-circle4 sk-child"></div>
-              <div class="sk-circle5 sk-child"></div>
-              <div class="sk-circle6 sk-child"></div>
-              <div class="sk-circle7 sk-child"></div>
-              <div class="sk-circle8 sk-child"></div>
-              <div class="sk-circle9 sk-child"></div>
-              <div class="sk-circle10 sk-child"></div>
-              <div class="sk-circle11 sk-child"></div>
-              <div class="sk-circle12 sk-child"></div>
+             
         </div>
 
 
     </div>
 
-    <div class=" container-fluid ocultar_contenido " id="container">
+    <div class=" container-fluid " id="container">
 
 
         <div class="row fila-primaria-padre ">
@@ -220,78 +215,100 @@
 
 
             <!---area de la tabla-->
-            <div class=" col-primaria col-primaria-tabla col-12 " id="contenedor_tabla">
+            <div class=" col-primaria col-primaria-tabla col-12 " id="contenedor_tabla_spinner">
 
-                <div  id="contenedor_spinner"></div>
+                <div id="contenedor_spinner">
 
-                <table class="table table-sm table-hover table-bordered text-center align-middle tabla " id="tabla">
+                            
+                    <div class="sk-circle">
 
-                    <thead class="cabecera-tabla text-white text-center align-middle" style="font-size:14px" id="head_table">
-
-                        <tr>
-                            <th>#@ViewBag.conteo</th>
-                            <th>@Html.DisplayNameFor(model => model.Ot)</th>
-                            <th>@Html.DisplayNameFor(model => model.fechaaveriaGuardarMostrar)</th>
-                             <th>@Html.DisplayNameFor(model => model.SistemasNombre)</th>
-                            <th>@Html.DisplayNameFor(model => model.SubsistemasNombre)</th>
-                            <th>@Html.DisplayNameFor(model => model.EstacionesNombre)</th>
-                            <th>@Html.DisplayNameFor(model => model.Ubicacion)</th>
-                            <th><div class="Columna-descripcion">@Html.DisplayNameFor(model => model.Descripcion)</div></th>
-                            <th>@Html.DisplayNameFor(model => model.SmNombre)</th>
-                            <th>@Html.DisplayNameFor(model => model.CriticidadNombre)</th>
-                            <th>@Html.DisplayNameFor(model => model.EstadoOtNombre)</th>
-                            <th>@Html.DisplayNameFor(model => model.MantenedorNombre)</th>
-                            <th>@Html.DisplayNameFor(model => model.OperadorReporte)</th>
-                            <th>@Html.DisplayNameFor(model => model.CodigoOperadorReporte)</th>
-                            <th>@Html.DisplayNameFor(model => model.Fechanotificacion)</th>
-                            <th>@Html.DisplayNameFor(model => model.MantenedorNotificar)</th>
-                            @*<th>@Html.DisplayNameFor(model => model.MantenedorNotificarCodigo)</th>*@
-                            <th>@Html.DisplayNameFor(model => model.Fechainicioguardarmostrar)</th>
-                            <th>@Html.DisplayNameFor(model => model.MantenedorReparo)</th>
-                            @*<th>@Html.DisplayNameFor(model => model.MantenedorReparoCodigo)</th>*@
-                            <th>@Html.DisplayNameFor(model => model.OperadorCierre)</th>
-                            <th>@Html.DisplayNameFor(model => model.CodigoOperadorCierre)</th>
-                            <th>@Html.DisplayNameFor(model => model.Fechafinalguardarmostrar)</th>
-                            <th>@Html.DisplayNameFor(model => model.Comentario)</th>
-                            <th>@Html.DisplayNameFor(model => model.UsuariosCodigo)</th>
-                            <th>@Html.DisplayNameFor(model => model.UsuariosNombre)</th>
-                            <th>Usuario actualizo</th>
+                              <div class="sk-circle1 sk-child"></div>
+                              <div class="sk-circle2 sk-child"></div>
+                              <div class="sk-circle3 sk-child"></div>
+                              <div class="sk-circle4 sk-child"></div>
+                              <div class="sk-circle5 sk-child"></div>
+                              <div class="sk-circle6 sk-child"></div>
+                              <div class="sk-circle7 sk-child"></div>
+                              <div class="sk-circle8 sk-child"></div>
+                              <div class="sk-circle9 sk-child"></div>
+                              <div class="sk-circle10 sk-child"></div>
+                              <div class="sk-circle11 sk-child"></div>
+                              <div class="sk-circle12 sk-child"></div>
+                    </div>
 
 
+                </div>
+
+           
+
+                    <table class="table table-sm table-hover table-bordered text-center align-middle " id="tabla">
+
+                        <thead class="cabecera-tabla text-white text-center align-middle" style="font-size:14px" id="head_table">
+
+                            <tr>
+                                <th>#@ViewBag.conteo</th>
+                                <th>@Html.DisplayNameFor(model => model.Ot)</th>
+                                <th>@Html.DisplayNameFor(model => model.fechaaveriaGuardarMostrar)</th>
+                                <th>@Html.DisplayNameFor(model => model.SistemasNombre)</th>
+                                <th>@Html.DisplayNameFor(model => model.SubsistemasNombre)</th>
+                                <th>@Html.DisplayNameFor(model => model.EstacionesNombre)</th>
+                                <th>@Html.DisplayNameFor(model => model.Ubicacion)</th>
+                                <th><div class="Columna-descripcion">@Html.DisplayNameFor(model => model.Descripcion)</div></th>
+                                <th>@Html.DisplayNameFor(model => model.SmNombre)</th>
+                                <th>@Html.DisplayNameFor(model => model.CriticidadNombre)</th>
+                                <th>@Html.DisplayNameFor(model => model.EstadoOtNombre)</th>
+                                <th>@Html.DisplayNameFor(model => model.MantenedorNombre)</th>
+                                <th>@Html.DisplayNameFor(model => model.OperadorReporte)</th>
+                                <th>@Html.DisplayNameFor(model => model.CodigoOperadorReporte)</th>
+                                <th>@Html.DisplayNameFor(model => model.Fechanotificacion)</th>
+                                <th>@Html.DisplayNameFor(model => model.MantenedorNotificar)</th>
+                                @*<th>@Html.DisplayNameFor(model => model.MantenedorNotificarCodigo)</th>*@
+                                <th>@Html.DisplayNameFor(model => model.Fechainicioguardarmostrar)</th>
+                                <th>@Html.DisplayNameFor(model => model.MantenedorReparo)</th>
+                                @*<th>@Html.DisplayNameFor(model => model.MantenedorReparoCodigo)</th>*@
+                                <th>@Html.DisplayNameFor(model => model.OperadorCierre)</th>
+                                <th>@Html.DisplayNameFor(model => model.CodigoOperadorCierre)</th>
+                                <th>@Html.DisplayNameFor(model => model.Fechafinalguardarmostrar)</th>
+                                <th>@Html.DisplayNameFor(model => model.Comentario)</th>
+                                <th>@Html.DisplayNameFor(model => model.UsuariosCodigo)</th>
+                                <th>@Html.DisplayNameFor(model => model.UsuariosNombre)</th>
+                                <th>Usuario actualizo</th>
 
 
-                        </tr>
-                    </thead>
 
-                    <tbody id="Pintardata" class="tabla">
 
-                        @*@foreach (var item in Model)
+                            </tr>
+                        </thead>
+
+                        <tbody id="Pintardata" class="tabla">
+
+                            @*@foreach (var item in Model)
                             {
                             <tr>
 
-                                <td>@Html.DisplayFor(model => item.Ot)</td>
-                                <td>@Html.DisplayFor(model => item.Fechaaveria)</td>
-                                <td>@Html.DisplayFor(model => item.SubsistemasNombre)</td>
-                                <td>@Html.DisplayFor(model => item.EstacionesNombre)</td>
-                                <td>@Html.DisplayFor(model => item.UbicacionesNombre)</td>
-                                <td>@Html.DisplayFor(model => item.Descripcion)</td>
-                                <td>@Html.DisplayFor(model => item.SistemasNombre)</td>
-                                <td>@Html.DisplayFor(model => item.CriticidadNombre)</td>
-                                <td>@Html.DisplayFor(model => item.EstadoOtNombre)</td>
-                                <td>@Html.DisplayFor(model => item.OperadorReporteNombre)</td>
-                                <td>@Html.DisplayFor(model => item.OperadorReporteCodigo)</td>
-                                <td>@Html.DisplayFor(model => item.Fechanotificacion)</td>
-                                <td>@Html.DisplayFor(model => item.MantenedorNotificarNombre)</td>
-                                <td>@Html.DisplayFor(model => item.MantenedorNotificarCodigo)</td>
-                                <td>@Html.DisplayFor(model => item.Fechainicio)</td>
-                                <td>@Html.DisplayFor(model => item.MantenedorReparoNombre)</td>
-                                <td>@Html.DisplayFor(model => item.MantenedorReparoCodigo)</td>
-                                <td>@Html.DisplayFor(model => item.OperadorCierreNombre)</td>
-                                <td>@Html.DisplayFor(model => item.OperadorCierreCodigo)</td>
-                                <td>@Html.DisplayFor(model => item.Fechafinal)</td>
-                                <td>@Html.DisplayFor(model => item.Comentario)</td>
-                                <td>@Html.DisplayFor(model => item.UsuariosCodigo)</td>
-                                <td>@Html.DisplayFor(model => item.UsuariosNombre)</td>
+                            <td>@Html.DisplayFor(model => item.Ot)</td>
+                            <td>@Html.DisplayFor(model => item.Fechaaveria)</td>
+                            <td>@Html.DisplayFor(model => item.SubsistemasNombre)</td>
+                            <td>@Html.DisplayFor(model => item.EstacionesNombre)</td>
+                            <td>@Html.DisplayFor(model => item.UbicacionesNombre)</td>
+                            <td>@Html.DisplayFor(model => item.Descripcion)</td>
+                            <td>@Html.DisplayFor(model => item.SistemasNombre)</td>
+                            <td>@Html.DisplayFor(model => item.CriticidadNombre)</td>
+                            <td>@Html.DisplayFor(model => item.EstadoOtNombre)</td>
+                            <td>@Html.DisplayFor(model => item.OperadorReporteNombre)</td>
+                            <td>@Html.DisplayFor(model => item.OperadorReporteCodigo)</td>
+                            <td>@Html.DisplayFor(model => item.Fechanotificacion)</td>
+                            <td>@Html.DisplayFor(model => item.MantenedorNotificarNombre)</td>
+                            <td>@Html.DisplayFor(model => item.MantenedorNotificarCodigo)</td>
+                            <td>@Html.DisplayFor(model => item.Fechainicio)</td>
+                            <td>@Html.DisplayFor(model => item.MantenedorReparoNombre)</td>
+                            <td>@Html.DisplayFor(model => item.MantenedorReparoCodigo)</td>
+                            <td>@Html.DisplayFor(model => item.OperadorCierreNombre)</td>
+                            <td>@Html.DisplayFor(model => item.OperadorCierreCodigo)</td>
+                            <td>@Html.DisplayFor(model => item.Fechafinal)</td>
+                            <td>@Html.DisplayFor(model => item.Comentario)</td>
+                            <td>@Html.DisplayFor(model => item.UsuariosCodigo)</td>
+                            <td>@Html.DisplayFor(model => item.UsuariosNombre)</td>
 
 
                             </tr>
@@ -299,13 +316,17 @@
 
 
 
-                    </tbody>
+                        </tbody>
 
 
 
 
 
-                </table>
+                    </table>
+
+             
+
+               
 
 
 
@@ -637,7 +658,7 @@
 
                                         <div class="col-2" m>
 
-                                            <input type="color" id="inputcolor" value="" title="Choose your color">
+                                            <input type="color" id="inputcolor"  title="Choose your color">
                                         </div>
 
 
@@ -715,24 +736,94 @@
            
 
         }
+
+        //funcion para mostrar el spinner de la tabla
+       
+        function mostrar_spinnerTable(){
+
+         //llamamos la tabla para ocultarla
+        const tabla = document.getElementById("tabla");
+
+        tabla.classList.add("ocultar_contenido");
+
+
+        //llamamos el contenedor spinner para mostrarlo
+
+        const contenedor_spinner = document.getElementById("contenedor_spinner");
+              contenedor_spinner.classList.add("spin");
+
+              contenedor_spinner.classList.remove("ocultar_contenido");
+        }
+
+
+
+
+        //funcion para ocultar el spinner de la tabla
+
+        function ocultar_spinnertable(){
+
+
+        //llamamos elcontenedor spinner a mostrarlo
+
+        const contenedor_spinner = document.getElementById("contenedor_spinner");
+
+
+            contenedor_spinner.classList.remove("spin");
+
+           contenedor_spinner.classList.add("ocultar_contenido");
+
+             //llamamos la tabla para ocultarla
+         const tabla = document.getElementById("tabla");
+
+             tabla.classList.remove("ocultar_contenido");
+
         
 
-        window.onload = function () {
-            
+        }
+
+
+
+        //funcion para mostrar el spinner inicial
+
+         function mostrar_spinnerInicial(){
 
             const spin_container = document.getElementById("spin_container")
 
-            spin_container.style.display = "none";
+            spin_container.classList.add("spinner")
+
+            const contenido = document.getElementById("container")
+
+            contenido.classList.add("ocultar_contenido")
+          
+            
+        }
+
+            mostrar_spinnerInicial()
+
+
+        //funcion para ocultar el spinner inicial
+
+        function ocultar_spinnerInicial(){
+
+            const spin_container = document.getElementById("spin_container")
+
+            spin_container.classList.add("ocultar_contenido")
 
             const contenido = document.getElementById("container")
 
             contenido.classList.remove("ocultar_contenido")
-           
+          
+            
+        }
+
+        window.onload = function () {
+
+            ocultar_spinnerInicial();
           
             //ocultar btn reutilizar solo se muestra cuando se va a actualizar un registro
             let reutilizarenviar = document.getElementById("reutilizarenviar");
 
-            reutilizarenviar.style.display = "none";
+            reutilizarenviar.classList.add("ocultar_contenido")
 
             //mostrar contenido de la tabla
 
@@ -745,61 +836,7 @@
 
         }
 
-        function limpiarhtml(){
-
-             const contenedor_tabla = document.getElementById("contenedor_tabla")
-            while (contenedor_tabla.firstChild) {
-
-
-               contenedor_tabla.removeChild(contenedor_tabla.firstChild);
-            }
-        }
-
-        function Spinner() {
-
-            //const tabla = document.getElementById("tabla")
-
-            //tabla.classList.add("ocultar_contenido")
-
-
-            const contenedor_tabla = document.getElementById("contenedor_tabla")
-
-            let contenedor_spinner = document.getElementById("contenedor_spinner")
-
-            contenedor_spinner.classList.add("spin");
-
-            let elemento_spinner = document.createElement("div");
-
-
-
-            elemento_spinner.classList.add("sk-chase");
-
-            elemento_spinner.innerHTML = `
-
-                           <div class="sk-chase-dot"></div>
-                           <div class="sk-chase-dot"></div>
-                           <div class="sk-chase-dot"></div>
-                           <div class="sk-chase-dot"></div>
-                           <div class="sk-chase-dot"></div>
-                           <div class="sk-chase-dot"></div>
-
-
-
-
-
-                     `
-            contenedor_spinner.appendChild(elemento_spinner)
-
-            contenedor_tabla.appendChild(contenedor_spinner);
-
-
-
-        }
-
-
-
-
-
+      
 
 
         function Fecha(fecha) {
@@ -939,7 +976,7 @@
 
             e.preventDefault();
 
-            //console.log(e.submitter.id)
+           
 
 
             let idreportes = Number(document.getElementById("idreportes").value);
@@ -954,7 +991,6 @@
             let criticidad = document.getElementById("criticidad");
             let Sm = document.getElementById("sm");
             let estadoot = document.getElementById("estado");
-            alert(estadoot.value)
             let ot = document.getElementById("ot");
             let comentario = document.getElementById("comentario").value;
             let fechanotificacion = document.getElementById("fechanotificacion").value;
@@ -1255,8 +1291,7 @@
             fetch(url)
                 .then(res => res.json())
                 .then(data => {
-                    alert(JSON.stringify(data))
-
+                 
 
 
                     let Idreportes = document.getElementById("idreportes").value = data.id;
@@ -1312,7 +1347,11 @@
 
         function Listardata(url) {
 
-            Spinner();
+
+        //mostrarmos el espinner a lo que carga la data
+
+            mostrar_spinnerTable()
+
 
             fetch(url)
                 .then(res => res.json())
@@ -1489,8 +1528,10 @@
                     }
                     
                     Pintardata.innerHTML = filasTabla;
-                    let contenedor_spinner = document.getElementById("contenedor_spinner")
-                    contenedor_spinner.style.display = "none"
+
+                    //una vez la data pintada ocultamos el espinner
+                    ocultar_spinnertable();
+                   
                 })
               
            
@@ -1538,8 +1579,6 @@
             let fecha = document.getElementById("filtrofecha").value;
             let estadoot = document.getElementById("filtroestadoot").value;
             let usuario = document.getElementById("fitrousuario").value;
-
-            alert(usuario)
 
             let url = "Reportes/Listarasincrono/?IdEstacion=" + estaciones + "&IdSubsistema=" + subsistemas + "&fechaaveriaGuardarMostrar=" + fecha
                 + "&IdEstadoOt=" + estadoot + "&IdUsuarios=" + usuario;
@@ -1748,7 +1787,6 @@
 
         function EstadoRegistro() {
 
-            alert(ot.value)
 
             const estadoot = document.getElementById("estado");
             const codigooperadorfinal = document.getElementById("codigooperadorfinal");

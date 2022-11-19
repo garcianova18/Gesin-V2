@@ -1331,6 +1331,7 @@
             let criticidad = document.getElementById("criticidad");
             let sm = document.getElementById("sm");
             let nombreoperador = document.getElementById("nombreoperador");
+            
 
             descripcioncascada.classList.remove("error");
             sistemas.classList.remove("error");
@@ -1353,11 +1354,14 @@
             fetch(url)
                 .then(res => res.json())
                 .then(data => {
-                 
 
+                    //aqui llamamos  las funcion que carga el Listado de subsistema y de activo descripcion en cascada para que al cargar un registro este tambie me cargue los subsistemas
+                    SubsistemaCascada();
+                    descripcionCascada();
 
                     let Idreportes = document.getElementById("idreportes").value = data.id;
                     let sistemas = document.getElementById("sistemas").value = data.sistemasNombre;
+                    let mantenedor = document.getElementById("mantenedor").value = data.mantenedorNombre;
                     let subsistemas = document.getElementById("subsistemas").value = data.subsistemasNombre;
                     let estaciones = document.getElementById("estaciones").value = data.estacionesNombre;
                     let ubicaciones = document.getElementById("ubicaciones").value = data.ubicacion;
@@ -1388,9 +1392,9 @@
                     }
 
 
-                    //aqui llamamos  las funcion que carga el Listado de subsistema y de activo descripcion en cascada para que al cargar un registro este tambie me cargue los subsistemas
-                    SubsistemaCascada();
-                    descripcionCascada();
+                    
+                  
+                  
 
 
 
@@ -1700,12 +1704,14 @@
 
         function SubsistemaCascada() {
 
+            
+                // cuando se haga un cambio sistemalimpiamos los campos subsistema y mantenedor 
+                document.getElementById("subsistemas").value = "";
+                document.getElementById("mantenedor").value = "";
 
+            
 
-
-
-
-
+           
 
             let Listsubsistemas = document.getElementById("Listsubsistemas");
             Listsubsistemas.innerHTML = "";
@@ -1770,6 +1776,7 @@
 
         //-----funcion para llenar el campo descripcion cascada-----------------
         //esta funcion la dispara el campo Subsistema con el evento change-----
+        //en esta tambien llenamos el campo mantenedor de solo lectura
 
         const subsistema = document.getElementById("subsistemas");
 

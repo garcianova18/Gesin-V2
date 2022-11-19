@@ -571,8 +571,6 @@ namespace gesin_app.Controllers
         [HttpPost]
         public async Task< IActionResult> CrearEditarReportes([FromBody] ReportesCreateView reporte)
         
-        
-        
         {
 
             if (reporte !=null )
@@ -589,9 +587,18 @@ namespace gesin_app.Controllers
                 //----pero traemos lo que se digite en el campo lo buscamos y estraemos su id para luego gardar en base de datos
 
                 //var operadorreporte = Db.Personas.FirstOrDefault(o => o.Codigo == reporte.OperadorreporteCodigo);
+
+
+
                 var sistema = Db.Sistemas.FirstOrDefault(o => o.Nombre == reporte.Sistema);
                 var subsistema = Db.Subsistemas.FirstOrDefault(o => o.Nombre == reporte.Subsistema);
                 var estacion = Db.Estacions.FirstOrDefault(o => o.Nombre == reporte.Estacion);
+
+
+                if (sistema == null || subsistema ==null || estacion == null)
+                {
+                    return Ok(3);
+                }
                 //var ubicacion = Db.Ubicacions.FirstOrDefault(o => o.Nombre == reporte.UbicacionesNombre);
                 //var mantenedornotificar = Db.Personas.FirstOrDefault(m => m.Nombre == reporte.MantenedorNotificarNombre);
                 //var mantenedorreparo = Db.Personas.FirstOrDefault(m => m.Nombre == reporte.MantenedorReparoNombre);
@@ -664,6 +671,7 @@ namespace gesin_app.Controllers
                      }
 
             }
+
             else
             {
                 //Actualizar
@@ -727,12 +735,10 @@ namespace gesin_app.Controllers
             if (fecha != null && fecha != "")
             {
                 //convertir la cadena al formato necesario
+                //con split(new char[] {}) podemos espeficicar vairos deparadores para cortar nuestra cadenasin indicar el limitador
+                var splisfecha = fecha.Split(new char[] { '/', ' '});
 
-                var splisfecha = fecha.Split("/", 3);
-
-                var splithoras = splisfecha[2].Split(new char[] { ' ' });
-
-                string dias = splisfecha[0], meses = splisfecha[1], anios = splithoras[0], horas = splithoras[1];
+                string dias = splisfecha[0], meses = splisfecha[1], anios = splisfecha[2], horas = splisfecha[3];
 
                 var Fechaformatoconvertido = new DateTime().ToString($"{anios}/{meses}/{dias}' '{horas}");
 

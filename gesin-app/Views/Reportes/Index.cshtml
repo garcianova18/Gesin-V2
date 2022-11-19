@@ -537,7 +537,7 @@
 
                                 <div class="col-12 col-md-5 mb-3">
 
-                                    <input class="form-control form-control-sm" id="fechanotificacion" ondblclick="ObtenerfechaNotificacion()" placeholder="Fecha Notif.">
+                                    <input class="form-control form-control-sm" id="fechanotificacion" ondblclick="ObtenerfechaNotificacion()" maxlength="16" placeholder="Fecha Notif.">
 
                                 </div>
 
@@ -576,12 +576,12 @@
 
                                 <div class=" col-12 col-md-5 mb-3 ">
 
-                                    <input class="form-control form-control-sm" placeholder="Fecha inicio" id="fechainicio">
+                                    <input class="form-control form-control-sm" placeholder="Fecha inicio" maxlength="16" id="fechainicio">
                                 </div>
 
                                 <div class=" col-12 col-md-5 mb-3 ">
 
-                                    <input class="form-control form-control-sm" placeholder="Fecha final" id="fechafinal">
+                                    <input class="form-control form-control-sm" placeholder="Fecha final" maxlength="16" id="fechafinal">
                                 </div>
 
                                 <div class=" col-12 col-md-5 mb-3 ">
@@ -678,6 +678,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/mensajes_errores.js" ></script>
     <script>
 
 
@@ -955,7 +956,7 @@
             let fechanotificacion = document.getElementById("fechanotificacion").value;
             let mantenedornotificar = document.getElementById("mantenedornotificar").value;
             let fechainicio = document.getElementById("fechainicio").value;
-            let fechafinal = document.getElementById("fechainicio").value;
+            let fechafinal = document.getElementById("fechafinal").value;
             let nombreoperadorfinal = document.getElementById("nombreoperadorfinal").value;
             let codigooperadorfinal = document.getElementById("codigooperadorfinal").value;
             let mantenedorcierre = document.getElementById("mantenedorcierre").value;
@@ -1043,166 +1044,266 @@
             if (sistema.value == "" || subsistemas.value == "" || estaciones.value == "" || ubicaciones.value == "" || descripcion.value == ""
                 || nombreoperador.value == "" || codigooperador.value == "" || fechareportes.value == "" || Number(criticidad.value) == 0 || Number(Sm.value) == 0) {
 
-                Swal.fire({
 
 
-                    position: 'center-end',
-                    icon: 'warning',
-                    text: `Los Campos en rojos son obligatorios`,
-                    showConfirmButton: true,
-                    background: '#130a28',
-                    color: '#ffff'
+                modalerror('Los Campos en rojos son obligatorios', 'center-end')
 
-
-
-                })
-
+               
             }
             else {
+
+
+           
                
-
-               const fecha =isNaN(Date.parse(fechareportes.value));
-
-                if (fechareportes.value.length ==16 && !fecha) {
-
-
-                    let url = "Reportes/CrearEditarReportes/reporte"
-
-                    fetch(url, {
-                        method: 'POST',
-                        body: JSON.stringify({
-
-                            id: idreportes,
-                            sistema: sistema.value,
-                            subsistema: subsistemas.value,
-                            estacion: estaciones.value,
-                            ubicacion: ubicaciones.value,
-                            descripcion: descripcion.value,
-                            operadorReporte: nombreoperador.value,
-                            codigoOperadorReporte: codigooperador.value,
-                            fechaaveriaGuardarMostrar: fechareportes.value,
-                            idCriticidad: Number(criticidad.value),
-                            idSm: Number(Sm.value),
-                            idEstadoOt: Number(estadoot.value),
-                            ot: Number(ot.value),
-                            comentario: comentario,
-                            fechanotificacionguardarmostrar: fechanotificacion,
-                            mantenedorNotificar: mantenedornotificar,
-                            fechainicioguardarmostrar: fechainicio,
-                            fechafinalguardarmostrar: fechafinal,
-                            operadorCierre: nombreoperadorfinal,
-                            codigoOperadorCierre: codigooperadorfinal,
-                            mantenedorReparo: mantenedorcierre,
-                            idUsuarios: usuario
+                // si esta funcion regresa true la fecha no es valida
+                //si regresa false la fecha es valida
+                //si la fecha viene vacia tambien regresaresmos false ya que las fechas no son obligatorias ecepto la fecha de averia
+                //pero el campo fecha averia es validado mas arriba que si viene vacio muestre el campo en rojo y nopermita enviar el formulario
+               function validarfechas(fecha){
 
 
+                    if (fecha !=="") {
+                       
+                       const fechasplit = fecha.split("/", 3);
 
-                        }),
-                        headers: {
-                            'Content-Type': 'application/json'
+                        if(fechasplit.length <3){
+
+                          
+                            return true
                         }
-                    })
-                        .then(res => res.json())
-                        .then(data => {
 
-                            //se creo un registro
-                            if (data == 1) {
+                        else{
+
+                           
+                           const fechasplit2 = fechasplit[2].split(" ", 2)
+
+                           const fechaformateada = `${fechasplit2[0]}/${fechasplit[1]}/${fechasplit[0]} ${fechasplit2[1]}`
+
+                            return isNaN(Date.parse(fechaformateada))
+
+                        }
+
+                       
+                   }
+                   else{
+
+                    
+
+                        return false
+                   }
+                  
+                    
+
+                        
+                  
+
+               }
+
+               
+               
+            
+             
+               //verificamos si fecha averia es valida
+                if (fechareportes.value.length ==16 && !validarfechas(fechareportes.value)) {
+
+                    //aqui verifiamos una de las fechas no sea valida para mostrar el error
+                    if (fechanotificacion.length !=16 && validarfechas(fechanotificacion)
+                        || fechainicio.length != 16 && validarfechas(fechainicio)
+                        || fechafinal.length != 16 && validarfechas(fechafinal) )
+                    {
+
+                        //aqui validamos cual fecha exactamente no es la valida para decirle al usuario cual la que deve verificar
+
+                        if(validarfechas(fechanotificacion)){
+
+                           
+                            modalerror('La fecha introducida en el campo mantenedor notificar no es valida','' ,'Formato válido: DD-MM-YYYY hh:mm')
+                            
+                        }
+                        else if(validarfechas(fechainicio)){
+
+                           
+                            modalerror('La fecha introducida en el campo fecha inicio no es valida','' ,'Formato válido: DD-MM-YYYY hh:mm')
+                             
+                        }
+                        else {
+
+                           
+                            modalerror( 'La fecha introducida en el campo fecha final no es valida','' ,'Formato válido: DD-MM-YYYY hh:mm')
+                            
+                        }
+                        
+                     
+
+                    }
+                    else{
+
+                        //si todas las fechas son valida o las que no son abligatirias estan vacias enviamos el formulario
+
+                         let url = "Reportes/CrearEditarReportes/reporte"
+
+                        fetch(url, {
+                            method: 'POST',
+                            body: JSON.stringify({
+
+                                id: idreportes,
+                                sistema: sistema.value,
+                                subsistema: subsistemas.value,
+                                estacion: estaciones.value,
+                                ubicacion: ubicaciones.value,
+                                descripcion: descripcion.value,
+                                operadorReporte: nombreoperador.value,
+                                codigoOperadorReporte: codigooperador.value,
+                                fechaaveriaGuardarMostrar: fechareportes.value,
+                                idCriticidad: Number(criticidad.value),
+                                idSm: Number(Sm.value),
+                                idEstadoOt: Number(estadoot.value),
+                                ot: Number(ot.value),
+                                comentario: comentario,
+                                fechanotificacionguardarmostrar: fechanotificacion,
+                                mantenedorNotificar: mantenedornotificar,
+                                fechainicioguardarmostrar: fechainicio,
+                                fechafinalguardarmostrar: fechafinal,
+                                operadorCierre: nombreoperadorfinal,
+                                codigoOperadorCierre: codigooperadorfinal,
+                                mantenedorReparo: mantenedorcierre,
+                                idUsuarios: usuario
 
 
 
-                                let url = "Reportes/Listarasincrono";
-                                //llamamos al metodo listar para que vuelva a cargar la tabla
-                                Listardata(url);
-
-
-
-
-                                Swal.fire({
-                                    position: 'center-end',
-                                    icon: 'success',
-                                    title: 'Reporte agregado satisfactoriamente',
-                                    showConfirmButton: false,
-                                    timer: 1000
-                                })
-
-
-                                const check = document.getElementById("reutilizar")
-
-                                // si el chekbox no esta chekiado entonces resetiamos/ limpiamos el formulario
-                                if (!check.checked) {
-
-                                    form.reset();
-
-                                }
-
+                            }),
+                            headers: {
+                                'Content-Type': 'application/json'
                             }
-                            // se actualizo un registro
-                            else if (data == 2) {
-
-
-
-                                let url = "Reportes/Listarasincrono";
-                                //llamamos al metodo listar para que vuelva a cargar la tabla
-                                Listardata(url);
-
-
-
-                                Swal.fire({
-                                    position: 'center-end',
-                                    icon: 'success',
-                                    title: 'Reporte Actualizado satisfactoriamente',
-                                    showConfirmButton: false,
-                                    timer: 1000
-                                })
-
-
-
-
-
-
-
-                                const check = document.getElementById("reutilizar")
-
-
-                                if (!check.checked) {
-
-                                    form.reset();
-                                    document.getElementById("enviar").value = "Agregar";
-                                    reutilizarenviar.style.display = "none";
-
-                                }
-
-                            }
-
-
-
                         })
+                            .then(res => res.json())
+                            .then(data => {
 
+                                //se creo un registro
+                                if (data == 1) {
+
+
+
+                                    let url = "Reportes/Listarasincrono";
+                                    //llamamos al metodo listar para que vuelva a cargar la tabla
+                                    Listardata(url);
+
+
+
+
+                                    Swal.fire({
+                                        position: 'center-end',
+                                        icon: 'success',
+                                        title: 'Reporte agregado satisfactoriamente',
+                                        showConfirmButton: false,
+                                        timer: 1000
+                                    })
+
+
+                                    const check = document.getElementById("reutilizar")
+
+                                    // si el chekbox no esta chekiado entonces resetiamos/ limpiamos el formulario
+                                    if (!check.checked) {
+
+                                        form.reset();
+
+                                    }
+
+                                }
+                                // se actualizo un registro
+                                else if (data == 2) {
+
+
+
+                                    let url = "Reportes/Listarasincrono";
+                                    //llamamos al metodo listar para que vuelva a cargar la tabla
+                                    Listardata(url);
+
+
+
+                                    Swal.fire({
+                                        position: 'center-end',
+                                        icon: 'success',
+                                        title: 'Reporte Actualizado satisfactoriamente',
+                                        showConfirmButton: false,
+                                        timer: 1000
+                                    })
+
+                                    const check = document.getElementById("reutilizar")
+
+                                    if (!check.checked) {
+
+                                        form.reset();
+                                        document.getElementById("enviar").value = "Agregar";
+                                        reutilizarenviar.style.display = "none";
+
+                                    }
+
+                                }
+                                else if (data == 3) {
+
+
+                                    Swal.fire({
+
+
+                                        position: 'center',
+                                        icon: 'warning',
+                                        html: `<p>No debes de escribir en los campos Sistemas, Subsistemas y Estaciones.
+                                                                   <b>Debes elegir del menu de opciones que estos ofrecen</b>.</p>
+                                                                   `,
+
+                                        showConfirmButton: true,
+                                        background: '#130a28',
+                                        color: '#ffff',
+
+
+
+
+                                    })
+                                }
+
+                                else {
+
+
+                                    Swal.fire({
+
+
+                                        position: 'center',
+                                        icon: 'error',
+                                        text: `Algo salio mal vuelva a intentarlo, si el problema persiste consulte con soporte tecnico
+                                                                   `,
+                                        showConfirmButton: true,
+                                        background: '#130a28',
+                                        color: '#ffff'
+
+
+
+                                    })
+
+
+                                }
+
+
+
+
+                            })
+
+
+
+                    }
+
+                    
+                    
                 }
+
+
                 else {
 
 
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'error',
-                        text: 'La Fecha introducida no es válida',
-                        showConfirmButton: true,
-                        background: '#130a28',
-                        color: '#ffff',
-
-                        //timer: 1000,
-                        footer: "Formato válido: DD-MM-YYYY hh:mm"
-
-                    })
-
+                    modalerror('La fecha introducida en el campo fecha averia no es valida', '', 'Formato válido: DD-MM-YYYY hh:mm')
 
                 }
             }
-
-
-
-
-
 
 
 

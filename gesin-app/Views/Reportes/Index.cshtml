@@ -49,7 +49,9 @@
 
 <body id="cuerpo" class="cuerpo">
 
-<div id="spin_container">
+      <!------spinner de inicio----->
+
+    <div id="spin_container">
 
          <div class="sk-chase">
 
@@ -87,7 +89,7 @@
                         <div class="collapse navbar-collapse" id="navbarNavDropdown">
                             <ul class="navbar-nav">
 
-
+                                    <!----Area de mantenimiento--------------->
 
                                 @if (User.IsInRole("administrador"))
                                 {
@@ -125,8 +127,8 @@
 
 
                                             </li>
-                                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                            <li><a class="dropdown-item" href="#"></a></li>
+                                            <li><a class="dropdown-item" href="#"></a></li>
                                         </ul>
 
                                  </li>
@@ -218,6 +220,8 @@
             <!---area de la tabla-->
             <div class=" col-primaria col-primaria-tabla col-12 " id="contenedor_tabla_spinner">
 
+
+            <!------spinner de la tabla------>
                 <div id="contenedor_spinner">
 
                             
@@ -1798,18 +1802,13 @@
 
                         alert(JSON.stringify(data))
 
-                        alert(data[0])
 
-                        for (let i = 0; i < data.length; i++) {
+                            document.getElementById("mantenedor").value = `${data.mantenedor}`;
 
-                            document.getElementById("mantenedor").value = `${data[i].mantenedor}`;
-
-
-                            alert(data[i].descripcion[0])
-
-
+                        alert(data.mantenedor)
+                         
                             // recorremos el array descripcion que esta dentro del objeto que viene del backend
-                            data[0].descripcion.map((desp) =>{
+                            data.descripcion.map((desp) =>{
 
                                 let ElementOpcion = document.createElement("option");
 
@@ -1820,22 +1819,10 @@
                                 listcascada.appendChild(ElementOpcion);
 
 
-
                             })
 
                                  
                           
-                               
-
-
-
-                           
-
-                        }
-
-
-
-
                     })
 
             }

@@ -8,3 +8,5 @@ Resultados-Compilación.txt
 /.vs
 /vs
 *.suo
+*.user
+*.pubxml

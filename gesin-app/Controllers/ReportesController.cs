@@ -434,15 +434,14 @@ namespace gesin_app.Controllers
 
         //metodo para cargar la descripcion de activos y el mantenedor segun el subsistema esto para crear combolist en cascada con las descripciones
 
-        public IActionResult Descripcion(string subsistema)
+        public async Task< IActionResult >Descripcion(string subsistema)
         {
 
-            var Buscarsubsistema = Db.Subsistemas.Where(s => s.Nombre == subsistema).Select(b=>new
+            var Buscarsubsistema = await Db.Subsistemas.Where(s => s.Nombre == subsistema).Select(b=>new
             {
 
                 // para haceder a la data relacionada debemos con include indicarle en este caso no lo hicimos 
                 //porque estamos devolviendo un objeto anonimo y el hacede a la data relacionada si indiarlo
-
 
 
                 //mantenedor es padre de susbsistema 
@@ -452,7 +451,8 @@ namespace gesin_app.Controllers
 
                 //despcricion es hijo de subsistem de esta forma navegamos  a sus propiedades y obtenemos una lista de jihos
                 descripcion = b.Activos.Select(d=> d.Descripcion).ToList()
-            }).ToList();
+
+            }).FirstOrDefaultAsync();
 
           
 

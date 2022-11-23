@@ -437,28 +437,29 @@ namespace gesin_app.Controllers
         public IActionResult Descripcion(string subsistema)
         {
 
-            var idsubsistema = Db.Subsistemas.Where(s => s.Nombre == subsistema).FirstOrDefault();
-
-          
-
-            var descripcion = Db.Activos.Where(sub => sub.Idsubsistema == idsubsistema.Id).Select(d => new
+            var Buscarsubsistema = Db.Subsistemas.Where(s => s.Nombre == subsistema).Select(b=>new
             {
-                descripcion = d.Descripcion,
-                mantenedor = d.IdsubsistemaNavigation.IdMantenedorNavigation.Nombre
-              
 
+                // para haceder a la data relacionada debemos con include indicarle en este caso no lo hicimos 
+                //porque estamos devolviendo un objeto anonimo y el hacede a la data relacionada si indiarlo
+
+
+
+                //mantenedor es padre de susbsistema 
+                // de esta forma navegamos a sus propiedades
+                mantenedor = b.IdMantenedorNavigation.Nombre,
+
+
+                //despcricion es hijo de subsistem de esta forma navegamos  a sus propiedades y obtenemos una lista de jihos
+                descripcion = b.Activos.Select(d=> d.Descripcion).ToList()
             }).ToList();
 
-
-            //var mantenedor = Db.Mantenedors.Where(n => n.Nombre == "Exergia").Select(sub => new
-            //{
-
-            //    subsistema = sub.Subsistemas.Select(n => n.Nombre).ToList()
-            //}).ToList();
-
           
 
-            return Json(descripcion);
+
+            return Json(Buscarsubsistema);
+
+
 
 
         }

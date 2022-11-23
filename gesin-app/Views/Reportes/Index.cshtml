@@ -2,6 +2,7 @@
 @model IEnumerable<gesin_app.ViewModel.ReportesView>
 @using gesin_app.ViewModel;
 
+
 @{
 
     Layout = null;
@@ -1378,11 +1379,11 @@
                     let mantenedornotificar = document.getElementById("mantenedornotificar").value = data.mantenedorNotificar;
                     let fechainicio = document.getElementById("fechainicio").value = data.fechainicioguardarmostrar;
                     let fechafinal = document.getElementById("fechafinal").value = data.fechafinalguardarmostrar;
-                    let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = data.operadorCierre;
-                    let nombreoperadorfinal = document.getElementById("nombreoperadorfinal").value = data.codigoOperadorCierre;
+                    let nombreoperadorfinal = document.getElementById("nombreoperadorfinal").value = data.operadorCierre;
+                    let codigooperadorfinal = document.getElementById("codigooperadorfinal").value = data.codigoOperadorCierre;
                     let mantenedorcierre = document.getElementById("mantenedorcierre").value = data.mantenedorReparo;
                     let usuario = document.getElementById("usuario").value = data.idUsuarios;
-
+                 
 
                     //si estado OT es duplicada el campo ot lo ponemos de color gris
                     if (estadoot == 7) {
@@ -1463,11 +1464,11 @@
                                                             ${data[i].criticidadNombre == "Bajo Impacto" ?
 
                                     `
-                                                                   <td style ="background-color:#8dff43">${data[i].criticidadNombre}</td>
+                                                                   <td style ="background-color:#33F603">${data[i].criticidadNombre}</td>
                                                             `
                                     :
                                     `
-                                                                <td style ="background-color:#CE2B08">${data[i].criticidadNombre}</td>
+                                                                <td style ="background-color:#FF0000">${data[i].criticidadNombre}</td>
 
                                                             `
 
@@ -1795,20 +1796,40 @@
                     .then(res => res.json())
                     .then(data => {
 
+                        alert(JSON.stringify(data))
+
+                        alert(data[0])
 
                         for (let i = 0; i < data.length; i++) {
 
                             document.getElementById("mantenedor").value = `${data[i].mantenedor}`;
 
 
+                            alert(data[i].descripcion[0])
 
-                            let ElementOpcion = document.createElement("option");
 
-                            let TextOpcion = document.createTextNode(`${data[i].descripcion}`);
+                            // recorremos el array descripcion que esta dentro del objeto que viene del backend
+                            data[0].descripcion.map((desp) =>{
 
-                            ElementOpcion.appendChild(TextOpcion);
+                                let ElementOpcion = document.createElement("option");
 
-                            listcascada.appendChild(ElementOpcion);
+                                let TextOpcion = document.createTextNode(`${desp}`);
+
+                                ElementOpcion.appendChild(TextOpcion);
+
+                                listcascada.appendChild(ElementOpcion);
+
+
+
+                            })
+
+                                 
+                          
+                               
+
+
+
+                           
 
                         }
 
@@ -1860,6 +1881,7 @@
             const estadoot = document.getElementById("estado");
             const codigooperadorfinal = document.getElementById("codigooperadorfinal");
             const btnEnviar = document.getElementById("enviar")
+            const idreportes = document.getElementById("idreportes")
 
             const url = "Reportes/BuscarOt/?ot=" + ot.value;
 
@@ -1867,15 +1889,19 @@
                 .then(res => res.json())
                 .then(data => {
 
+                    alert(JSON.stringify(data))
+                    alert(idreportes.value)
 
                     // si existen ordenes con el mismo numero de ot entonces me cambia a estado duplicada y pone el color gris
-                    if (data >= 1) {
+                    if (data >= 1 && idreportes.value == 0) {
 
 
                         ot.style.backgroundColor = "grey";
 
                         if (codigooperadorfinal.value != "") {
 
+
+                            alert("cerrada")
                             //cerrada
                             estadoot.value = 5;
 
@@ -1886,6 +1912,8 @@
 
                             // duplicada
                             estadoot.value = 7;
+
+                            alert("me dispararon stoy duplicada")
                         }
 
 
@@ -1896,7 +1924,7 @@
                     }
                     // se ejecuta si no existen reportes con ot duplicada
 
-                    else if (data == 0) {
+                    else if (data == 0 || data >= 1 && idreportes.value !=0) {
 
                         const mantenedornotificar = document.getElementById("mantenedornotificar");
                         const estadoot = document.getElementById("estado");
@@ -1908,10 +1936,12 @@
                         //aqui le decimos que si existe algun valor en el campo ot y no esta duplicado me cambie el estado a creada reportada
                         if (ot.value != "" && mantenedornotificar.value == "" && codigooperadorfinal.value == "") {
 
+                            ot.style.backgroundColor = "#8dff43"
+                            
                             //creada
                             estadoot.value = 1;
 
-
+                            
                         }
 
 
@@ -1926,15 +1956,45 @@
 
                         else if (ot.value != "" && mantenedornotificar.value != "" && codigooperadorfinal.value == "") {
 
+                            if(ot.value == 0)
+                            {
+
+                                
+                            estadoot.value = 2;
+
+                            
+                            }
+                            else{
+
                             //creada reportada
                             estadoot.value = 3;
+
+                            }
+                            
 
                         }
 
                         else if (codigooperadorfinal.value != "" && ot.value != "" && mantenedornotificar.value != "") {
 
-                            //cerrada
-                            estadoot.value = 5;
+                            ot.style.backgroundColor = "grey";
+
+                            if (codigooperadorfinal.value != "") {
+
+
+                                alert("cerrada")
+                                //cerrada
+                                estadoot.value = 5;
+
+
+                            }
+                            else {
+
+
+                                // duplicada
+                                estadoot.value = 7;
+
+                                alert("me dispararon stoy duplicada")
+                            }
 
                         }
 
@@ -1965,6 +2025,9 @@
         let EstadoOTCerrado = () => EstadoRegistro();
 
         codigooperadorfinal.addEventListener('keyup', EstadoOTCerrado);
+
+
+
 
         //-----------funcion para Limpiar los campos del filtrado-----------------------
 
@@ -2012,7 +2075,7 @@
             if (descripcion != "") {
 
                 //para que el input de activo descripcion se mantena vacio
-                descripcioncascadas.value = "";
+                descripcioncascadas.value = ""
             }
 
         }

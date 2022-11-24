@@ -211,7 +211,7 @@ namespace gesin_app.Controllers
             }
 
 
-            return Json(reportesArray.OrderByDescending(r=> r.Id).Take(0));
+            return Json(reportesArray.OrderByDescending(r=> r.Id).Take(300));
         }
 
 

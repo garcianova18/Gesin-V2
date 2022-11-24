@@ -1,42 +1,45 @@
-﻿p .Erroralert {
+﻿*{
+
+    padding:0;
+    margin: 0;
+    text-decoration: none;
+    box-sizing:border-box;
+}
+
+p .Erroralert {
     color: #820a0a;
     font-size: 50px;
     padding: 25px;
 }
 .col-primaria-filtro {
     
-    background-color: rgba(0, 0, 0);
-    position:relative;
-    height: 4%
+   
+    
+    height: 8%;
+   
+    
   
 }
+   
 
 .col-primaria-tabla {
-    height: 57%;
     overflow: auto; /*con este overfllow hacemos que me ponga la barra de scroll cuando el contenido no quepa*/
     width: 100%;
-    margin: 0;
-    padding: 0;
-  
-    
-    
+    height: 50%;
 }
 
 
 .col-primaria-reportes {
-    overflow: hidden;
-   padding: 1.5px
-    
+    /*overflow: hidden;*/
     
 }
 
 
 
 .col-secundaria {
-   /* background-image: url('../img/greg-rosenke-6QnEf_b47eA-unsplash.jpg');*/
+    background-image: url('../img/greg-rosenke-6QnEf_b47eA-unsplash.jpg');
     background-size: cover;
     background-position: center;
-    /*background-color: rgba(18,47,94,0.9);*/
     background-repeat: no-repeat;
     
 }
@@ -44,6 +47,7 @@
 
 .fila-primaria-padre {
     height: 100vh;
+   
 }
 
 

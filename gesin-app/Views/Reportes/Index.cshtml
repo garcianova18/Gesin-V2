@@ -73,119 +73,117 @@
 
         <div class="row fila-primaria-padre ">
 
-
             <!-----area del menu-->
-            <div class=" col-primaria col-primaria-filtro  col-12  bg-dark">
+            <div class=" col-primaria col-primaria-filtro  col-12  bg-dark g-0">
 
 
-                <nav class="navbar navbar-expand-lg navbar-dark">
-
-
-                  
-
-                        <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon "></span>
-                        </button>
-                        <div class="collapse navbar-collapse bg-dark p-3 p-lg-0" id="navbarNavDropdown">
-                            <ul class="navbar-nav">
-
-                                    <!----Area de mantenimiento--------------->
-
-                                @if (User.IsInRole("administrador"))
-                                {
-                                    <li class="nav-item dropdown">
-
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa-solid fa-circle-user icono"></i>
-                                        </a>
-
-
-                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                            <li>
-
-
-                                                @*Button trigger modal -*@
-
-                                                <a class="dropdown-item" asp-action="Index" asp-controller="Estaciones">
-
-                                                    <div class="d-flex align-items-center">
-                                                        <i class="fas fa-solid fa-shop me-1 text-success"> </i><div>Estaciones</div>
-                                                    </div>
-
-
-                                                </a>
-
-                                                <a class="dropdown-item" asp-action="Index" asp-controller="Personas">
-
-                                                    <div class="d-flex align-items-center">
-                                                        <i class="fa fa-solid fa-user  me-1 text-success"></i> <div>Personas</div>
-                                                    </div>
-
-
-                                                </a> 
+                <nav class="navbar navbar-expand-lg navbar-dark px-3">
 
 
 
-                                            </li>
-                                            <li><a class="dropdown-item" href="#"></a></li>
-                                            <li><a class="dropdown-item" href="#"></a></li>
-                                        </ul>
 
-                                 </li>
+                    <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon "></span>
+                    </button>
+                    <div class="collapse navbar-collapse bg-dark p-3 p-lg-0" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+
+                            <!----Area de mantenimiento--------------->
+                            @if (User.IsInRole("administrador"))
+                            {
+                                <li class="nav-item dropdown">
+
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-circle-user icono"></i>
+                                    </a>
 
 
-                                }
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <li>
 
 
-                                <li class="nav-item  me-md-2 ">
-                                    <input type="number" name="Ot" id="filtroOt" min="0" class="form-control form-control-sm mt-1
+                                            @*Button trigger modal -*@
+
+                                            <a class="dropdown-item" asp-action="Index" asp-controller="Estaciones">
+
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-solid fa-shop me-1 text-success"> </i><div>Estaciones</div>
+                                                </div>
+
+
+                                            </a>
+
+                                            <a class="dropdown-item" asp-action="Index" asp-controller="Personas">
+
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fa fa-solid fa-user  me-1 text-success"></i> <div>Personas</div>
+                                                </div>
+
+
+                                            </a>
+
+
+
+                                        </li>
+                                        <li><a class="dropdown-item" href="#"></a></li>
+                                        <li><a class="dropdown-item" href="#"></a></li>
+                                    </ul>
+
+                                </li>
+
+
+                            }
+
+
+                            <li class="nav-item  me-md-2 ">
+                                <input type="number" name="Ot" id="filtroOt" min="0" class="form-control form-control-sm mt-1
                                             " placeholder="OT" />
-                                </li>
-                                <li class="nav-item me-md-2  ">
-                                    <input type="date" id="filtrofecha" class=" filtrofecha form-control form-control-sm mt-1" onchange="filtrar()" />
-                                </li>
-                                <li class="nav-item me-md-2">
-                                    <select asp-items="@ViewBag.fitroestaciones" class="form-select form-select-sm mt-1"
-                                            id="fitroestaciones" onchange="filtrar()"></select>
-                                </li>
-                                <li class="nav-item me-md-2 ">
-                                    <select asp-items="@ViewBag.filtrosubsistema" class="form-select form-select-sm mt-1"
-                                            id="filtrosubsistema" onchange="filtrar()"></select>
-                                </li>
-                                <li class="nav-item me-md-2 ">
-                                    <select asp-items="@ViewBag.estadoOTs" class="form-select form-select-sm mt-1"
-                                            id="filtroestadoot" onchange="filtrar()"></select>
-                                </li>
+                            </li>
+                            <li class="nav-item me-md-2  ">
+                                <input type="date" id="filtrofecha" class=" filtrofecha form-control form-control-sm mt-1" onchange="filtrar()" />
+                            </li>
+                            <li class="nav-item me-md-2">
+                                <select asp-items="@ViewBag.fitroestaciones" class="form-select form-select-sm mt-1"
+                                        id="fitroestaciones" onchange="filtrar()"></select>
+                            </li>
+                            <li class="nav-item me-md-2 ">
+                                <select asp-items="@ViewBag.filtrosubsistema" class="form-select form-select-sm mt-1"
+                                        id="filtrosubsistema" onchange="filtrar()"></select>
+                            </li>
+                            <li class="nav-item me-md-2 ">
+                                <select asp-items="@ViewBag.estadoOTs" class="form-select form-select-sm mt-1"
+                                        id="filtroestadoot" onchange="filtrar()"></select>
+                            </li>
 
-                                <li class="nav-item me-md-2 ">
-                                    <select asp-items="@ViewBag.fitrousuario" class="form-select form-select-sm mt-1"
-                                            id="fitrousuario" onchange="filtrar()"></select>
-                                </li>
-                                <li class="nav-item  pt-1 d-flex ">
-                                    <a href="#" id="limpiar" class="">
-                                        <i class="fa-solid fa-brush limpiar pt-2 mx-3"></i>
+                            <li class="nav-item me-md-2 ">
+                                <select asp-items="@ViewBag.fitrousuario" class="form-select form-select-sm mt-1"
+                                        id="fitrousuario" onchange="filtrar()"></select>
+                            </li>
+                            <li class="nav-item  pt-1 d-flex ">
+                                <a href="#" id="limpiar" class="">
+                                    <i class="fa-solid fa-brush limpiar pt-2 mx-3"></i>
 
-                                    </a>
+                                </a>
 
-                                    <a asp-action="Logout" asp-controller="Acceso" >
+                                <a asp-action="Logout" asp-controller="Acceso">
 
-                                        <i class="fas fa-regular fa-right-from-bracket salir pt-2 mx-3 "></i>
-                                    </a>
+                                    <i class="fas fa-regular fa-right-from-bracket salir pt-2 mx-3 "></i>
+                                </a>
 
-                                </li>
-
-                               
-
-                                <li class="nav-item me-md-2  ">
-                                    <div class="text-white d-none d-md-block" id="reloj" style="font-size:13px"></div>
-                                </li>
+                            </li>
 
 
 
+                            <li class="nav-item me-md-2  ">
+                                <div class="text-white d-none d-md-block" id="reloj" style="font-size:13px"></div>
+                            </li>
 
-                            </ul>
-                        </div>
-                   
+
+
+
+                        </ul>
+                    </div>
+
                 </nav>
 
 
@@ -217,109 +215,114 @@
             </div>
 
 
-         <!---area de la tabla-->
+
+            <!---area de la tabla-->
 
             <div class=" col-primaria col-primaria-tabla col-12 g-0 " id="contenedor_tabla_spinner">
 
 
-            <!------spinner de la tabla------>
+                
+                <!------spinner de la tabla------>
                 <div id="contenedor_spinner">
 
-                            
+
                     <div class="sk-circle">
 
-                              <div class="sk-circle1 sk-child"></div>
-                              <div class="sk-circle2 sk-child"></div>
-                              <div class="sk-circle3 sk-child"></div>
-                              <div class="sk-circle4 sk-child"></div>
-                              <div class="sk-circle5 sk-child"></div>
-                              <div class="sk-circle6 sk-child"></div>
-                              <div class="sk-circle7 sk-child"></div>
-                              <div class="sk-circle8 sk-child"></div>
-                              <div class="sk-circle9 sk-child"></div>
-                              <div class="sk-circle10 sk-child"></div>
-                              <div class="sk-circle11 sk-child"></div>
-                              <div class="sk-circle12 sk-child"></div>
+                        <div class="sk-circle1 sk-child"></div>
+                        <div class="sk-circle2 sk-child"></div>
+                        <div class="sk-circle3 sk-child"></div>
+                        <div class="sk-circle4 sk-child"></div>
+                        <div class="sk-circle5 sk-child"></div>
+                        <div class="sk-circle6 sk-child"></div>
+                        <div class="sk-circle7 sk-child"></div>
+                        <div class="sk-circle8 sk-child"></div>
+                        <div class="sk-circle9 sk-child"></div>
+                        <div class="sk-circle10 sk-child"></div>
+                        <div class="sk-circle11 sk-child"></div>
+                        <div class="sk-circle12 sk-child"></div>
                     </div>
 
 
                 </div>
 
 
-           
-
-                    <table class="table table-sm table-hover table-bordered text-center align-middle " id="tabla">
-
-                        <thead class="cabecera-tabla text-white text-center align-middle" style="font-size:14px" id="head_table">
-
-                            <tr>
-                                <th>#@ViewBag.conteo</th>
-                                <th>@Html.DisplayNameFor(model => model.Ot)</th>
-                                <th>@Html.DisplayNameFor(model => model.fechaaveriaGuardarMostrar)</th>
-                                <th>@Html.DisplayNameFor(model => model.SistemasNombre)</th>
-                                <th>@Html.DisplayNameFor(model => model.SubsistemasNombre)</th>
-                                <th>@Html.DisplayNameFor(model => model.EstacionesNombre)</th>
-                                <th>@Html.DisplayNameFor(model => model.Ubicacion)</th>
-                                <th><div class="Columna-descripcion">@Html.DisplayNameFor(model => model.Descripcion)</div></th>
-                                <th>@Html.DisplayNameFor(model => model.SmNombre)</th>
-                                <th>@Html.DisplayNameFor(model => model.CriticidadNombre)</th>
-                                <th>@Html.DisplayNameFor(model => model.EstadoOtNombre)</th>
-                                <th>@Html.DisplayNameFor(model => model.MantenedorNombre)</th>
-                                <th>@Html.DisplayNameFor(model => model.OperadorReporte)</th>
-                                <th>@Html.DisplayNameFor(model => model.CodigoOperadorReporte)</th>
-                                <th>@Html.DisplayNameFor(model => model.Fechanotificacion)</th>
-                                <th>@Html.DisplayNameFor(model => model.MantenedorNotificar)</th>
-                                @*<th>@Html.DisplayNameFor(model => model.MantenedorNotificarCodigo)</th>*@
-                                <th>@Html.DisplayNameFor(model => model.Fechainicioguardarmostrar)</th>
-                                <th>@Html.DisplayNameFor(model => model.MantenedorReparo)</th>
-                                @*<th>@Html.DisplayNameFor(model => model.MantenedorReparoCodigo)</th>*@
-                                <th>@Html.DisplayNameFor(model => model.OperadorCierre)</th>
-                                <th>@Html.DisplayNameFor(model => model.CodigoOperadorCierre)</th>
-                                <th>@Html.DisplayNameFor(model => model.Fechafinalguardarmostrar)</th>
-                                <th>@Html.DisplayNameFor(model => model.Comentario)</th>
-                                <th>@Html.DisplayNameFor(model => model.UsuariosCodigo)</th>
-                                <th>@Html.DisplayNameFor(model => model.UsuariosNombre)</th>
-                                <th>Usuario actualizo</th>
 
 
+                <table class="table table-sm table-hover table-bordered text-center align-middle " id="tabla">
+
+                    <thead class="cabecera-tabla text-white text-center align-middle" style="font-size:14px" id="head_table">
+
+                        <tr>
+                            <th>#@ViewBag.conteo</th>
+                            <th>@Html.DisplayNameFor(model => model.Ot)</th>
+                            <th>@Html.DisplayNameFor(model => model.fechaaveriaGuardarMostrar)</th>
+                            <th>@Html.DisplayNameFor(model => model.SistemasNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.SubsistemasNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.EstacionesNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.Ubicacion)</th>
+                            <th><div class="Columna-descripcion">@Html.DisplayNameFor(model => model.Descripcion)</div></th>
+                            <th>@Html.DisplayNameFor(model => model.SmNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.CriticidadNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.EstadoOtNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.MantenedorNombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.OperadorReporte)</th>
+                            <th>@Html.DisplayNameFor(model => model.CodigoOperadorReporte)</th>
+                            <th>@Html.DisplayNameFor(model => model.Fechanotificacion)</th>
+                            <th>@Html.DisplayNameFor(model => model.MantenedorNotificar)</th>
+                            @*<th>@Html.DisplayNameFor(model => model.MantenedorNotificarCodigo)</th>*@
+                            <th>@Html.DisplayNameFor(model => model.Fechainicioguardarmostrar)</th>
+                            <th>@Html.DisplayNameFor(model => model.MantenedorReparo)</th>
+                            @*<th>@Html.DisplayNameFor(model => model.MantenedorReparoCodigo)</th>*@
+                            <th>@Html.DisplayNameFor(model => model.OperadorCierre)</th>
+                            <th>@Html.DisplayNameFor(model => model.CodigoOperadorCierre)</th>
+                            <th>@Html.DisplayNameFor(model => model.Fechafinalguardarmostrar)</th>
+                            <th>@Html.DisplayNameFor(model => model.Comentario)</th>
+                            <th>@Html.DisplayNameFor(model => model.UsuariosCodigo)</th>
+                            <th>@Html.DisplayNameFor(model => model.UsuariosNombre)</th>
+                            <th>Usuario actualizo</th>
 
 
-                            </tr>
-                        </thead>
-
-                        <tbody id="Pintardata">
-
-                          
-                            <!--El HTML y la data se pinta aqu con javascript-->
-
-                        </tbody>
 
 
-                    </table>
+                        </tr>
+                    </thead>
 
-             
+                    <tbody id="Pintardata">
 
-               
+
+                        <!--El HTML y la data se pinta aqu con javascript-->
+
+                    </tbody>
+
+
+                </table>
+
+
+
 
 
 
             </div>
+            
 
-           
-            <!-----------area del formuilario--------------->
-           
-
-
-                <div class=" col-primaria col-primaria-reportes col-12  " id="area_averias">
+             
+              <!-----------area del formuilario--------------->
+   
 
 
-                     <form id="formulario" method="post" class="g-0">
+            <div class=" col-primaria col-primaria-reportes col-12 g-0  " id="area_averias">
 
-                       <div class="row fila-secundaria " id="divPadre">
+                <!---formulario-->
+
+
+
+                <form id="formulario" method="post" class="formulario" >
+
+                    <div class="row fila-reportes  g-0 " id="divPadre">
 
                         <!------Registro de averias------>
 
-                        <div class="col-secundaria col-12 col-sm-4  col-md-4 border-end border-white border-2 ps-md-0">
+                        <div class="col-secundaria col-12 col-sm-4  col-md-4 col-secundaria-border ps-md-0">
 
 
                             <div class="row reporte-averia gx-2 ms-md-3 me-md-2  mx-3 mx-md-0 d-flex justify-content- ">
@@ -330,37 +333,37 @@
 
 
                                 </div>
-                                 
-
-                                       <input id="idreportes" class="form-control form-control-sm" hidden readonly="readonly"   >
-                                
-
-                                
-
-                                   <div class="col-12 col-md-6 mb-3">
 
 
-                                 
-                                        <input class=" sistema form-control form-control-sm campos_obligatorios " name="Id" list="Listsistemas" id="sistemas" placeholder="Sistemas">
-
-                                        <datalist id="Listsistemas">
-                                            @foreach (var item in sistemas)
-                                            {
-                                                <option> @item.Nombre</option>
-                                            }
-
-                                        </datalist>
-
-                                   
-
-                                     </div>
-                                
-                                   <div class="col-12  col-md-3 offset-md-3 mb-3">
-
-                                    <input type="text" class="form-control form-control-sm " id="mantenedor" placeholder="Mantenedor" disabled readonly="readonly"   />
+                                <input id="idreportes" class="form-control form-control-sm" hidden readonly="readonly">
 
 
-                                    </div>
+
+
+                                <div class="col-12 col-md-6 mb-3">
+
+
+
+                                    <input class=" sistema form-control form-control-sm campos_obligatorios " name="Id" list="Listsistemas" id="sistemas" placeholder="Sistemas">
+
+                                    <datalist id="Listsistemas">
+                                        @foreach (var item in sistemas)
+                                        {
+                                            <option> @item.Nombre</option>
+                                        }
+
+                                    </datalist>
+
+
+
+                                </div>
+
+                                <div class="col-12  col-md-3 offset-md-3 mb-3">
+
+                                    <input type="text" class="form-control form-control-sm " id="mantenedor" placeholder="Mantenedor" disabled readonly="readonly" />
+
+
+                                </div>
 
 
 
@@ -372,14 +375,14 @@
                                     <input class=" subsistema form-control form-control-sm campos_obligatorios" name="Id" list="Listsubsistemas" id="subsistemas" placeholder="Subsistemas">
 
                                     <datalist id="Listsubsistemas">
-                                       @* @foreach (var item in subsistemas)
+                                        @* @foreach (var item in subsistemas)
                                         {
-                                            <option> @item.Nombre</option>
+                                        <option> @item.Nombre</option>
                                         }*@
 
                                     </datalist>
 
-                                   
+
 
                                 </div>
 
@@ -416,9 +419,9 @@
 
                                     </datalist>
                                 </div>
-                               <div class="col-12 col-md-4 ">
+                                <div class="col-12 col-md-4 ">
 
-                                    <input id="usuario" class="form-control-sm"  hidden readonly="readonly" />
+                                    <input id="usuario" class="form-control-sm" hidden readonly="readonly" />
 
                                 </div>
 
@@ -441,14 +444,14 @@
 
                                 @*<div class="col-12 pb-3">
 
-                                        <select name="Id" class="form-select form-select-sm" id="descripcioncascada">
+                                <select name="Id" class="form-select form-select-sm" id="descripcioncascada">
 
-                                            <option value="">Seleccione una descripcion</option>
+                                <option value="">Seleccione una descripcion</option>
 
-                                        </select>
+                                </select>
 
 
-                                    </div>*@
+                                </div>*@
 
 
                                 <div class="col-12 ">
@@ -489,24 +492,24 @@
 
                                 <div class="col-4  gx-2  ">
 
-                                    <input type="submit" class="form-control form-control-sm btn btn-sm btn-warning"  value="Reutilizar Registro" id="reutilizarenviar">
+                                    <input type="submit" class="form-control form-control-sm btn btn-sm btn-warning" value="Reutilizar Registro" id="reutilizarenviar">
 
                                 </div>
 
                                 <div class="col-4  gx-2 mb-md-3">
 
-                                    <input type="submit"  class="form-control form-control-sm btn btn-sm btn-success" value="Agregar" id="enviar" >
+                                    <input type="submit" class="form-control form-control-sm btn btn-sm btn-success" value="Agregar" id="enviar">
 
                                 </div>
                             </div>
-                            
+
 
 
                         </div>
 
                         <!------------------reportes de averias---------------------->
 
-                        <div class=" col-secundaria col-12 col-sm-4 col-md-4 border-end border-white border-2">
+                        <div class=" col-secundaria col-12 col-sm-4 col-md-4 col-secundaria-border">
 
 
 
@@ -525,14 +528,14 @@
 
                                 </div>
 
-                            
+
                                 <div class=" col-12 col-md-5 mb-3">
                                     <select name="Id" asp-items="ViewBag.estadoOTs" class="form-select form-select-sm" id="estado"></select>
 
                                 </div>
                                 <div class=" col-12 col-md-4 offset-md-2 mb-3 ">
 
-                                    <input type="number" class="form-control form-control-sm" id="ot"  placeholder="#OT" min="0">
+                                    <input type="number" class="form-control form-control-sm" id="ot" placeholder="#OT" min="0">
 
                                 </div>
 
@@ -576,35 +579,35 @@
                         <div class=" col-secundaria col-12 col-sm-4 ">
 
 
-                            <div class="row  align-items-center d-flex  justify-content-md-around  mx-2  h-100 ">
+                            <div class="row  mx-2  ">
 
-                                <div class="col-12  text-white mb-3 ">
+                                <div class="col-12  text-white pb-3 pt-2 ">
                                     Cierre de Averias
                                 </div>
 
 
-                                <div class=" col-12 col-md-5 mb-3 ">
+                                <div class=" col-12 col-md-5 mb-5 ">
 
                                     <input class="form-control form-control-sm" placeholder="Fecha inicio" maxlength="16" id="fechainicio">
                                 </div>
 
-                                <div class=" col-12 col-md-5 mb-3 ">
+                                <div class=" col-12 col-md-5 mb-5 ">
 
                                     <input class="form-control form-control-sm" placeholder="Fecha final" maxlength="16" id="fechafinal">
                                 </div>
 
-                                <div class=" col-12 col-md-5 mb-3 ">
+                                <div class=" col-12 col-md-5 mb-5 ">
 
                                     <input class="form-control form-control-sm" placeholder="Codigo Op." id="codigooperadorfinal">
                                 </div>
 
-                                <div class=" col-12 col-md-5 mb-3  ">
+                                <div class=" col-12 col-md-5 mb-5  ">
 
                                     <input class="form-control form-control-sm" placeholder="Nombre Op." id="nombreoperadorfinal">
                                 </div>
 
 
-                                <div class=" col-12 col-md-5 mb-3 ">
+                                <div class=" col-12 col-md-5 mb-5">
 
 
                                     @*<select asp-items="ViewBag.mantenedor" class="form-select form-select-sm" ></select>*@
@@ -634,7 +637,7 @@
 
                                         <div class="col-2" m>
 
-                                            <input type="color" id="inputcolor"  title="Choose your color">
+                                            <input type="color" id="inputcolor" title="Choose your color">
                                         </div>
 
 
@@ -660,12 +663,14 @@
 
 
 
-                      </div>
+                    </div>
 
-                    </form>
+                </form>
+           
 
-                </div>
+            </div>
 
+        
 
             
 

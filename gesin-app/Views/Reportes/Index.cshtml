@@ -279,7 +279,7 @@
                             <th>@Html.DisplayNameFor(model => model.OperadorCierre)</th>
                             <th>@Html.DisplayNameFor(model => model.CodigoOperadorCierre)</th>
                             <th>@Html.DisplayNameFor(model => model.Fechafinalguardarmostrar)</th>
-                            <th>@Html.DisplayNameFor(model => model.Comentario)</th>
+                           <th><div class="Columna-descripcion">@Html.DisplayNameFor(model => model.Comentario)</div></th>
                             <th>@Html.DisplayNameFor(model => model.UsuariosCodigo)</th>
                             <th>@Html.DisplayNameFor(model => model.UsuariosNombre)</th>
                             <th>Usuario actualizo</th>
@@ -587,28 +587,28 @@
                                 </div>
 
 
-                                <div class=" col-12 col-md-5 mb-5 ">
+                                <div class=" col-12 col-md-5 mb-3 mb-md-5 ">
 
                                     <input class="form-control form-control-sm" placeholder="Fecha inicio" maxlength="16" id="fechainicio">
                                 </div>
 
-                                <div class=" col-12 col-md-5 mb-5 ">
+                                <div class=" col-12 col-md-5 mb-3 mb-md-5 ">
 
                                     <input class="form-control form-control-sm" placeholder="Fecha final" maxlength="16" id="fechafinal">
                                 </div>
 
-                                <div class=" col-12 col-md-5 mb-5 ">
+                                <div class=" col-12 col-md-5 mb-3 mb-md-5  ">
 
                                     <input class="form-control form-control-sm" placeholder="Codigo Op." id="codigooperadorfinal">
                                 </div>
 
-                                <div class=" col-12 col-md-5 mb-5  ">
+                                <div class=" col-12 col-md-5 mb-3 mb-md-5   ">
 
                                     <input class="form-control form-control-sm" placeholder="Nombre Op." id="nombreoperadorfinal">
                                 </div>
 
 
-                                <div class=" col-12 col-md-5 mb-5">
+                                <div class=" col-12 col-md-5 mb-3 mb-md-5 ">
 
 
                                     @*<select asp-items="ViewBag.mantenedor" class="form-select form-select-sm" ></select>*@
@@ -625,7 +625,7 @@
                                     </datalist>
                                 </div>
 
-                                <div class="col-12 mb-3 ">
+                                <div class="col-12 mb-3 mb-md-5  ">
 
                                     <div class="row ">
 
@@ -812,6 +812,8 @@
             horas = horas <= 9 ? "0" + horas : horas;
 
             meses = meses <= 9 ? "0" + meses : meses;
+
+            dias = dias <= 9 ? "0" + dias : dias;
 
             fecha.value = `${dias}/${meses}/${anios} ${horas}:${minutos}`
 

@@ -540,7 +540,7 @@ namespace gesin_app.Controllers
 
     // con este metodo buscamo si existe por lo menos un registro con un numero de ot 
     //para pasar la al frontend y indicar si es duplicada en caso de que exista 1 por lo menos
-       public int BuscarOt(int? ot)
+       public int BuscarOt(ulong? ot)
         {
 
             if (ot == 0)

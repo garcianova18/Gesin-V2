@@ -112,7 +112,7 @@ namespace gesin_app.ViewModel
         [Display(Name = "Operador Cierre")]
         public string OperadorCierre { get; set; }
 
-        [Display(Name = "Cod. Op. Cierre")]
+        [Display(Name = "Cod. Cierre")]
         public string CodigoOperadorCierre { get; set; }
 
 

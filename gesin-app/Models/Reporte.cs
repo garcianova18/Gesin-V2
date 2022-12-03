@@ -16,7 +16,7 @@ namespace gesin_app.Models
         public DateTime Fechaaveria { get; set; }
         public int IdCriticidad { get; set; }
         public int IdSm { get; set; }
-        public int? Ot { get; set; }
+        public ulong? Ot { get; set; }
         public int IdEstadoOt { get; set; }
         public string Comentario { get; set; }
         public DateTime? Fechanotificacion { get; set; }

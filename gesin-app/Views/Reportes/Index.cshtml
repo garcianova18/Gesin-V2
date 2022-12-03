@@ -34,10 +34,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="icon" href="/img/icono_gestiondeaverias.png" />
     <link rel="stylesheet" href="/css/Spinner_inicial.css" />
-     <link rel="stylesheet" href="/css/Spinner_tabla.css" />
-      <link rel="stylesheet" href="~/css/Index.css"/>
+    <link rel="stylesheet" href="/css/Spinner_tabla.css" />
+    <link rel="icon"  href="/img/icono_gestionaverias.png" />
+    <link rel="stylesheet" href="~/css/Index.css"/>
+    <link rel="stylesheet" href="~/css/all.min.css" />
+
 
     <script src="/js/Recuperar_style_usuarios.js"></script>
 
@@ -51,7 +53,7 @@
 
       <!------spinner de inicio----->
 
-    <div id="spin_container">
+    <div class="spinner " id="spin_container">
 
          <div class="sk-chase">
 
@@ -68,123 +70,123 @@
 
     </div>
 
-    <div class=" container-fluid " id="container">
+    <div class="container-fluid ocultar_contenido" id="container">
 
 
         <div class="row fila-primaria-padre ">
 
             <!-----area del menu-->
-            <div class=" col-primaria col-primaria-filtro  col-12  bg-dark g-0">
+
+            <div class=" col-primaria col-primaria-filtro  col-12 g-0">
 
 
-                <nav class="navbar navbar-expand-lg navbar-dark px-3">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#"></a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+
+                                <!----Area de mantenimiento--------------->
+                                @if (User.IsInRole("administrador"))
+                                {
+                                    <li class="nav-item dropdown">
+
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-gear icono"></i>
+                                        </a>
+
+
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                            <li>
+
+
+                                                @*Button trigger modal -*@
+
+                                                <a class="dropdown-item" asp-action="Index" asp-controller="Estaciones">
+
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="fas fa-solid fa-shop me-1 text-success"> </i><div>Estaciones</div>
+                                                    </div>
+
+
+                                                </a>
+
+                                                <a class="dropdown-item" asp-action="Index" asp-controller="Personas">
+
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="fa fa-solid fa-user  me-1 text-success"></i> <div>Personas</div>
+                                                    </div>
+
+
+                                                </a>
 
 
 
+                                            </li>
+                                            <li><a class="dropdown-item" href="#"></a></li>
+                                            <li><a class="dropdown-item" href="#"></a></li>
+                                        </ul>
 
-                    <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon "></span>
-                    </button>
-                    <div class="collapse navbar-collapse bg-dark p-3 p-lg-0" id="navbarNavDropdown">
-                        <ul class="navbar-nav">
+                                    </li>
 
-                            <!----Area de mantenimiento--------------->
-                            @if (User.IsInRole("administrador"))
-                            {
-                                <li class="nav-item dropdown">
 
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-circle-user icono"></i>
+                                }
+
+
+                                <li class="nav-item  me-md-2 ">
+                                    <input type="number" name="Ot" id="filtroOt" min="0" class="form-control form-control-sm mt-1
+                  " placeholder="OT" />
+                                </li>
+                                <li class="nav-item me-md-2  ">
+                                    <input type="date" id="filtrofecha" class=" filtrofecha form-control form-control-sm mt-1" onchange="filtrar()" />
+                                </li>
+                                <li class="nav-item me-md-2">
+                                    <select asp-items="@ViewBag.fitroestaciones" class="form-select form-select-sm mt-1"
+                                            id="fitroestaciones" onchange="filtrar()"></select>
+                                </li>
+                                <li class="nav-item me-md-2 ">
+                                    <select asp-items="@ViewBag.filtrosubsistema" class="form-select form-select-sm mt-1"
+                                            id="filtrosubsistema" onchange="filtrar()"></select>
+                                </li>
+                                <li class="nav-item me-md-2 ">
+                                    <select asp-items="@ViewBag.estadoOTs" class="form-select form-select-sm mt-1"
+                                            id="filtroestadoot" onchange="filtrar()"></select>
+                                </li>
+
+                                <li class="nav-item me-md-2 ">
+                                    <select asp-items="@ViewBag.fitrousuario" class="form-select form-select-sm mt-1"
+                                            id="fitrousuario" onchange="filtrar()"></select>
+                                </li>
+                                <li class="nav-item  pt-1 d-flex ">
+                                    <a href="#" id="limpiar" class="">
+                                        <i class="fa-solid fa-brush limpiar pt-2 mx-3"></i>
+
                                     </a>
 
+                                    <a asp-action="Logout" asp-controller="Acceso">
 
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <li>
-
-
-                                            @*Button trigger modal -*@
-
-                                            <a class="dropdown-item" asp-action="Index" asp-controller="Estaciones">
-
-                                                <div class="d-flex align-items-center">
-                                                    <i class="fas fa-solid fa-shop me-1 text-success"> </i><div>Estaciones</div>
-                                                </div>
-
-
-                                            </a>
-
-                                            <a class="dropdown-item" asp-action="Index" asp-controller="Personas">
-
-                                                <div class="d-flex align-items-center">
-                                                    <i class="fa fa-solid fa-user  me-1 text-success"></i> <div>Personas</div>
-                                                </div>
-
-
-                                            </a>
-
-
-
-                                        </li>
-                                        <li><a class="dropdown-item" href="#"></a></li>
-                                        <li><a class="dropdown-item" href="#"></a></li>
-                                    </ul>
+                                        <i class="fas fa-regular fa-right-from-bracket salir pt-2 mx-3 "></i>
+                                    </a>
 
                                 </li>
 
 
-                            }
 
-
-                            <li class="nav-item  me-md-2 ">
-                                <input type="number" name="Ot" id="filtroOt" min="0" class="form-control form-control-sm mt-1
-                                            " placeholder="OT" />
-                            </li>
-                            <li class="nav-item me-md-2  ">
-                                <input type="date" id="filtrofecha" class=" filtrofecha form-control form-control-sm mt-1" onchange="filtrar()" />
-                            </li>
-                            <li class="nav-item me-md-2">
-                                <select asp-items="@ViewBag.fitroestaciones" class="form-select form-select-sm mt-1"
-                                        id="fitroestaciones" onchange="filtrar()"></select>
-                            </li>
-                            <li class="nav-item me-md-2 ">
-                                <select asp-items="@ViewBag.filtrosubsistema" class="form-select form-select-sm mt-1"
-                                        id="filtrosubsistema" onchange="filtrar()"></select>
-                            </li>
-                            <li class="nav-item me-md-2 ">
-                                <select asp-items="@ViewBag.estadoOTs" class="form-select form-select-sm mt-1"
-                                        id="filtroestadoot" onchange="filtrar()"></select>
-                            </li>
-
-                            <li class="nav-item me-md-2 ">
-                                <select asp-items="@ViewBag.fitrousuario" class="form-select form-select-sm mt-1"
-                                        id="fitrousuario" onchange="filtrar()"></select>
-                            </li>
-                            <li class="nav-item  pt-1 d-flex ">
-                                <a href="#" id="limpiar" class="">
-                                    <i class="fa-solid fa-brush limpiar pt-2 mx-3"></i>
-
-                                </a>
-
-                                <a asp-action="Logout" asp-controller="Acceso">
-
-                                    <i class="fas fa-regular fa-right-from-bracket salir pt-2 mx-3 "></i>
-                                </a>
-
-                            </li>
-
-
-
-                            <li class="nav-item me-md-2  ">
-                                <div class="text-white d-none d-md-block" id="reloj" style="font-size:13px"></div>
-                            </li>
+                                <li class="nav-item me-md-2  ">
+                                    <div class="text-white d-none d-md-block" id="reloj" style="font-size:13px"></div>
+                                </li>
 
 
 
 
-                        </ul>
+                            </ul>
+                        </div>
                     </div>
-
                 </nav>
+
 
 
                 <!-- Modal -->
@@ -218,12 +220,13 @@
 
             <!---area de la tabla-->
 
-            <div class=" col-primaria col-primaria-tabla col-12 g-0 " id="contenedor_tabla_spinner">
+            <div class=" col-primaria col-primaria-tabla col-12 g-0 bg-white " id="contenedor_tabla_spinner">
 
 
                 
                 <!------spinner de la tabla------>
-                <div id="contenedor_spinner">
+
+                <div class="spin" id="contenedor_spinner">
 
 
                     <div class="sk-circle">
@@ -248,7 +251,7 @@
 
 
 
-                <table class="table table-sm table-hover table-bordered text-center align-middle " id="tabla">
+                <table class="table table-sm table-hover table-bordered text-center align-middle mb-0" id="tabla">
 
                     <thead class="cabecera-tabla text-white text-center align-middle" style="font-size:14px" id="head_table">
 
@@ -306,10 +309,8 @@
             
 
              
-              <!-----------area del formuilario--------------->
+            <!-----------area del formuilario--------------->
    
-
-
             <div class=" col-primaria col-primaria-reportes col-12 g-0  " id="area_averias">
 
                 <!---formulario-->
@@ -717,87 +718,10 @@
            
 
         }
-
-        //funcion para mostrar el spinner de la tabla
        
-        function mostrar_spinnerTable(){
-
-            const tabla = document.getElementById("tabla");
-
-            tabla.classList.add("ocultar_contenido");
 
 
-   
-
-            const contenedor_spinner = document.getElementById("contenedor_spinner");
-                  contenedor_spinner.classList.add("spin");
-
-              //iniciamo removiendo esta clase para cada vez que se llame a esta funcion se quite esta clase
-              //ya que al ocultar el spinner se se agrega y si o se la quitamos no se volvera a mostrar
-
-              contenedor_spinner.classList.remove("ocultar_contenido");
-        }
-
-
-
-
-        //funcion para ocultar el spinner de la tabla
-
-        function ocultar_spinnertable(){
-
-
-             const contenedor_spinner = document.getElementById("contenedor_spinner");
-
-
-                contenedor_spinner.classList.remove("spin");
-
-               contenedor_spinner.classList.add("ocultar_contenido");
-
-           
-             const tabla = document.getElementById("tabla");
-
-                 tabla.classList.remove("ocultar_contenido");
-
-        
-
-        }
-
-
-
-        //funcion para mostrar el spinner inicial
-
-         function mostrar_spinnerInicial(){
-
-            const spin_container = document.getElementById("spin_container")
-
-            spin_container.classList.add("spinner")
-
-            const contenido = document.getElementById("container")
-
-            contenido.classList.add("ocultar_contenido")
-          
-            
-        }
-
-            mostrar_spinnerInicial()
-
-
-        //funcion para ocultar el spinner inicial
-
-        function ocultar_spinnerInicial(){
-
-            const spin_container = document.getElementById("spin_container")
-
-            spin_container.classList.add("ocultar_contenido")
-
-            const contenido = document.getElementById("container")
-
-            contenido.classList.remove("ocultar_contenido")
-          
-            
-        }
-
-        window.onload = function () {
+         window.onload = function () {
 
             ocultar_spinnerInicial();
           
@@ -809,13 +733,64 @@
             //mostrar contenido de la tabla
 
            
-
            ListarTodo();
            
-           
-        
 
         }
+
+        //funcion para mostrar el spinner de la tabla
+       
+        function mostrar_spinnerTable(){
+
+            const tabla = document.getElementById("tabla");
+            tabla.classList.add("ocultar_contenido");
+
+
+            //aqui removemos la clase ocultar_contenido  ya que cuando llamamos el metodo ocultar_spinnerttable se la agregamos
+            // y cuando ejecutemos este metodo mostrar_spinnerTable() sin recargar la pagina si no se la quitasemos no se mostrara el spinner
+
+            const contenedor_spinner = document.getElementById("contenedor_spinner");
+             contenedor_spinner.classList.remove("ocultar_contenido");
+
+            
+        }
+
+
+
+
+        //funcion para ocultar el spinner de la tabla
+
+        function ocultar_spinnertable(){
+
+
+             const contenedor_spinner = document.getElementById("contenedor_spinner");
+             contenedor_spinner.classList.add("ocultar_contenido");
+
+           
+             const tabla = document.getElementById("tabla");
+             tabla.classList.remove("ocultar_contenido");
+
+        }
+
+
+
+     
+
+
+        //funcion para ocultar el spinner inicial
+
+  
+         function ocultar_spinnerInicial(){
+
+            const spin_container = document.getElementById("spin_container");
+            spin_container.classList.add("ocultar_contenido");
+
+            const contenido = document.getElementById("container");
+            contenido.classList.remove("ocultar_contenido");
+          
+            
+        }
+       
 
       
 
@@ -1058,7 +1033,7 @@
 
 
 
-                modalerror('Los Campos en rojos son obligatorios', 'center-end')
+                modalerror('Los campos en rojos son obligatorios', 'center-end')
 
                
             }
@@ -1151,7 +1126,7 @@
                     else{
 
                         //si todas las fechas son valida o las que no son abligatirias estan vacias enviamos el formulario
-
+                       
                          let url = "Reportes/CrearEditarReportes/reporte"
 
                         fetch(url, {
@@ -1807,12 +1782,12 @@
                     .then(res => res.json())
                     .then(data => {
 
-                        alert(JSON.stringify(data))
+
 
 
                             document.getElementById("mantenedor").value = `${data.mantenedor}`;
 
-                        alert(data.mantenedor)
+                      
                          
                             // recorremos el array descripcion que esta dentro del objeto que viene del backend
                             data.descripcion.map((desp) =>{
@@ -1883,8 +1858,6 @@
                 .then(res => res.json())
                 .then(data => {
 
-                    alert(JSON.stringify(data))
-                    alert(idreportes.value)
 
                     // si existen ordenes con el mismo numero de ot entonces me cambia a estado duplicada y pone el color gris
                     if (data >= 1 && idreportes.value == 0) {
@@ -1895,7 +1868,7 @@
                         if (codigooperadorfinal.value != "") {
 
 
-                            alert("cerrada")
+                            
                             //cerrada
                             estadoot.value = 5;
 
@@ -1907,7 +1880,7 @@
                             // duplicada
                             estadoot.value = 7;
 
-                            alert("me dispararon stoy duplicada")
+                           
                         }
 
 
@@ -1975,7 +1948,7 @@
                             if (codigooperadorfinal.value != "") {
 
 
-                                alert("cerrada")
+                              
                                 //cerrada
                                 estadoot.value = 5;
 
@@ -1987,7 +1960,7 @@
                                 // duplicada
                                 estadoot.value = 7;
 
-                                alert("me dispararon stoy duplicada")
+                                
                             }
 
                         }

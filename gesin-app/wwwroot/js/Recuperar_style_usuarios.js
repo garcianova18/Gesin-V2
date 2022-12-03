@@ -10,6 +10,10 @@ const recuperarStyle = () => {
         .then(res => res.json())
         .then(data => {
 
+            let cuerpo = document.getElementById("cuerpo");
+           
+            cuerpo.style.backgroundColor = `${data.background}`;
+
             let area_averias = document.getElementById("area_averias");
             area_averias.style.backgroundColor = `${data.background}`;
 
@@ -19,6 +23,8 @@ const recuperarStyle = () => {
 
             let inputColor = document.getElementById("inputcolor");
             inputColor.value = `${data.background}`;
+
+          
         })
 
 

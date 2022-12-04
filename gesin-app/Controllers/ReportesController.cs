@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using gesin_app.Servicios;
+using System.Runtime.CompilerServices;
 
 namespace gesin_app.Controllers
 {
@@ -630,21 +631,22 @@ namespace gesin_app.Controllers
 
 
 
-                        Reporte reportemodel = new Reporte();
-                            
-                      //var CompararOT=  BuscarOt(reporte.Ot);
+                       
 
-                      //  //buscamos si existe el  numero de ot en la db
-                      //  //si existe entonces este registro se guardara con el estado de OT duplicado
+                        //este metodo lo hacemos  porque si reutilizamos un registro vendra con el estado que tenga el registro a reutilizar o copiar, entonces si no hacemos esto podria pasar que reutilicemos por ej. un registro con estado creada y al reutilizarlo no nos creara el nuevo registro con estadoot duplicada mas bien heredara el estado del registro reutilizado.
 
-                      //  if (CompararOT != 0 )
-                      //  {
-                      //      reporte.IdEstadoOt = 7;
-                      //  }
+                        var CompararOT = BuscarOt(reporte.Ot);
+                        
+                      
+                         // si el registro a reutilizar trae una ot que existe le ponemos el estado duplicada asi le quitamos el que trae heredado del registro original 
+                        if (CompararOT != 0)
+                        {
+                            reporte.IdEstadoOt = 7;
+                        }
 
                         //si el estado de OT es 0 el registro se guardara con el estado de OT sin estado
-                        // al crear un registro nuevo donde el campo ot, mantenedor notf esten  vacio
-                        // se gardaran con estado sin estado por default
+                        // al crear un registro nuevo donde el campo ot y el campo mantenedor notf esten vacio se gardaran con estado sin estado por default
+                        if (reporte.IdEstadoOt ==0)
                         {
                             reporte.IdEstadoOt = 8;
                         }

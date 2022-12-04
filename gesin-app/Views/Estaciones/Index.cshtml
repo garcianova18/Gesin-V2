@@ -2,19 +2,17 @@
 @model IEnumerable<Estacion>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Mantenimiento Estaciones";
 
-   
-
+  
 }
 
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+
+
+
+
 
     <style>
 
@@ -26,10 +24,8 @@
             font-size: 25px;
         }
     </style>
-</head>
 
 
-<body>
 
     <div class="row">
 
@@ -154,16 +150,12 @@
 
 
 
-</body>
-</html>
 
 
 
 
 
-<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="https://kit.fontawesome.com/c6f899d35a.js" crossorigin="anonymous"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
 
@@ -504,55 +496,71 @@
 
     function Eliminarestacion(idEstacion) {
 
+        Swal.fire({
+            title: 'Estas seguro?',
+            text: "No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, eliminar!'
 
-        alert(idEstacion)
-        const url ="/Estaciones/Eliminar/?id="+ idEstacion;
+        }).then((result) => {
 
-        fetch(url)
-        .then(res=> res.json())
-        .then(data => {
-             alert(data)
-            
-            if (data == 1) {
-                alert("entre")
+            if (result.isConfirmed) {
+
+              
+                const url = "/Estaciones/Eliminar/?id=" + idEstacion;
+
+                fetch(url)
+                    .then(res => res.json())
+                    .then(data => {
+                        alert(data)
+
+                        if (data == 1) {
+                            alert("entre")
 
 
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Se ha eliminado correctamente',
-                    showConfirmButton: false,
-                    timer: 2000
-                })
-                pintardara();
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Se ha eliminado correctamente',
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                            pintardara();
+                        }
+
+                        else if (data == 2) {
+
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error...',
+                                text: 'la estacion no puede ser eliminada porque existen reportes con ella',
+
+                            })
+
+                            pintardara();
+                        }
+                        else {
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error...',
+                                text: 'Error 404 recurso no encontrado',
+
+                            })
+
+                        }
+
+
+
+                    })
+
             }
-
-            else if (data == 2) {
-
-
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error...',
-                    text: 'la estacion no puede ser eliminada porque existen reportes con ella',
-
-                })
-
-                pintardara();
-            }
-            else {
-
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error...',
-                    text: 'Error 404 recurso no encontrado',
-
-                })
-
-            }
-
-
-           
         })
+       
     }
 
    

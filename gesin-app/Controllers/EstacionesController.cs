@@ -120,7 +120,7 @@ namespace gesin_app.Controllers
 
         public ActionResult Eliminar(int? id)
         {
-            id = 40;
+           
 
             if (id == null)
             {

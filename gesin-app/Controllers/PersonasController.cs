@@ -55,12 +55,12 @@ namespace gesin_app.Controllers
              //buscamos si existe una con este mismo nombre 
             var BuscarEstacion =  context.Personas.Where(e => e.Nombre.Trim() == persona.Nombre.Trim()).Count();
 
-            //si entra aqui la estacion existe y devolvemo mensaje
+            //si entra aqui la persona existe y devolvemo mensaje
             if (BuscarEstacion == 1)
             {
                 return Ok(3);
             }
-            //si entra aqui es que no existe la escion y se va a crear o editar segun el caso
+            //si entra aqui es que no existe la persona y se va a crear o editar segun el caso
             else
             {
 

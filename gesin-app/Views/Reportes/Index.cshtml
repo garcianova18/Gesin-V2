@@ -6,7 +6,7 @@
 @{
 
     Layout = null;
-    ViewData["Title"] = "Index";
+ 
 
 
 
@@ -1319,6 +1319,8 @@
 
         function BuscarEditar(idreporte) {
 
+
+            //para limpiar el campo ot si tenia color gris
             const otcolor = document.getElementById("ot")
             otcolor.style.backgroundColor = "";
 
@@ -1357,7 +1359,8 @@
                 .then(res => res.json())
                 .then(data => {
 
-                    //aqui llamamos  las funcion que carga el Listado de subsistema y de activo descripcion en cascada para que al cargar un registro este tambie me cargue los subsistemas
+                    //aqui llamamos  las funciones que carga el Listado de subsistema y de activo descripcion en cascada 
+                    // para que al cargar un registro este tambien cargue los subsistemas
                     SubsistemaCascada();
                     descripcionCascada();
 
@@ -1874,7 +1877,7 @@
                 .then(data => {
 
 
-                    // si existen ordenes con el mismo numero de ot y vamos a agregar un registro
+                    // si existen registro con el mismo numero de ot 
                     if (data >= 1 ) {
 
 
@@ -1904,9 +1907,7 @@
 
 
                     }
-                    // se ejecuta si no existen reportes con ot duplicada y vamos a crear
-                    // o si existen reportes con ot duplicada pero vamos a actualizar
-
+                    // si no existen registro con el mismo numero ot         
                     else{
 
                         const mantenedornotificar = document.getElementById("mantenedornotificar");
@@ -1916,7 +1917,7 @@
 
                         ot.style.backgroundColor = "";
 
-                        //aqui le decimos que si existe algun valor en el campo ot y no esta duplicado me cambie el estado a creada 
+                        
                         if (ot.value != "" && mantenedornotificar.value == "" && codigooperadorfinal.value == "") {
 
                             ot.style.backgroundColor = "#8dff43" // le ponemos color verde para indicar que esta ot no esta duplicada
@@ -1956,13 +1957,16 @@
 
                         }
 
-                        // si no existen valores en el campo ot evaluamos nuevamente
                         else {
 
                             const estadoot = document.getElementById("estado");
 
                             //sin estado
                             estadoot.value = "";
+
+                            //esto es si el usuario no a llenado el campo OT tampoco el campo mantenedor notificar
+                            //no le colocara ningun estado pero el el backend si le indicamos que si el registro llega con 
+                            // estadoot en 0 que es su valor por default  le asigne el valor 7 que este indica sin estado
                         }
 
 

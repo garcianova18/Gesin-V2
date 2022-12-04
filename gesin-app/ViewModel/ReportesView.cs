@@ -28,7 +28,7 @@ namespace gesin_app.ViewModel
 
         public int IdSm { get; set; }
 
-        public int? Ot { get; set; }
+        public long? Ot { get; set; }
 
 
         public int IdEstadoOt { get; set; }

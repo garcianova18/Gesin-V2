@@ -39,7 +39,7 @@ namespace gesin_app.ViewModel
         [Required]
         public int IdEstadoOt { get; set; }
 
-        public ulong? Ot { get; set; }
+        public long? Ot { get; set; }
 
         public string Comentario { get; set; }
 

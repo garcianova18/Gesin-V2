@@ -12,10 +12,5 @@ namespace gesin_app.Models
         public int Idsubsistema { get; set; }
 
         public virtual Subsistema IdsubsistemaNavigation { get; set; }
-
-        public static implicit operator List<object>(Activo v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

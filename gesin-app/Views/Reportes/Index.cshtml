@@ -793,7 +793,7 @@
        
 
       
-
+        //obtener fecha 
 
         function Fecha(fecha) {
 
@@ -819,6 +819,9 @@
 
         }
 
+
+        //obtener fecha reporte
+
         function ObtenerfechaReporte() {
 
             let fechareportes = document.getElementById("fechareporte");
@@ -830,6 +833,8 @@
         }
 
 
+        //obtener fecha notificacion
+
         function ObtenerfechaNotificacion() {
 
             let fechanotificar = document.getElementById("fechanotificacion");
@@ -837,6 +842,8 @@
             Fecha(fechanotificar)
 
         }
+
+        //obtener fecha inicio
 
         let fechainicio = document.getElementById("fechainicio");
 
@@ -847,6 +854,9 @@
 
 
         }
+
+
+        //obtener fecha final
 
         let fechafinal = document.getElementById("fechafinal");
 
@@ -859,6 +869,8 @@
         })
 
 
+
+        //buscar operador
         function Operador(codigooperador, nombreoperador) {
 
 
@@ -879,7 +891,7 @@
 
         }
 
-
+        //buscar operador reporte
         function buscaroperadorreporte() {
 
             let codOperador = document.getElementById("codigooperador").value;
@@ -892,6 +904,7 @@
 
         }
 
+        //buscar operador cierre
         function buscaroperadorcierre() {
 
             let codOperador = document.getElementById("codigooperadorfinal");
@@ -901,7 +914,7 @@
 
         }
 
-
+        //buscar operador final
         let codOperadorfinal = document.getElementById("codigooperadorfinal");
 
         codOperadorfinal.onkeyup = function () {
@@ -920,7 +933,7 @@
 
         const form = document.getElementById("formulario");
 
-
+        // Funcion para Crear y Editar Reportes
         function CrearEditarReportes(e) {
 
             e.preventDefault();
@@ -1302,7 +1315,7 @@
         form.addEventListener("submit", CrearEditarReportes);
 
 
-        // Buscar la data y cargarla al formulario para ediarla
+        // Funcion para Buscar la data y cargarla al formulario para ediarla
 
         function BuscarEditar(idreporte) {
 
@@ -1652,7 +1665,6 @@
             let fecha = new Date();
 
             let dias = fecha.getDate();
-
             //le sumams uno para obtener el mes actual ya que los meses tienen indice y comienzan por el cero
             let meses = fecha.getMonth() + 1;
             let anios = fecha.getFullYear();
@@ -1669,9 +1681,10 @@
             horas = horas == 00 ? horas + 12 : horas;
 
             //le restamos 12 para convertir el horario de 12 horas ya que viene en 24
-            horas = horas >= 13 ? horas - 12 : horas;
+            //horas = horas >= 13 ? horas - 12 : horas;
             horas = horas <= 9 ? "0" + horas : horas;
 
+            dias = dias <= 9 ? "0" + dias : dias;
             meses = meses <= 9 ? "0" + meses : meses;
 
 
@@ -1861,11 +1874,11 @@
                 .then(data => {
 
 
-                    // si existen ordenes con el mismo numero de ot entonces me cambia a estado duplicada y pone el color gris
-                    if (data >= 1 && idreportes.value == 0) {
+                    // si existen ordenes con el mismo numero de ot y vamos a agregar un registro
+                    if (data >= 1 ) {
 
 
-                        ot.style.backgroundColor = "grey";
+                        
 
                         if (codigooperadorfinal.value != "") {
 
@@ -1878,7 +1891,7 @@
                         }
                         else {
 
-
+                            ot.style.backgroundColor = "grey";
                             // duplicada
                             estadoot.value = 7;
 
@@ -1891,9 +1904,10 @@
 
 
                     }
-                    // se ejecuta si no existen reportes con ot duplicada
+                    // se ejecuta si no existen reportes con ot duplicada y vamos a crear
+                    // o si existen reportes con ot duplicada pero vamos a actualizar
 
-                    else if (data == 0 || data >= 1 && idreportes.value !=0) {
+                    else{
 
                         const mantenedornotificar = document.getElementById("mantenedornotificar");
                         const estadoot = document.getElementById("estado");
@@ -1902,18 +1916,16 @@
 
                         ot.style.backgroundColor = "";
 
-                        //aqui le decimos que si existe algun valor en el campo ot y no esta duplicado me cambie el estado a creada reportada
+                        //aqui le decimos que si existe algun valor en el campo ot y no esta duplicado me cambie el estado a creada 
                         if (ot.value != "" && mantenedornotificar.value == "" && codigooperadorfinal.value == "") {
 
-                            ot.style.backgroundColor = "#8dff43"
+                            ot.style.backgroundColor = "#8dff43" // le ponemos color verde para indicar que esta ot no esta duplicada
                             
                             //creada
                             estadoot.value = 1;
 
                             
                         }
-
-
 
 
                         else if (ot.value == "" && mantenedornotificar.value != "" && codigooperadorfinal.value == "") {
@@ -1925,45 +1937,22 @@
 
                         else if (ot.value != "" && mantenedornotificar.value != "" && codigooperadorfinal.value == "") {
 
-                            if(ot.value == 0)
-                            {
-
-                                
-                            estadoot.value = 2;
-
-                            
-                            }
-                            else{
+                           
 
                             //creada reportada
                             estadoot.value = 3;
 
-                            }
-                            
+                         
 
                         }
 
                         else if (codigooperadorfinal.value != "" && ot.value != "" && mantenedornotificar.value != "") {
 
-                            ot.style.backgroundColor = "grey";
-
-                            if (codigooperadorfinal.value != "") {
-
+                           
 
                               
                                 //cerrada
                                 estadoot.value = 5;
-
-
-                            }
-                            else {
-
-
-                                // duplicada
-                                estadoot.value = 7;
-
-                                
-                            }
 
                         }
 

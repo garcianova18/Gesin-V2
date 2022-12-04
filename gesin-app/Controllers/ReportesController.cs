@@ -301,11 +301,11 @@ namespace gesin_app.Controllers
             }).ToList();
 
 
-            criticidad.Insert(0, new SelectListItem
-            {
-                Text = "Seleccionar Criticidad",
-                Value = ""
-            });
+            //criticidad.Insert(0, new SelectListItem
+            //{
+            //    Text = "Seleccionar Criticidad",
+            //    Value = ""
+            //});
 
             return criticidad;
 
@@ -348,11 +348,11 @@ namespace gesin_app.Controllers
             }).ToList();
 
 
-            SM.Insert(0, new SelectListItem
-            {
-                Text = "Seleccionar S.M",
-                Value = ""
-            });
+            //SM.Insert(0, new SelectListItem
+            //{
+            //    Text = "Seleccionar S.M",
+            //    Value = ""
+            //});
 
             return SM;
 
@@ -540,7 +540,7 @@ namespace gesin_app.Controllers
 
     // con este metodo buscamo si existe por lo menos un registro con un numero de ot 
     //para pasar la al frontend y indicar si es duplicada en caso de que exista 1 por lo menos
-       public int BuscarOt(ulong? ot)
+       public int BuscarOt(long? ot)
         {
 
             if (ot == 0)
@@ -632,18 +632,19 @@ namespace gesin_app.Controllers
 
                         Reporte reportemodel = new Reporte();
                             
-                      var CompararOT=  BuscarOt(reporte.Ot);
+                      //var CompararOT=  BuscarOt(reporte.Ot);
 
-                        //buscamos si existe el  numero de ot en la db
-                        //si existe entonces este registro se guardara con el estado de OT duplicado
+                      //  //buscamos si existe el  numero de ot en la db
+                      //  //si existe entonces este registro se guardara con el estado de OT duplicado
 
-                        if (CompararOT != 0 )
-                        {
-                            reporte.IdEstadoOt = 7;
-                        }
+                      //  if (CompararOT != 0 )
+                      //  {
+                      //      reporte.IdEstadoOt = 7;
+                      //  }
 
                         //si el estado de OT es 0 el registro se guardara con el estado de OT sin estado
-                        if (reporte.IdEstadoOt == 0)
+                        // al crear un registro nuevo donde el campo ot, mantenedor notf esten  vacio
+                        // se gardaran con estado sin estado por default
                         {
                             reporte.IdEstadoOt = 8;
                         }

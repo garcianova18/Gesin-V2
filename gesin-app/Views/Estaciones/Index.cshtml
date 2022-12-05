@@ -14,16 +14,7 @@
 
 
 
-    <style>
-
-        .btn-agregar {
-            font-size: 25px;
-        }
-
-        .btn-eliminar {
-            font-size: 25px;
-        }
-    </style>
+    
 
 
 
@@ -54,7 +45,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Crear nueva estacion</h5>
+                            <h5 class="modal-title" id="staticBackdropLabel">Agregar nueva estación</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form id="formEstaciones" method="post">
@@ -67,7 +58,7 @@
 
                             </div>
                             <div class="modal-footer " id="btnfooter">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCerrarCrear">Cerrar</button>
                                 <input type="submit" class="btn btn-primary" value="Agregar" id="btnenviar">
                             </div>
                         </form>
@@ -138,7 +129,7 @@
 
                     </div>
                     <div class="modal-footer " id="btnfooter">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCerrarEditar">Cerrar</button>
                         <input type="submit" class="btn btn-primary" value="Actualizar" id="btnenviar">
                     </div>
                 </form>
@@ -232,9 +223,11 @@
                             })
                             pintardara();
 
-                            const nombreEstacion = document.getElementById("nombreEstacion").value = "";
-                            const idEstacion = document.getElementById("idEstacion").value = "";
+                            document.getElementById("btnCerrarCrear").click();
+                          
+                            formestaciones.reset();
 
+                          
 
                         }
 
@@ -326,10 +319,9 @@
                             timer: 2000
                         })
                         pintardara();
-
-                        const nombreEstacion = document.getElementById("nombreEstacion").value = "";
-                        const idEstacion = document.getElementById("idEstacion").value = "";
-
+                        document.getElementById("btnCerrarEditar").click();
+                        formEstacionesEditar.reset();
+                       
 
                     }
 
@@ -401,7 +393,7 @@
 
                                                         <div class="d-flex align-items-center">
 
-                                                            <div class="px-1">Editar </div>  <i class="fa-solid fa-pen-to-square btn-editar"></i>
+                                                            <i class="fa-solid fa-pen-to-square px-2"></i>
 
                                                         </div>
 
@@ -411,7 +403,7 @@
 
                                                         <div class="d-flex align-items-center">
 
-                                                            <div class="px-1">Eliminar </div>  <i class="fas fa-regular fa-trash"></i>
+                                                              <i class="fas fa-regular fa-trash px-2"></i>
 
                                                         </div>
 

@@ -42,7 +42,7 @@
                 <div class="d-flex align-items-center">
 
 
-                    <div class="px-2">agregar</div> <i class="fa-solid fa-circle-plus btn-agregar"></i>
+                    <span class="px-2">agregar</span> <i class="fa-solid fa-circle-plus btn-agregar"></i>
 
 
                 </div>
@@ -54,7 +54,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Agregar Personas</h5>
+                            <h5 class="modal-title" id="staticBackdropLabel">Agregar nueva Persona</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
@@ -89,7 +89,7 @@
 
                             </div>
                             <div class="modal-footer " id="btnfooter">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCerrarCrear">Cerrar</button>
                                 <input type="submit" class="btn btn-primary" value="Agregar" id="btnenviar">
                             </div>
                         </form>
@@ -159,7 +159,7 @@
 
 
                     <div class="row">
-                        <input id="idpersona" class="form-control form-control-sm" readonly/>
+                        <input id="idpersona" class="form-control form-control-sm" readonly hidden/>
 
                         <div class="col-12 col-md-6 mb-3">
 
@@ -186,7 +186,7 @@
 
                 </div>
                 <div class="modal-footer " id="btnfooter">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCerrarEditar">Cerrar</button>
                     <input type="submit" class="btn btn-primary" value="Actualizar" id="btnenviar">
                 </div>
             </form>
@@ -246,7 +246,7 @@
 
                                                         <div class="d-flex align-items-center">
 
-                                                            <div class="px-1">Editar </div>  <i class="fa-solid fa-pen-to-square btn-editar"></i>
+                                                                   <i class="fa-solid fa-pen-to-square px-2"></i>
 
                                                         </div>
 
@@ -256,7 +256,7 @@
 
                                                         <div class="d-flex align-items-center">
 
-                                                            <div class="px-1">Eliminar </div>  <i class="fas fa-regular fa-trash"></i>
+                                                             <i class="fas fa-regular fa-trash px-2"></i>
 
                                                         </div>
 
@@ -361,7 +361,9 @@
                                   
                                     pintardara();
 
-                           
+                                   
+                                    document.getElementById("btnCerrarCrear").click();
+                                    formPersona.reset();
 
                                 }
                                 else {
@@ -448,7 +450,9 @@
                         })
                         pintardara();
 
-                      
+                        document.getElementById("btnCerrarEditar").click();
+                        formPersonaEditar.reset();
+
 
                     }
 

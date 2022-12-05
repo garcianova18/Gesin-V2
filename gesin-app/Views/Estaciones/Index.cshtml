@@ -157,163 +157,163 @@
 
 
 
+@section Scripts{
 
-
-<script>
-
-
-
-    window.onload = function () {
-
-        pintardara();
-
-    }
+    <script>
 
 
 
+        window.onload = function () {
 
-     //------- crear estaciones asincrono-----------
+            pintardara();
 
-    const formestaciones = document.getElementById("formEstaciones");
-
-    function crearestaciones(e) {
-
-
-        e.preventDefault();
-
-       
-
-        const nombreEstacion = document.getElementById("nombreEstacion_crear").value;
-        
-
-        
-        const url = "/Estaciones/CrearEditar/estacion";
-
-        fetch(url, {
-
-            method: 'POST',
-            body: JSON.stringify({
-
-                nombre: nombreEstacion,
-              
-
-
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-
-
-
-        })
-            .then(res => res.json())
-            .then(data => {
-
-                if (data == 3) {
-
-                    Swal.fire('esta estacion ya existe')
-
-                }
-                else {
-
-                   
-
-                    if (data == 1) {
+        }
 
 
 
 
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Se ha agregado correctamente',
-                            showConfirmButton: false,
-                            timer: 2000
-                        })
-                        pintardara();
+        //------- crear estaciones asincrono-----------
 
-                        const nombreEstacion = document.getElementById("nombreEstacion").value = "";
-                        const idEstacion = document.getElementById("idEstacion").value = "";
-                       
+        const formestaciones = document.getElementById("formEstaciones");
 
-                    }
+        function crearestaciones(e) {
+
+
+            e.preventDefault();
 
 
 
-  
-                    else{
+            const nombreEstacion = document.getElementById("nombreEstacion_crear").value;
 
-                        
-                          Swal.fire({
-                          icon: 'warning',
-                          title: 'Advertencia...',
-                          text: 'el campo nombre es obligatorio',
-                          //footer: '<a href="">Why do I have this issue?</a>'
-                        })
-                        
-                    }
 
+
+            const url = "/Estaciones/CrearEditar/estacion";
+
+            fetch(url, {
+
+                method: 'POST',
+                body: JSON.stringify({
+
+                    nombre: nombreEstacion,
+
+
+
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
                 }
 
 
 
             })
+                .then(res => res.json())
+                .then(data => {
 
-    }
+                    if (data == 3) {
 
-    formestaciones.addEventListener("submit", crearestaciones);
+                        Swal.fire('esta estacion ya existe')
 
-
-
-  
-   //------------ editar estaciones asincrono--------------
-   
-    const formEstacionesEditar = document.getElementById("formEstacionesEditar");
-
-
-    function editarestacion(e) {
-        
-
-        e.preventDefault();
+                    }
+                    else {
 
 
 
-        const nombreEstacion = document.getElementById("nombreEstacionEditar").value;
-        const idEstacion = Number(document.getElementById("idEstacionEditar").value);
-
-
-        const url = "/Estaciones/CrearEditar/estacion";
-
-        fetch(url, {
-
-            method: 'POST',
-            body: JSON.stringify({
-
-                nombre: nombreEstacion,
-                id: idEstacion
-
-
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+                        if (data == 1) {
 
 
 
-        })
-            .then(res => res.json())
-            .then(data => {
 
-                if (data == 3) {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Se ha agregado correctamente',
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                            pintardara();
 
-                  
-                     
-                    Swal.fire('esta estacion ya existe')
+                            const nombreEstacion = document.getElementById("nombreEstacion").value = "";
+                            const idEstacion = document.getElementById("idEstacion").value = "";
 
+
+                        }
+
+
+
+
+                        else {
+
+
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Advertencia...',
+                                text: 'el campo nombre es obligatorio',
+                                //footer: '<a href="">Why do I have this issue?</a>'
+                            })
+
+                        }
+
+                    }
+
+
+
+                })
+
+        }
+
+        formestaciones.addEventListener("submit", crearestaciones);
+
+
+
+
+        //------------ editar estaciones asincrono--------------
+
+        const formEstacionesEditar = document.getElementById("formEstacionesEditar");
+
+
+        function editarestacion(e) {
+
+
+            e.preventDefault();
+
+
+
+            const nombreEstacion = document.getElementById("nombreEstacionEditar").value;
+            const idEstacion = Number(document.getElementById("idEstacionEditar").value);
+
+
+            const url = "/Estaciones/CrearEditar/estacion";
+
+            fetch(url, {
+
+                method: 'POST',
+                body: JSON.stringify({
+
+                    nombre: nombreEstacion,
+                    id: idEstacion
+
+
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
                 }
-             
 
-                 else if (data == 2) {
+
+
+            })
+                .then(res => res.json())
+                .then(data => {
+
+                    if (data == 3) {
+
+
+
+                        Swal.fire('esta estacion ya existe')
+
+                    }
+
+
+                    else if (data == 2) {
 
 
 
@@ -331,22 +331,22 @@
                         const idEstacion = document.getElementById("idEstacion").value = "";
 
 
-                }
+                    }
 
-                else if (data == 4) {
-
-
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Advertencia...',
-                        text: 'el campo nombre es obligatorio ',
-                        //footer: '<a href="">Why do I have this issue?</a>'
-                    })
+                    else if (data == 4) {
 
 
-                }
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Advertencia...',
+                            text: 'el campo nombre es obligatorio ',
+                            //footer: '<a href="">Why do I have this issue?</a>'
+                        })
 
-                  else {
+
+                    }
+
+                    else {
 
 
                         Swal.fire({
@@ -356,212 +356,188 @@
                             //footer: '<a href="">Why do I have this issue?</a>'
                         })
 
-                  }
-
-                
+                    }
 
 
 
-            })
-
-    }
-
-    formEstacionesEditar.addEventListener("submit", editarestacion )
 
 
-    //--------Listar estaciones asincrono----------------------
-    function pintardara() {
+                })
 
-        const url = "/Estaciones/Listarestaciones";
+        }
 
-        fetch(url)
-            .then(res => res.json())
-            .then(data => {
+        formEstacionesEditar.addEventListener("submit", editarestacion)
 
-                const pintardata = document.getElementById("pintardata");
-                let filatabla = "";
 
-                for (var i = 0; i < data.length; i++) {
+        //--------Listar estaciones asincrono----------------------
+        function pintardara() {
 
-                    
+            const url = "/Estaciones/Listarestaciones";
 
-                    filatabla += `
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
 
-                                        <tr>
+                    const pintardata = document.getElementById("pintardata");
+                    let filatabla = "";
 
-                                        <td>${data[i].id}</td>
-                                        <td>${data[i].nombre}</td>
-                                        <td class="d-flex justify-content-around">
+                    for (var i = 0; i < data.length; i++) {
 
 
 
-                                            <!-- Button trigger modal -->
+                        filatabla += `
 
-                                            <button onclick="EditarEstacion(${data[i].id})" type="button" class="btn btn-sm btn-success " data-bs-toggle="modal" data-bs-target="#editarEstacion">
+                                                <tr>
 
-                                                <div class="d-flex align-items-center">
+                                                <td>${data[i].id}</td>
+                                                <td>${data[i].nombre}</td>
+                                                <td class="d-flex justify-content-around">
 
-                                                    <div class="px-1">Editar </div>  <i class="fa-solid fa-pen-to-square btn-editar"></i>
 
-                                                </div>
 
-                                            </button>
+                                                    <!-- Button trigger modal -->
 
-                                            <button onclick="Eliminarestacion(${data[i].id})" type="button" class="btn btn-sm btn-danger ">
+                                                    <button onclick="EditarEstacion(${data[i].id})" type="button" class="btn btn-sm btn-success " data-bs-toggle="modal" data-bs-target="#editarEstacion">
 
-                                                <div class="d-flex align-items-center">
+                                                        <div class="d-flex align-items-center">
 
-                                                    <div class="px-1">Eliminar </div>  <i class="fas fa-regular fa-trash"></i>
+                                                            <div class="px-1">Editar </div>  <i class="fa-solid fa-pen-to-square btn-editar"></i>
 
-                                                </div>
-
-                                            </button>
-
-                                                                              <!-- Modal -->
-                                                <div class="modal fade" id="editar_estacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <form id="formEstacionesEditar" method="post">
-                                                                <div class="modal-body">
-
-                                                                    <input id="idEstacion" class="form-control" />
-
-                                                                    <label class="form-label">Nombre</label>
-                                                                    <input id="nombreEstacion" class="form-control" />
-                                                                </div>
-                                                                <div class="modal-footer " id="btnfooter">
-                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                                                    <input type="submit" class="btn btn-primary" value="Actualizar" >
-                                                                </div>
-                                                            </form>
                                                         </div>
-                                                    </div>
-                                                </div>
 
+                                                    </button>
 
-                                           
+                                                    <button onclick="Eliminarestacion(${data[i].id})" type="button" class="btn btn-sm btn-danger ">
 
-                                         </td>
+                                                        <div class="d-flex align-items-center">
 
-                                       
+                                                            <div class="px-1">Eliminar </div>  <i class="fas fa-regular fa-trash"></i>
 
-                                        </tr>
+                                                        </div>
 
-                                        
-
-
-                                         `
+                                                    </button>
 
 
 
 
+                                                 </td>
+
+
+
+                                                </tr>
+
+
+
+
+                                                 `
+
+
+
+
+
+                    }
+
+                    pintardata.innerHTML = filatabla;
+
+
+                })
+
+
+
+        }
+
+        //------Cargar la data para llenar el formulario a ediar asincrono -----------//
+        function EditarEstacion(idEstacion) {
+
+
+            const url = "Estaciones/CargarData_editar/?id=" + idEstacion;
+
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+
+                    const nombreEstacion = document.getElementById("nombreEstacionEditar").value = data.nombre;
+                    const idestacion = document.getElementById("idEstacionEditar").value = data.id;
+
+
+
+                })
+
+
+        }
+
+
+        //---------Elimiar una estacion asincrono---------------------//
+
+        function Eliminarestacion(idEstacion) {
+
+            Swal.fire({
+                title: 'Estas seguro?',
+                text: "No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, eliminar!'
+
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+
+                    const url = "/Estaciones/Eliminar/?id=" + idEstacion;
+
+                    fetch(url)
+                        .then(res => res.json())
+                        .then(data => {
+                           
+                            if (data == 1) {
+                              
+
+
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Se ha eliminado correctamente',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                })
+                                pintardara();
+                            }
+
+                            else if (data == 2) {
+
+
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error...',
+                                    text: 'la estacion no puede ser eliminada porque existen reportes con ella',
+
+                                })
+
+                                pintardara();
+                            }
+                            else {
+
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error...',
+                                    text: 'Error 404 recurso no encontrado',
+
+                                })
+
+                            }
+
+
+
+                        })
 
                 }
-
-                pintardata.innerHTML = filatabla;
-
-
             })
 
-        
-
-    }
-   
-//------Cargar la data para llenar el formulario a ediar asincrono -----------//
-    function EditarEstacion(idEstacion) {
+        }
 
 
-                const url = "Estaciones/CargarData_editar/?id="+ idEstacion;
+    </script>
 
-               fetch(url)
-               .then(res => res.json())
-               .then(data =>{
-
-                   const nombreEstacion = document.getElementById("nombreEstacionEditar").value = data.nombre;
-                   const idestacion = document.getElementById("idEstacionEditar").value = data.id;
-
-                   
-
-       })
-
-
-    }
-
-
-    //---------Elimiar una estacion asincrono---------------------//
-
-    function Eliminarestacion(idEstacion) {
-
-        Swal.fire({
-            title: 'Estas seguro?',
-            text: "No podrás revertir esto!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, eliminar!'
-
-        }).then((result) => {
-
-            if (result.isConfirmed) {
-
-              
-                const url = "/Estaciones/Eliminar/?id=" + idEstacion;
-
-                fetch(url)
-                    .then(res => res.json())
-                    .then(data => {
-                        alert(data)
-
-                        if (data == 1) {
-                            alert("entre")
-
-
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Se ha eliminado correctamente',
-                                showConfirmButton: false,
-                                timer: 2000
-                            })
-                            pintardara();
-                        }
-
-                        else if (data == 2) {
-
-
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error...',
-                                text: 'la estacion no puede ser eliminada porque existen reportes con ella',
-
-                            })
-
-                            pintardara();
-                        }
-                        else {
-
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error...',
-                                text: 'Error 404 recurso no encontrado',
-
-                            })
-
-                        }
-
-
-
-                    })
-
-            }
-        })
-       
-    }
-
-   
-</script>
+}

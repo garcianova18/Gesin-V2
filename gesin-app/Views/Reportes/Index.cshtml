@@ -19,7 +19,7 @@
 
     List<Ubicacion> ubicaciones = ViewBag.ubicacion;
 
-    List<string> mantenedornotificar = ViewBag.mantenedornotificar;
+    List<Persona> mantenedornotificar = ViewBag.mantenedornotificar;
 
      List<Sistema> sistemas = ViewBag.sistema;
 
@@ -520,18 +520,19 @@
                                     Reportes de Averias
                                 </div>
                                 <div class=" col-12 col-md-5 mb-3 ">
-                                    <select name="Id" asp-items="@ViewBag.criticidad" class="form-select form-select-sm campos_obligatorios" id="criticidad"></select>
+
+                                    <select  asp-items="@ViewBag.criticidad" class="form-select form-select-sm campos_obligatorios" id="criticidad"></select>
 
                                 </div>
 
                                 <div class=" col-12 col-md-5 offset-md-2 mb-3 ">
-                                    <select name="Id" asp-items="@ViewBag.SM" class="form-select form-select-sm campos_obligatorios" id="sm"></select>
+                                    <select asp-items="@ViewBag.SM" class="form-select form-select-sm campos_obligatorios" id="sm"></select>
 
                                 </div>
 
 
                                 <div class=" col-12 col-md-5 mb-3">
-                                    <select name="Id" asp-items="ViewBag.estadoOTs" class="form-select form-select-sm" id="estado"></select>
+                                    <select  asp-items="ViewBag.estadoOTs" class="form-select form-select-sm" id="estado"></select>
 
                                 </div>
                                 <div class=" col-12 col-md-4 offset-md-2 mb-3 ">
@@ -564,7 +565,7 @@
 
                                         @foreach (var item in mantenedornotificar)
                                         {
-                                            <option> @item</option>
+                                            <option> @item.Nombre</option>
                                         }
 
                                     </datalist>
@@ -884,7 +885,7 @@
 
 
                     nombreoperador.value = "";
-                    nombreoperador.value = data[0].value;
+                    nombreoperador.value = data[0].nombre;
 
                 })
 

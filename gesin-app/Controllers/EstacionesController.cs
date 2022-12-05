@@ -128,6 +128,7 @@ namespace gesin_app.Controllers
                 return RedirectToAction("Index");
             }
 
+           
             var buscarestacion = Db.Estacions.Find(id);
 
             if (buscarestacion != null)

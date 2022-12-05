@@ -103,7 +103,7 @@ namespace gesin_app.Controllers
         }
 
 
-        public ActionResult CargarData_editar(int id)
+        public async Task< ActionResult> CargarData_editar(int id)
         {
             if (id == 0)
             {
@@ -111,7 +111,7 @@ namespace gesin_app.Controllers
                 return RedirectToAction("Index");
             }
 
-            var buscarestacion = repository.GetByIdAsync(id);
+            var buscarestacion = await repository.GetByIdAsync(id);
 
             if (buscarestacion != null)
             {
@@ -133,33 +133,23 @@ namespace gesin_app.Controllers
 
                 return RedirectToAction("Index");
             }
-
+      
             var buscarpersona = await repository.GetByIdAsync(id);
 
-            if (buscarpersona != null)
-            {
-                //buscamos si existen reportes con esta estacion si existe no podra ser eliminada dicha persona
-                var buscarreRortes = repository.GetByIdAsync(buscarpersona.Id);
-
+           
                //si no existen reporte con esta persona la eliminamos
-                if (buscarreRortes == null)
+                if (buscarpersona == null)
                 {
 
-                    var personaDelete = await repository.DeleteAsync(buscarpersona);
-
-                    return Ok(1);
-                }
-                else
-                {
-
-                    return Ok(2);
+                return Ok(0);
+                    
                 }
 
-            }
+            var personaDelete = await repository.DeleteAsync(buscarpersona);
 
 
 
-            return Json(buscarpersona);
+            return Ok(personaDelete);
 
         }
 

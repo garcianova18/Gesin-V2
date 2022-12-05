@@ -218,16 +218,29 @@ namespace gesin_app.Controllers
 
 
         //mantenedor reparo averia
-        public List<Persona> mantenedorreparo()
+        public List<Persona>mantenedorreparo()
         {
 
-            var mantenedor = (from p in Db.Personas
-                                     join fp in Db.Funcions
-                                     on p.IdFuncion equals (fp.Id)
-                                     where fp.Id == 2
-                                     select p).ToList();
+            //var mantenedor = (from p in Db.Personas
+            //                  join fp in Db.Funcions
+            //                  on p.IdFuncion equals (fp.Id)
+            //                  where fp.Id == 2
+            //                  select p).ToList();
 
-            return mantenedor;
+
+            // 2  es el id de los tecnico
+
+            var listPersonaTecnico =  Db.Personas.Where(n => n.IdFuncion == 2).Select(nom => new Persona
+            {
+
+                Nombre = nom.Nombre
+
+
+            }).ToList();
+
+
+
+            return listPersonaTecnico;
 
 
         }
@@ -303,12 +316,12 @@ namespace gesin_app.Controllers
 
 
             //criticidad.Insert(0, new SelectListItem
-            //{
-            //    Text = "Seleccionar Criticidad",
+            //{Criticidad",
             //    Value = ""
             //});
 
             return criticidad;
+            //    Text = "Seleccionar 
 
         }
 
@@ -361,7 +374,7 @@ namespace gesin_app.Controllers
 
 
         //Listar Mantenedor a notificar
-        public List<string> Mantenedornotificar()
+        public List<Persona> Mantenedornotificar()
         {
 
             //var mantenedor = (from p in Db.Personas
@@ -371,20 +384,29 @@ namespace gesin_app.Controllers
             //                  on fp.IdFuncion equals (f.Id)
             //                  where f.Id == 1
             //                  select p).ToList();
-            
 
-            var ListPersonas =  Db.Funcions.Where(n => n.Nombre == "Call Center").Select(p => new MantenedorNotificarViewcs
+
+            // 1 es el id de Call center
+            var listPersonaCallCenter = Db.Personas.Where(n => n.IdFuncion == 1).Select(nom => new Persona
             {
-
-               Nombres = p.Personas.Select(p=> p.Nombre).ToList()
               
+                Nombre = nom.Nombre
+
 
             }).ToList();
 
+            //var ListPersonas =  Db.Funcions.Where(n => n.Nombre == "Call Center").Select(p => new MantenedorNotificarViewcs
+            //{
 
-            var personas = ListPersonas[0].Nombres;
+            //   Nombres = p.Personas.Select(p=> p.Nombre).ToList()
+              
 
-            return personas;
+            //}).ToList();
+
+
+            //var personas = ListPersonas[0].Nombres;
+
+            return listPersonaCallCenter;
 
 
         }
@@ -422,7 +444,7 @@ namespace gesin_app.Controllers
             var operador = Db.Personas.Where(o => o.Codigo == op).Select(o => new
             {
 
-                value = o.Nombre
+                nombre = o.Nombre
 
             }).ToList();
 
@@ -441,16 +463,17 @@ namespace gesin_app.Controllers
             var Buscarsubsistema = await Db.Subsistemas.Where(s => s.Nombre == subsistema).Select(b=>new
             {
 
-                // para haceder a la data relacionada debemos con include indicarle en este caso no lo hicimos 
+                // para acceder a la data relacionada debemos con include indicarle en este caso no lo hicimos 
                 //porque estamos devolviendo un objeto anonimo y el hacede a la data relacionada si indiarlo
 
 
                 //mantenedor es padre de susbsistema 
-                // de esta forma navegamos a sus propiedades
+               // asi novegamos de hijo a padre a travez de su propiedad de navegacion
                 mantenedor = b.IdMantenedorNavigation.Nombre,
 
 
-                //despcricion es hijo de subsistem de esta forma navegamos  a sus propiedades y obtenemos una lista de jihos
+                //despcricion es hijo de subsistema
+                //asi navegamos de padre a hijos y obtenemos una lista de hijos
                 descripcion = b.Activos.Select(d=> d.Descripcion).ToList()
 
             }).FirstOrDefaultAsync();

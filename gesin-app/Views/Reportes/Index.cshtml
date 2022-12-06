@@ -725,6 +725,7 @@
          window.onload = function () {
 
             ocultar_spinnerInicial();
+
           
             //ocultar btn reutilizar solo se muestra cuando se va a actualizar un registro
             let reutilizarenviar = document.getElementById("reutilizarenviar");
@@ -1365,6 +1366,11 @@
                     SubsistemaCascada();
                     descripcionCascada();
 
+                     if (data.ot == 0){
+
+                            data.ot ="";
+                        }
+
                     let Idreportes = document.getElementById("idreportes").value = data.id;
                     let sistemas = document.getElementById("sistemas").value = data.sistemasNombre;
                     let mantenedor = document.getElementById("mantenedor").value = data.mantenedorNombre;
@@ -1447,6 +1453,11 @@
 
                         }
 
+                        if (data[i].ot == 0){
+
+                            data[i].ot ="";
+                        }
+
 
                         // funcion que contiene la data a pintar en la tabla
                         function pintar(color) {
@@ -1507,8 +1518,6 @@
                                         </tr>
 
                                     `
-
-
 
 
 

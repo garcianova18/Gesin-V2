@@ -207,7 +207,7 @@ namespace gesin_app.Controllers
 
                 item.UsuarioActualizoNombre = item.UsuarioActualizoNombre == null ? item.UsuarioActualizoNombre = "" : item.UsuarioActualizoNombre = item.UsuarioActualizoNombre;
 
-
+                
                 acumulador = acumulador + 1;
             }
 

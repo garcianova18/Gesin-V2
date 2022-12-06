@@ -19,7 +19,7 @@ namespace gesin_app.Models
         public string Apellido { get; set; }
         public int Codigo { get; set; }
         public string UserName { get; set; }
-        public int Password { get; set; }
+        public string Password { get; set; }
         public int IdRol { get; set; }
         public DateTime? Fecha { get; set; }
 

@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using gesin_app.Servicios;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace gesin_app.Controllers
 {
@@ -904,6 +905,11 @@ namespace gesin_app.Controllers
 
             return Ok(recuperarStyle);
 
+        }
+
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
     }

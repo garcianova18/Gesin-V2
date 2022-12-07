@@ -7,6 +7,8 @@
 
     Funciones = ViewBag.funciones;
 
+    int conteo =1;
+
    
 }
 
@@ -105,7 +107,8 @@
 
 
 
-            <table class="table table-sm table-bordered ">
+
+            <table class="table table-sm table-bordered  " id="tablita" >
 
                 <thead class="table-dark text-center ">
 
@@ -125,8 +128,65 @@
 
                 </thead>
 
-                <tbody id="pintardata">
 
+            <tbody id="pintardata">
+
+               
+                    @foreach (var item in Model)
+                    {
+                            <tr>
+                                <td>@(conteo++)</td>
+                                <td>@Html.DisplayFor(model => item.Nombre)</td>
+                                <td>@Html.DisplayFor(model => item.Codigo)</td>
+                                <td>@Html.DisplayFor(model => item.IdFuncionNavigationNombre)</td>
+                                
+
+                        <td class="d-flex justify-content-around">
+
+
+
+                            <!-- Button trigger modal -->
+
+                            <button onclick="cargarDataPersona(@item.Id)" type="button" class="btn btn-sm btn-success " data-bs-toggle="modal" data-bs-target="#editarPersona">
+
+                                <div class="d-flex align-items-center">
+
+                                    <i class="fa-solid fa-pen-to-square px-2"></i>
+
+                                </div>
+
+                            </button>
+
+                            <button onclick="EliminarPersona(@item.Id)" type="button" class="btn btn-sm btn-danger ">
+
+                                <div class="d-flex align-items-center">
+
+                                    <i class="fas fa-regular fa-trash px-2"></i>
+
+                                </div>
+
+                            </button>
+
+
+
+
+                        </td>
+
+
+
+
+                            </tr>
+
+                    }
+
+
+
+
+
+
+               
+
+                    
                     <!--Aqi se va a cargar la data de manera asincrono-->
 
                 </tbody>
@@ -197,104 +257,82 @@
 
 
 
-
-
 @section Scripts{
 
     <script>
 
-        window.onload = function () {
 
-            pintardara();
+        $(document).ready(function () {
 
-        }
+          
+            $('#tablita').DataTable();
+            
+        });
+
+
 
 
         //--------Listar Persona asincrono----------------------
-        function pintardara() {
+        //function pintardara() {
 
-            const url = "/Personas/ListarPersonas";
+        //    const url = "/Personas/ListarPersonas";
 
-            fetch(url)
-                .then(res => res.json())
-                .then(data => {
+        //    fetch(url)
+        //        .then(res => res.json())
+        //        .then(data => {
 
-                    const pintardata = document.getElementById("pintardata");
-                    let filatabla = "";
+        //            const pintardata = document.getElementById("pintardata");
+        //            let filatabla = "";
 
-                    let conteo = 0;
+        //            let conteo = 0;
 
-                    for (var i = 0; i < data.length; i++) {
+        //            for (var i = 0; i < data.length; i++) {
 
-                         conteo++;
+        //                 conteo++;
 
-                        filatabla += `
+        //                filatabla += `
 
-                                                <tr>
-                                                <td>${conteo}</td>
-                                                <td>${data[i].nombre}</td>
-                                                <td>${data[i].codigo}</td>
-                                                <td>${data[i].idFuncionNavigationNombre}</td>
-
-                                                <td class="d-flex justify-content-around">
-
-
-
-                                                    <!-- Button trigger modal -->
-
-                                                         <button onclick="EditarPersona(${data[i].id})" type="button" class="btn btn-sm btn-success " data-bs-toggle="modal" data-bs-target="#editarPersona">
-
-                                                        <div class="d-flex align-items-center">
-
-                                                                   <i class="fa-solid fa-pen-to-square px-2"></i>
-
-                                                        </div>
-
-                                                    </button>
-
-                                                    <button onclick="EliminarPersona(${data[i].id})" type="button" class="btn btn-sm btn-danger ">
-
-                                                        <div class="d-flex align-items-center">
-
-                                                             <i class="fas fa-regular fa-trash px-2"></i>
-
-                                                        </div>
-
-                                                    </button>
-
-                                                      
-
-
-                                                 </td>
+        //                                        <tr>
+        //                                        <td>${conteo}</td>
+        //                                        <td>${data[i].nombre}</td>
+        //                                        <td>${data[i].codigo}</td>
+        //                                        <td>${data[i].idFuncionNavigationNombre}</td>
+        //                                                 <td>probando</td>
+                                               
 
 
 
-                                                </tr>
+        //                                        </tr>
 
 
 
 
-                                                 `
+        //                                         `
 
 
 
 
 
-                    }
+        //            }
 
-                    pintardata.innerHTML = filatabla;
-
-
-                })
+        //            pintardata.innerHTML = filatabla;
 
 
+        //        })
 
-        }
+
+
+        //}
 
 
 
 
         //------- crear persona asincrono-----------
+
+
+
+
+        //Crear editar personas
 
         const formPersona = document.getElementById("formPersona");
 
@@ -359,7 +397,7 @@
 
                                     })  
                                   
-                                    pintardara();
+                                    //pintardara();
 
                                    
                                     document.getElementById("btnCerrarCrear").click();
@@ -448,7 +486,7 @@
                             showConfirmButton: false,
                             timer: 2000
                         })
-                        pintardara();
+                     /*   pintardara()*/;
 
                         document.getElementById("btnCerrarEditar").click();
                         formPersonaEditar.reset();
@@ -493,7 +531,7 @@
 
 
         //------Cargar la data para llenar el formulario a ediar asincrono -----------//
-        function EditarPersona(idpersona) {
+        function cargarDataPersona(idpersona) {
 
 
             const url = "Personas/CargarData_editar/?id=" + idpersona;
@@ -546,7 +584,7 @@
                                     showConfirmButton: false,
                                     timer: 2000
                                 })
-                                pintardara();
+                                //pintardara();
                             }
 
                            

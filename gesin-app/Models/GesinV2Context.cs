@@ -310,6 +310,10 @@ namespace gesin_app.Models
                     .IsRequired()
                     .HasMaxLength(20);
 
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
                 entity.Property(e => e.UserName)
                     .IsRequired()
                     .HasMaxLength(20);

@@ -29,7 +29,10 @@ namespace gesin_app.Controllers
 
             ViewBag.funciones = Funciones();
 
-            return View();
+            var listaPersonas =  context.Personas.ProjectTo<PersonaView>(mapper.ConfigurationProvider).ToList();
+
+
+            return View(listaPersonas);
         }
 
         public async Task<ActionResult> ListarPersonas()
@@ -53,7 +56,7 @@ namespace gesin_app.Controllers
                 return Ok(0);
             }
              //buscamos si existe una con este mismo nombre 
-            var BuscarEstacion =  context.Personas.Where(e => e.Nombre.Trim() == persona.Nombre.Trim()).Count();
+            var BuscarEstacion =  context.Personas.Where(e => e.Nombre.Trim() == persona.Nombre.Trim() && e.Id !=persona.Id).Count();
 
             //si entra aqui la persona existe y devolvemo mensaje
             if (BuscarEstacion == 1)

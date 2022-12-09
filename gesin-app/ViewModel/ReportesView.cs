@@ -8,15 +8,14 @@ namespace gesin_app.ViewModel
 {
     public class ReportesView
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public int IdSubsistema { get; set; }
         public string Ubicacion { get; set; }
         public int IdEstacion { get; set; }
 
         public string Descripcion { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0: yyyy-MM-dd }", ApplyFormatInEditMode = true)]
-        [DataType(DataType.Date)]
+       
         public DateTime Fechaaveria { get; set; }
 
         public int? IdUsuarios { get; set; }

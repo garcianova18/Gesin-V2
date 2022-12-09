@@ -7,7 +7,7 @@ namespace gesin_app.Models
 {
     public partial class Reporte
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public int IdSubsistema { get; set; }
         public string Ubicacion { get; set; }
         public int IdEstacion { get; set; }

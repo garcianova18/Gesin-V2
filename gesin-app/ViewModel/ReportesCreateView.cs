@@ -6,7 +6,7 @@ namespace gesin_app.ViewModel
 {
     public class ReportesCreateView
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string Sistema { get; set; }
 

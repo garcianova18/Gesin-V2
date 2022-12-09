@@ -123,7 +123,7 @@ namespace gesin_app.Models
 
                 entity.Property(e => e.Nombre)
                     .IsRequired()
-                    .HasMaxLength(60);
+                    .HasMaxLength(100);
 
                 entity.HasOne(d => d.IdFuncionNavigation)
                     .WithMany(p => p.Personas)

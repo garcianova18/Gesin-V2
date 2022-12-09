@@ -86,7 +86,7 @@ namespace gesin_app.Controllers
             var reportes = Db.Reportes.ProjectTo<ReportesView>(mapper.ConfigurationProvider);
 
 
-            //para realizar el fintrado combinado
+            //para realizar el filtrado combinado
             
             if (reportesView.Ot != null)
             {
@@ -125,7 +125,7 @@ namespace gesin_app.Controllers
 
 
 
-            //convertimos a reportes en array para asi poder aplicarle un idexador mas abajo ya que iquerable que devolvia reportes no permites indexadores
+            //convertimos a reportes en array para asi poder aplicarle un idexador mas abajo ya que iquerable que devolvia reportes no permites indexadores y aqui necesitamos recorre cada regstro para aplicar formatos
             var reportesArray = reportes.ToArray();
 
 
@@ -135,7 +135,7 @@ namespace gesin_app.Controllers
             foreach (var item in reportesArray)
             {
 
-                //---------para fecha reporte de averia-----//
+                //---------para fecha reporte de averia se muestre con este formato de fecha y no la que trae desde la Db-----//
                 var fechaaveriaconvertida = item.Fechaaveria.ToString("dd/MM/yyyy HH:mm");
 
                 //para aplicarle este idexador convertimos a reportes en un array ya que iquerable no permite idexadores
@@ -149,7 +149,7 @@ namespace gesin_app.Controllers
                 var FechanotificacionConvertiDatetime = Convert.ToDateTime(item.Fechanotificacion);
 
 
-                //aqui decimos si la fecha ya convertida a datemite recibio un null, esta me devuelve su tipo por defecto con convert.datetime y ese tipo por defecto es formato 01/01/01 si me devuelve esto entonces a reportes[acumulador].Fechanotificacionguardarmostrar le pasamos una cadena vacia para que no me muestre esa fecha que no es valida en la vista
+                //aqui decimos si la fecha ya convertida a datemite recibio un null, esta me devuelve su tipo por defecto con convert.datetime y ese tipo por defecto es formato 01/01/01 si me devuelve esto entonces a reportes[acumulador].Fechanotificacionguardarmostrar le pasamos una cadena vacia para que no me muestre esa fecha que no es valida en la vista 
                 if (FechanotificacionConvertiDatetime == default)
                 {
                     reportesArray[acumulador].Fechanotificacionguardarmostrar = "";
@@ -161,7 +161,7 @@ namespace gesin_app.Controllers
                 }
                 #endregion
 
-                #region //--------------para fecha inicio de reporo de averia----------//
+                #region //--------------para fecha inicio de reparo de averia----------//
 
                 var FechainicioConvertiDatetime = Convert.ToDateTime(item.Fechainicio);
 
@@ -178,7 +178,7 @@ namespace gesin_app.Controllers
 
                 #endregion
 
-                #region //--------------para fecha final de reporo de averia----------//
+                #region //--------------para fecha final de reparo de averia----------//
 
                 var FechafinalConvertiDatetime = Convert.ToDateTime(item.Fechafinal);
 
@@ -195,7 +195,7 @@ namespace gesin_app.Controllers
 
                 #endregion
 
-              // aqui estamos comparando estas propiedades para si viene null no me nuestre eso en el front y me lo muestre vacio
+              // aqui estamos comparando estas propiedades para si vienen null no me nuestre eso en el frontend y me lo muestre vacio
 
                 item.MantenedorNotificar = item.MantenedorNotificar == null ? item.MantenedorNotificar = "" : item.MantenedorNotificar;
               
@@ -677,6 +677,7 @@ namespace gesin_app.Controllers
                        
                      
                             var mapReporte = mapper.Map<Reporte>(reporte);
+
                             mapReporte.IdSistema= sistema.Id;
                             mapReporte.Idmantenedor = subsistema.IdMantenedor;
                             mapReporte.IdSubsistema = subsistema.Id;

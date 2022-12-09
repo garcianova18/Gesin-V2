@@ -141,36 +141,36 @@
                                 <td>@Html.DisplayFor(model => item.IdFuncionNavigationNombre)</td>
                                 
 
-                        <td class="d-flex justify-content-around">
+                                <td class="d-flex justify-content-around">
 
 
 
-                            <!-- Button trigger modal -->
+                                    <!-- Button trigger modal -->
 
-                            <button onclick="cargarDataPersona(@item.Id)" type="button" class="btn btn-sm btn-success " data-bs-toggle="modal" data-bs-target="#editarPersona">
+                                    <button onclick="cargarDataPersona(@item.Id)" type="button" class="btn btn-sm btn-success " data-bs-toggle="modal" data-bs-target="#editarPersona">
 
-                                <div class="d-flex align-items-center">
+                                        <div class="d-flex align-items-center">
 
-                                    <i class="fa-solid fa-pen-to-square px-2"></i>
+                                            <i class="fa-solid fa-pen-to-square px-2"></i>
 
-                                </div>
+                                        </div>
 
-                            </button>
+                                    </button>
 
-                            <button onclick="EliminarPersona(@item.Id)" type="button" class="btn btn-sm btn-danger ">
+                                    <button onclick="EliminarPersona(@item.Id)" type="button" class="btn btn-sm btn-danger ">
 
-                                <div class="d-flex align-items-center">
+                                        <div class="d-flex align-items-center">
 
-                                    <i class="fas fa-regular fa-trash px-2"></i>
+                                            <i class="fas fa-regular fa-trash px-2"></i>
 
-                                </div>
+                                        </div>
 
-                            </button>
-
-
+                                    </button>
 
 
-                        </td>
+
+
+                                </td>
 
 
 
@@ -400,8 +400,11 @@
                                     //pintardara();
 
                                    
-                                    document.getElementById("btnCerrarCrear").click();
-                                    formPersona.reset();
+                                    //document.getElementById("btnCerrarCrear").click();
+                                    //formPersona.reset();
+
+
+                                     document.getElementById('formPersona').submit();
 
                                 }
                                 else {
@@ -414,6 +417,8 @@
 
                                     })
                                 }
+
+
 
                          }
 
@@ -469,7 +474,7 @@
 
 
 
-                        Swal.fire('esta Persona ya existe')
+                        Swal.fire('Esta Persona ya existe')
 
                     }
 
@@ -488,10 +493,10 @@
                         })
                      /*   pintardara()*/;
 
-                        document.getElementById("btnCerrarEditar").click();
-                        formPersonaEditar.reset();
+                        //document.getElementById("btnCerrarEditar").click();
+                        //formPersonaEditar.reset();
 
-
+                        document.getElementById('formPersona').submit();
                     }
 
                     else if (data == 4) {
@@ -520,7 +525,7 @@
                     }
 
 
-
+                  
 
 
                 })
@@ -585,6 +590,8 @@
                                     timer: 2000
                                 })
                                 //pintardara();
+
+                                document.getElementById('formPersona').submit();
                             }
 
                            

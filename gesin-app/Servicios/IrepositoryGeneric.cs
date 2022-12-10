@@ -7,7 +7,7 @@ namespace gesin_app.Servicios
     {
 
         Task<IEnumerable> GetAllAsync();
-        Task<T> GetByIdAsync(int Id);
+        Task<T> GetByIdAsync(int? Id);
         Task<int> CreateAsync(T entidad );
         Task<int> UpdateAsync(T entidad);
         Task<int> DeleteAsync(T entidad);

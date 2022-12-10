@@ -1,8 +1,8 @@
-﻿@using gesin_app.Models
-@model IEnumerable<Estacion>
+﻿@using gesin_app.ViewModel;
+@model IEnumerable<UsuariosView>
 
 @{
-    ViewData["Title"] = "Mantenimiento Estaciones";
+    ViewData["Title"] = "Mantenimiento Usuarios";
 
   
 }
@@ -17,7 +17,7 @@
         <div class="col-12 d-flex justify-content-center mb-5">
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crear_estacion">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crear_usuario">
 
                 <div class="d-flex align-items-center">
 
@@ -30,20 +30,39 @@
             </button>
 
             <!------------- Moda para crear una nueva estacion -------->
-            <div class="modal fade" id="crear_estacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade" id="crear_usuario" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Agregar nueva estación</h5>
+                            <h5 class="modal-title" id="staticBackdropLabel">Agregar Usuario</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form id="formEstaciones" method="post">
+                        <form id="formUsuario" method="post">
                             <div class="modal-body">
 
 
+                        <input class=" form-control" id="idusuario" disabled hidden>
 
-                                <label class="form-label">Nombre</label>
-                                <input id="nombreEstacion_crear" class="form-control" />
+                        <label class="form-label">Nombre</label>
+                        <input id="nombreusuario" class="form-control" />
+
+                         <label class="form-label">Apellido</label>
+                        <input id="apellidousuario" class="form-control" />
+
+                        <label class="form-label">Codigo</label>
+                        <input  id="codigousuario" class="form-control" />
+
+                        <label class="form-label">Usuario</label>
+                        <input id="usuariousuario" class="form-control" />
+
+                        <label class="form-label">Contraseña</label>
+                        <input type="password" id="contrasenausuario" class="form-control" />
+
+                        <label class="form-label">Perfil</label>
+                        <select id="perfilusuario" class="form-control"  asp-items="ViewBag.rol">
+              
+
+                        </select>
 
                             </div>
                             <div class="modal-footer " id="btnfooter">
@@ -69,8 +88,10 @@
 
                     <tr>
 
-                        <th>@Html.DisplayNameFor(model => model.Id)</th>
                         <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+                        <th>@Html.DisplayNameFor(model => model.Codigo)</th>
+                        <th>@Html.DisplayNameFor(model => model.UserName)</th>
+                        <th>@Html.DisplayNameFor(model => model.IdRolNavigationNombre)</th>
                         <th>Operaciones</th>
 
 
@@ -99,22 +120,42 @@
     </div>
 
 
-    <!------------------------Modal para editar una estacion ---------------------------->
+    <!------------------------Modal para editar una Usuario ---------------------------->
 
-    <div class="modal fade" id="editarEstacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="editarUsuario" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Editar Estacion</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Editar Usuario</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="formEstacionesEditar" method="post">
+                <form id="formUsuarioEditar" method="post">
                     <div class="modal-body">
 
-                        <input class=" form-control" id="idEstacionEditar" disabled hidden>
+                        <input class=" form-control" id="idusuarioEditar" disabled hidden>
 
                         <label class="form-label">Nombre</label>
-                        <input id="nombreEstacionEditar" class="form-control" />
+                        <input id="nombreusuarioEditar" class="form-control" />
+
+                         <label class="form-label">Apellido</label>
+                        <input id="apellidousuarioEditar" class="form-control" />
+
+                        <label class="form-label">Codigo</label>
+                        <input id="codigousuarioEditar" class="form-control" />
+
+                        <label class="form-label">Usuario</label>
+                        <input id="usuariousuarioEditar" class="form-control" />
+
+                        <label class="form-label">Contraseña</label>
+                        <input id="contrasenausuarioEditar" class="form-control" />
+
+                        <label class="form-label">Perfil</label>
+                        <select id="perfilusuarioEditar" class="form-control"  asp-items="ViewBag.rol">
+              
+
+                        </select>
+
+                        
 
                     </div>
                     <div class="modal-footer " id="btnfooter">
@@ -152,30 +193,41 @@
 
 
 
-        //------- crear estaciones asincrono-----------
+        //------- crear Usuarios asincrono-----------
 
-        const formestaciones = document.getElementById("formEstaciones");
+        const formUsuario = document.getElementById("formUsuario");
 
-        function crearestaciones(e) {
+        function CrearUsuario(e) {
 
 
             e.preventDefault();
 
 
 
-            const nombreEstacion = document.getElementById("nombreEstacion_crear").value;
+                  const idusuario =  document.getElementById("idusuario").value;
+                  const nombre  =  document.getElementById("nombreusuario").value;
+                  const apellido = document.getElementById("apellidousuario").value;
+                  const codigo =  document.getElementById("codigousuario").value;
+                  const usuario =  document.getElementById("usuariousuario").value;
+                  const perfil =   document.getElementById("perfilusuario").value;
+                  const contrasena =  document.getElementById("contrasenausuario").value;
 
 
 
-            const url = "/Estaciones/CrearEditar/estacion";
+            const url = "/Usuarios/CrearEditarUsuarios/usuario";
 
             fetch(url, {
 
                 method: 'POST',
                 body: JSON.stringify({
 
-                    nombre: nombreEstacion,
-
+                   id:Number(idusuario),
+                   nombre: nombre,
+                   apellido: apellido,
+                   codigo: Number(codigo),
+                   userName:usuario,
+                   Password:contrasena,
+                   idRol : Number( perfil)
 
 
                 }),
@@ -191,7 +243,7 @@
 
                     if (data == 3) {
 
-                        Swal.fire('esta estacion ya existe')
+                        Swal.fire('Esta Usuario ya existe')
 
                     }
                     else {
@@ -229,7 +281,7 @@
                             Swal.fire({
                                 icon: 'warning',
                                 title: 'Advertencia...',
-                                text: 'el campo nombre es obligatorio',
+                                text: 'Todos los campos son obligatorio',
                                 //footer: '<a href="">Why do I have this issue?</a>'
                             })
 
@@ -243,36 +295,44 @@
 
         }
 
-        formestaciones.addEventListener("submit", crearestaciones);
+        formUsuario.addEventListener("submit", CrearUsuario);
 
 
 
 
-        //------------ editar estaciones asincrono--------------
+        //------------ editar Usuarios asincrono--------------
 
-        const formEstacionesEditar = document.getElementById("formEstacionesEditar");
+        const formUsuarioEditar = document.getElementById("formUsuarioEditar");
 
 
-        function editarestacion(e) {
+        function editarusuario(e) {
 
 
             e.preventDefault();
 
 
+                  const idusuario =  document.getElementById("idusuarioEditar").value;
+                  const nombre  =  document.getElementById("nombreusuarioEditar").value;
+                  const apellido = document.getElementById("apellidousuarioEditar").value;
+                  const codigo =  document.getElementById("codigousuarioEditar").value;
+                  const usuario =  document.getElementById("usuariousuarioEditar").value;
+                  const perfil =   document.getElementById("perfilusuarioEditar").value;
+                  const contrasena =  document.getElementById("contrasenausuarioEditar").value;
 
-            const nombreEstacion = document.getElementById("nombreEstacionEditar").value;
-            const idEstacion = Number(document.getElementById("idEstacionEditar").value);
-
-
-            const url = "/Estaciones/CrearEditar/estacion";
+            const url = "/Usuarios/CrearEditarUsuarios/usuario";
 
             fetch(url, {
 
                 method: 'POST',
                 body: JSON.stringify({
 
-                    nombre: nombreEstacion,
-                    id: idEstacion
+                   id:Number(idusuario),
+                   nombre: nombre,
+                   apellido: apellido,
+                   codigo: Number(codigo),
+                   userName:usuario,
+                   Password:contrasena,
+                   idRol : Number( perfil)
 
 
                 }),
@@ -290,7 +350,7 @@
 
 
 
-                        Swal.fire('esta estacion ya existe')
+                        Swal.fire('Esta Usaurio ya existe')
 
                     }
 
@@ -320,7 +380,7 @@
                         Swal.fire({
                             icon: 'warning',
                             title: 'Advertencia...',
-                            text: 'el campo nombre es obligatorio ',
+                            text: 'Todos los campos son obligatorio ',
                             //footer: '<a href="">Why do I have this issue?</a>'
                         })
 
@@ -347,13 +407,13 @@
 
         }
 
-        formEstacionesEditar.addEventListener("submit", editarestacion)
+        formUsuarioEditar.addEventListener("submit", editarusuario)
 
 
-        //--------Listar estaciones asincrono----------------------
+        //--------Listar Usuarios asincrono----------------------
         function pintardara() {
 
-            const url = "/Estaciones/Listarestaciones";
+            const url = "/Usuarios/ListarUsuarios";
 
             fetch(url)
                 .then(res => res.json())
@@ -362,61 +422,61 @@
                     const pintardata = document.getElementById("pintardata");
                     let filatabla = "";
 
-                    for (var i = 0; i < data.length; i++) {
-
+                   data.map((datos)=>{
 
 
                         filatabla += `
 
-                                                <tr>
+                                <tr>
 
-                                                <td>${data[i].id}</td>
-                                                <td>${data[i].nombre}</td>
-                                                <td class="d-flex justify-content-around">
-
-
-
-                                                    <!-- Button trigger modal -->
-
-                                                    <button onclick="EditarEstacion(${data[i].id})" type="button" class="btn btn-sm btn-success " data-bs-toggle="modal" data-bs-target="#editarEstacion">
-
-                                                        <div class="d-flex align-items-center">
-
-                                                            <i class="fa-solid fa-pen-to-square px-2"></i>
-
-                                                        </div>
-
-                                                    </button>
-
-                                                    <button onclick="Eliminarestacion(${data[i].id})" type="button" class="btn btn-sm btn-danger ">
-
-                                                        <div class="d-flex align-items-center">
-
-                                                              <i class="fas fa-regular fa-trash px-2"></i>
-
-                                                        </div>
-
-                                                    </button>
+                                <td>${datos.nombreCompleto}</td>
+                                <td>${datos.codigo}</td>
+                                <td>${datos.userName}</td>
+                                <td>${datos.idRolNavigationNombre}</td>
+                                <td class="d-flex justify-content-around">
 
 
 
+                                    <!-- Button trigger modal -->
 
-                                                 </td>
+                                    <button onclick="EditarUsuario(${datos.id})" type="button" class="btn btn-sm btn-success " data-bs-toggle="modal" data-bs-target="#editarUsuario">
 
+                                        <div class="d-flex align-items-center">
 
+                                            <i class="fa-solid fa-pen-to-square px-2"></i>
 
-                                                </tr>
+                                        </div>
+
+                                    </button>
+
+                                    <button onclick="EliminarUsuario(${datos.id})" type="button" class="btn btn-sm btn-danger ">
+
+                                        <div class="d-flex align-items-center">
+
+                                                <i class="fas fa-regular fa-trash px-2"></i>
+
+                                        </div>
+
+                                    </button>
 
 
 
 
-                                                 `
+                                    </td>
+
+
+
+                                </tr>
 
 
 
 
+                                    `
 
-                    }
+
+
+
+                   })
 
                     pintardata.innerHTML = filatabla;
 
@@ -428,29 +488,34 @@
         }
 
         //------Cargar la data para llenar el formulario a ediar asincrono -----------//
-        function EditarEstacion(idEstacion) {
+        function EditarUsuario(idUsuario) {
 
 
-            const url = "Estaciones/CargarData_editar/?id=" + idEstacion;
+            const url = "Usuarios/buscarUsuarios/?id=" + idUsuario;
 
             fetch(url)
                 .then(res => res.json())
                 .then(data => {
 
-                    const nombreEstacion = document.getElementById("nombreEstacionEditar").value = data.nombre;
-                    const idestacion = document.getElementById("idEstacionEditar").value = data.id;
+                    
 
-
-
+                    document.getElementById("idusuarioEditar").value = data.id;
+                    document.getElementById("nombreusuarioEditar").value = data.nombre;
+                    document.getElementById("apellidousuarioEditar").value = data.apellido;
+                    document.getElementById("codigousuarioEditar").value = data.codigo;
+                    document.getElementById("usuariousuarioEditar").value = data.userName;
+                    document.getElementById("contrasenausuarioEditar").value = data.password;
+                    document.getElementById("perfilusuarioEditar").value = data.idRol;
+                    
                 })
 
 
         }
 
 
-        //---------Elimiar una estacion asincrono---------------------//
+        //---------Elimiar una Usuarios asincrono---------------------//
 
-        function Eliminarestacion(idEstacion) {
+        function EliminarUsuario(idUsuario) {
 
             Swal.fire({
                 title: 'Estas seguro?',
@@ -466,7 +531,7 @@
                 if (result.isConfirmed) {
 
 
-                    const url = "/Estaciones/Eliminar/?id=" + idEstacion;
+                    const url = "/Usuarios/EliminarUsuarios/?id=" + idUsuario;
 
                     fetch(url)
                         .then(res => res.json())

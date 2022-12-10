@@ -49,7 +49,7 @@ namespace gesin_app.Servicios
             return reportes;
         }
 
-        public async Task<T> GetByIdAsync(int Id)
+        public async Task<T> GetByIdAsync(int? Id)
         {
             var reporte = await Entidades.FindAsync(Id);
             return reporte;

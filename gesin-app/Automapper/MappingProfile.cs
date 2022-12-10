@@ -16,6 +16,8 @@ namespace gesin_app.Automapper
             CreateMap<Reporte, ReportesView>().ReverseMap();
             CreateMap<Reporte, ReportesCreateView>().ReverseMap();
             CreateMap<Persona, PersonaView>().ReverseMap();
+            CreateMap<Usuario, UsuariosView>().ReverseMap();
+            CreateMap<Usuario, UsuarioCreateView>().ReverseMap();
 
             //CreateMap<Reporte, ReportesView>().ForMember(destino => destino.usuarionombre, opt => opt.MapFrom(fuente => fuente.Usuarios.Nombre)).ReverseMap();
 

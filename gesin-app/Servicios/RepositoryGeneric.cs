@@ -67,7 +67,7 @@ namespace gesin_app.Servicios
             catch (System.Exception)
             {
 
-                throw;
+                return 0;
             }
 
             return 2;

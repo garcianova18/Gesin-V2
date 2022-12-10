@@ -56,67 +56,88 @@ namespace gesin_app.Controllers
 
         public async Task<ActionResult<int>> CrearEditarUsuarios([FromBody] UsuarioCreateView usuario)
         {
-            if (usuario.Id == 0)
+
+            if (usuario != null)
             {
-
-                var verificaExisteUser = context.Usuarios.Where(u => u.UserName.Trim() == usuario.UserName.Trim()).Count();
-
-                if (verificaExisteUser == 1)
+                if (usuario.Id == 0)
                 {
-                    return 3;
+
+
+                    //Crear
+
+                    if (ModelState.IsValid)
+                    {
+                        var verificaExisteUser = context.Usuarios.Where(u => u.UserName.Trim() == usuario.UserName.Trim()).Count();
+
+                        if (verificaExisteUser == 1)
+                        {
+                            //el usuario existe
+                            return 3;
+                        }
+
+
+                        var mapUsuario = mapper.Map<Usuario>(usuario);
+
+                        mapUsuario.Fecha = DateTime.Now;
+
+                        var usuarioCreate = await repositoryGenerico.CreateAsync(mapUsuario);
+                        await hubContext.Clients.All.SendAsync("recibir");
+
+
+                        //se agrego exitosamente
+                        return usuarioCreate;
+                    }
+
+
+                    //alun campo no fue  completado y todos son requeridos
+                    return 4;
+
                 }
 
-             
 
-                //Crear
 
-                if (ModelState.IsValid)
+                else
                 {
-                    
-
-                    var mapUsuario = mapper.Map<Usuario>(usuario);
-
-                    mapUsuario.Fecha = DateTime.Now;
-
-                    var usuarioCreate = await repositoryGenerico.CreateAsync(mapUsuario);
-                    await hubContext.Clients.All.SendAsync("recibir");
+                    //Editar
 
 
 
-                    return usuarioCreate;
+                    if (ModelState.IsValid)
+                    {
+
+                        var verificaExisteUser = context.Usuarios.Where(u => u.UserName.Trim() == usuario.UserName.Trim() && u.Id != usuario.Id).Count();
+
+
+                        if (verificaExisteUser == 1)
+                        {
+                            //el usuario existe
+                            return 3;
+                        }
+
+                        var mapUsuario = mapper.Map<Usuario>(usuario);
+
+                        var usuarioUpdate = await repositoryGenerico.UpdateAsync(mapUsuario);
+
+                       
+
+
+                        await hubContext.Clients.All.SendAsync("recibir");
+
+                        //si trae 2 se actualizo correctamente si trae 0 ocurrio un error 
+                        return usuarioUpdate;
+
+
+                    }
+
+                    //alun campo no fue  completado y todos son requeridos
+                    return 4;
                 }
 
             }
-            else
-            {
-                //Editar
 
-                var verificaExisteUser = context.Usuarios.Where(u => u.UserName.Trim() == usuario.UserName.Trim() && u.Id != usuario.Id).Count();
-
-
-                if (verificaExisteUser == 1)
-                {
-                    return 3;
-                }
-
-                if (ModelState.IsValid)
-                {
-
-                    var mapUsuario = mapper.Map<Usuario>(usuario);
-
-                    var usuarioUpdate= await repositoryGenerico.UpdateAsync(mapUsuario);
-
-                    
-                    await hubContext.Clients.All.SendAsync("recibir");
-
-                    return usuarioUpdate;
-
-
-                }
-            }
-
-
+            //si el modelo viene null 
             return 0;
+            
         }
 
         public async Task<ActionResult<UsuariosView>> buscarUsuarios(int? id)

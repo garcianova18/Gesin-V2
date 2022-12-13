@@ -22,14 +22,15 @@ namespace gesin_app.Servicios
             try
             {
                 await _context.SaveChangesAsync();
+                return 1;
             }
             catch (System.Exception)
             {
 
-                
+                return 0;
             }
 
-            return 1;
+          
         }
 
         public async Task<int> DeleteAsync(T entidad )
@@ -62,6 +63,7 @@ namespace gesin_app.Servicios
             try
             {
                 await _context.SaveChangesAsync();
+                return 2;
 
             }
             catch (System.Exception)
@@ -70,7 +72,7 @@ namespace gesin_app.Servicios
                 return 0;
             }
 
-            return 2;
+          
 
 
         }

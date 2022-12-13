@@ -15,7 +15,7 @@ namespace gesin_app.ViewModel
             get { return Nombre.Trim() +" " + Apellido.Trim(); }
             
             }
-        public int Codigo { get; set; }
+        public string Codigo { get; set; }
 
         public int IdRol { get; set; }
 

@@ -13,7 +13,7 @@ namespace gesin_app.ViewModel
         [Required]
         public string Apellido { get; set; }
         [Required]
-        public int Codigo { get; set; }
+        public string Codigo { get; set; }
         [Required]
         public string UserName { get; set; }
         [Required]

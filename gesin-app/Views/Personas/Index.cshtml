@@ -334,9 +334,15 @@
 
         //Crear editar personas
 
+
+
+        
+       
         const formPersona = document.getElementById("formPersona");
 
         formPersona.addEventListener("submit", crearpersonas);
+
+        //--------Agregar y editar Persona asincrono----------------------
 
       function crearpersonas(e){
 
@@ -379,49 +385,47 @@
                         Swal.fire('Esta Persona ya existe')
 
                     }
-                    else {
-                                
+                      
                         
                         
-                                if (data == 1) {
+                    else if (data == 1) {
 
 
 
 
-                                    Swal.fire({
-                                        position: 'top-end',
-                                        icon: 'success',
-                                        title: 'Se ha agregado correctamente',
-                                        showConfirmButton: false,
-                                        timer: 2000
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Se ha agregado correctamente',
+                            showConfirmButton: false,
+                            timer: 2000
 
-                                    })  
+                        })  
                                   
-                                    //pintardara();
+                        //pintardara();
 
                                    
-                                    //document.getElementById("btnCerrarCrear").click();
-                                    //formPersona.reset();
+                        //document.getElementById("btnCerrarCrear").click();
+                        //formPersona.reset();
 
 
-                                     document.getElementById('formPersona').submit();
+                            document.getElementById('formPersona').submit();
 
-                                }
-                                else {
-
-
-                                    Swal.fire({
-                                        icon: 'warning',
-                                        title: 'Advertencia...',
-                                        text: 'Todos los campos son obligatorios',
-
-                                    })
-                                }
+                    }
+                    else {
 
 
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Advertencia...',
+                            text: 'Todos los campos son obligatorios',
 
-                         }
+                        })
+                    }
 
+
+
+                  
 
 
                 })
@@ -505,8 +509,8 @@
                         Swal.fire({
                             icon: 'warning',
                             title: 'Advertencia...',
-                            text: 'el campo nombre es obligatorio ',
-                           
+                            text: 'Todos los campos son obligatorios',
+
                         })
 
 

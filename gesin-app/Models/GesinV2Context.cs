@@ -38,13 +38,13 @@ namespace gesin_app.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server= MCFLOW-PC\\SQLEXPRESS; Initial catalog =GesinV2 ; Trusted_Connection = true;");
+                optionsBuilder.UseSqlServer("Server= DESKTOP-BP6RUJQ\\SQLEXPRESS; Initial catalog = GesinV2; Trusted_Connection = true;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AI");
+            modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
 
             modelBuilder.Entity<Activo>(entity =>
             {
@@ -303,6 +303,10 @@ namespace gesin_app.Models
                 entity.Property(e => e.Apellido)
                     .IsRequired()
                     .HasMaxLength(20);
+
+                entity.Property(e => e.Codigo)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Fecha).HasColumnType("datetime");
 

@@ -654,9 +654,6 @@ namespace gesin_app.Controllers
                         reporte.IdUsuarios = Convert.ToInt32(userName[2].Value);
 
 
-
-                       
-
                         //este metodo lo hacemos  porque si reutilizamos un registro vendra con el estado que tenga el registro a reutilizar o copiar, entonces si no hacemos esto podria pasar que reutilicemos por ej. un registro con estado creada y al reutilizarlo no nos creara el nuevo registro con estadoot duplicada mas bien heredara el estado del registro reutilizado.
 
                         var CompararOT = BuscarOt(reporte.Ot);
@@ -699,47 +696,54 @@ namespace gesin_app.Controllers
 
                      }
 
-            }
+                 }
 
-            else
-            {
-                //Actualizar
-
-                if (ModelState.IsValid)
+                else
                 {
+                    //Actualizar
 
-                     var userName = HttpContext.User.Claims.ToList();
+                    if (ModelState.IsValid)
+                    {
 
-                     reporte.IdUsuarioActualizo = Convert.ToInt32(userName[2].Value);
+                            var existeResgistro =await Db.Reportes.AnyAsync(r => r.Id == reporte.Id);
 
-                        if (reporte.IdEstadoOt == 0)
-                        {
-                            reporte.IdEstadoOt = 8;
-                        }
+                            if (existeResgistro == false)
+                            {
+                                return Ok(4);
+                            }
+
+                         var userName = HttpContext.User.Claims.ToList();
+
+                         reporte.IdUsuarioActualizo = Convert.ToInt32(userName[2].Value);
+
+                            if (reporte.IdEstadoOt == 0)
+                            {
+                                reporte.IdEstadoOt = 8;
+                            }
 
 
                         
-                        var mapReporte = mapper.Map<Reporte>(reporte);
-                        mapReporte.IdSistema = sistema.Id;
-                        mapReporte.Idmantenedor = subsistema.IdMantenedor;
-                        mapReporte.IdSubsistema = subsistema.Id;
-                        mapReporte.IdEstacion = estacion.Id;
-                        mapReporte.Fechaaveria = Convert.ToDateTime(fechareporte);
-                        mapReporte.Fechanotificacion = fechanotificacion;
-                        mapReporte.Fechainicio = fechainicio;
-                        mapReporte.Fechafinal = fechafinal;
+                            var mapReporte = mapper.Map<Reporte>(reporte);
+                            mapReporte.IdSistema = sistema.Id;
+                            mapReporte.Idmantenedor = subsistema.IdMantenedor;
+                            mapReporte.IdSubsistema = subsistema.Id;
+                            mapReporte.IdEstacion = estacion.Id;
+                            mapReporte.Fechaaveria = Convert.ToDateTime(fechareporte);
+                            mapReporte.Fechanotificacion = fechanotificacion;
+                            mapReporte.Fechainicio = fechainicio;
+                            mapReporte.Fechafinal = fechafinal;
 
-                        var reporteUpdate = await repository.UpdateAsync(mapReporte);
+                            var reporteUpdate = await repository.UpdateAsync(mapReporte);
 
-                    await hubContext.Clients.All.SendAsync("recibir");
+                        await hubContext.Clients.All.SendAsync("recibir");
 
                         
 
-                        return Ok(reporteUpdate);
+                            return Ok(reporteUpdate);
 
 
+                    }
                 }
-            }
 
 
             }

@@ -57,8 +57,8 @@ namespace gesin_app.Controllers
         public async Task<ActionResult<int>> CrearEditarUsuarios([FromBody] UsuarioCreateView usuario)
         {
 
-            if (usuario != null)
-            {
+           
+            
                 if (usuario.Id == 0)
                 {
 
@@ -66,6 +66,7 @@ namespace gesin_app.Controllers
                     //Crear
 
                     if (ModelState.IsValid)
+
                     {
                         var verificaExisteUser = context.Usuarios.Where(u => u.UserName.Trim() == usuario.UserName.Trim()).Count();
 
@@ -104,22 +105,32 @@ namespace gesin_app.Controllers
 
                     if (ModelState.IsValid)
                     {
+                        // verificamos que con el id que envio el usuario exista un registro 
+                        var existeRegistro = await context.Usuarios.AnyAsync(u => u.Id == usuario.Id);
 
-                        var verificaExisteUser = context.Usuarios.Where(u => u.UserName.Trim() == usuario.UserName.Trim() && u.Id != usuario.Id).Count();
-
-
-                        if (verificaExisteUser == 1)
+                        if (existeRegistro == false)
                         {
-                            //el usuario existe
+                            //si no existe un registro con ese id  es que el id no es valido y devolvemos 0
+                            //que en el frontend 0 muestra la alerta de recurso no encontrado.
+                            return 0;
+
+
+                        }
+
+                        //verificamos que no existan usuario con este mismo nombre de usuario 
+                        var verificaExisteUser = await context.Usuarios.Where(u => u.UserName.Trim() == usuario.UserName.Trim() && u.Id != usuario.Id).CountAsync();
+
+
+                        if (verificaExisteUser >= 1)
+                        {
+                            //el usuario ya existe
                             return 3;
                         }
+                   
 
                         var mapUsuario = mapper.Map<Usuario>(usuario);
 
                         var usuarioUpdate = await repositoryGenerico.UpdateAsync(mapUsuario);
-
-                       
-
 
                         await hubContext.Clients.All.SendAsync("recibir");
 
@@ -129,14 +140,13 @@ namespace gesin_app.Controllers
 
                     }
 
-                    //alun campo no fue  completado y todos son requeridos
+                    //algun campo no fue  completado y todos son requeridos
                     return 4;
                 }
 
-            }
+            
 
-            //si el modelo viene null 
-            return 0;
+           
             
         }
 

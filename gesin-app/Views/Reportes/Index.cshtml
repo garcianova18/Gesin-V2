@@ -1196,6 +1196,7 @@
                             .then(res => res.json())
                             .then(data => {
 
+                                alert(JSON.stringify(data))
                                 //se creo un registro
                                 if (data == 1) {
 
@@ -1204,8 +1205,6 @@
                                     let url = "Reportes/Listarasincrono";
                                     //llamamos al metodo listar para que vuelva a cargar la tabla
                                     Listardata(url);
-
-
 
 
                                     Swal.fire({
@@ -1277,6 +1276,27 @@
 
 
                                     })
+                                }
+
+                                else if(data == 4) {
+
+
+                                    Swal.fire({
+
+
+                                        position: 'center',
+                                        icon: 'error',
+                                        text: `Error 404 recurso no encontrado`,
+                                                                   
+                                        showConfirmButton: true,
+                                        background: '#130a28',
+                                        color: '#ffff'
+
+
+
+                                    })
+
+
                                 }
 
                                 else {

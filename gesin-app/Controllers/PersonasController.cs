@@ -51,22 +51,8 @@ namespace gesin_app.Controllers
         [HttpPost]
         public async Task< ActionResult >CrearEditar([FromBody] Persona persona)
         {
-            if (persona.Nombre == null)
-            {
-                return Ok(0);
-            }
-             //buscamos si existe una con este mismo nombre 
-            var BuscarEstacion =  context.Personas.Where(e => e.Nombre.Trim() == persona.Nombre.Trim() && e.Codigo.Trim() == persona.Codigo.Trim() && e.Id !=persona.Id).Count();
-
-            //si entra aqui la persona existe y devolvemo mensaje
-            if (BuscarEstacion == 1)
-            {
-                return Ok(3);
-            }
-            //si entra aqui es que no existe la persona y se va a crear o editar segun el caso
-            else
-            {
-
+           
+          
                 //crear
                 if (persona.Id == 0)
                 {
@@ -74,44 +60,81 @@ namespace gesin_app.Controllers
                     if (ModelState.IsValid)
                     {
 
+                        //buscamos si existe una con este mismo nombre y codigo
+                        var BuscarExistePersona = await context.Personas.Where(p => p.Nombre.Trim() == persona.Nombre.Trim() && p.Codigo.Trim() == persona.Codigo.Trim() && p.Id != persona.Id).CountAsync();
+
+                        //si entra aqui la persona existe y devolvemo mensaje
+                        if (BuscarExistePersona == 1)
+                        {
+                            return Ok(3);
+                        }
+
                         var personaCreate = await repository.CreateAsync(persona);
 
 
                         return Ok(personaCreate);
 
-                    }
-                }
+
+
+
+                     }
+
+
+
+
+                 }
                 //editar
                 else
                 {
+
+
                     if (ModelState.IsValid)
                     {
+                        // verificamos que con el id que envio el usuario exista un registro 
+                        var existeRegistro = await context.Personas.AnyAsync(p => p.Id == persona.Id);
 
-                        var personaUpdate = await repository.UpdateAsync(persona);
+                        if (existeRegistro == false)
+                        {
+                            //si no existe un registro con ese id  es que el id no es valido y devolvemos 0
+
+                            //recurso no encontrado.
+                            return Ok(0);
+
+                        }
+
+                        //buscamos si existe una con este mismo nombre y codigo
+                        var BuscarExistePersona = await context.Personas.Where(p => p.Nombre.Trim() == persona.Nombre.Trim() && p.Codigo.Trim() == persona.Codigo.Trim() && p.Id != persona.Id).CountAsync();
+
+                        //si entra aqui la persona existe y devolvemo mensaje
+                        if (BuscarExistePersona == 1)
+                        {
+                        //La persona ya existe con ese nombre y el mismo codigo
+                            return Ok(3);
+                        }
+
+                         var personaUpdate = await repository.UpdateAsync(persona);
 
 
                         return Ok(personaUpdate);
 
                     }
+
+
                 }
 
 
-            }
-
-
-
-            return Ok(0);
+            return Ok(4);
 
 
         }
 
 
-        public async Task< ActionResult> CargarData_editar(int id)
+        public async Task< ActionResult> CargarData_editar(int? id)
         {
-            if (id == 0)
+            if (id == 0 || id == null)
             {
 
-                return RedirectToAction("Index");
+                return Ok(0);
             }
 
             var buscarestacion = await repository.GetByIdAsync(id);

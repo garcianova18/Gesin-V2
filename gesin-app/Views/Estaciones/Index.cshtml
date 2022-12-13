@@ -191,14 +191,12 @@
 
                     if (data == 3) {
 
-                        Swal.fire('esta estacion ya existe')
+                        Swal.fire('Esta estacion ya existe')
 
                     }
-                    else {
+                 
 
-
-
-                        if (data == 1) {
+                    else if (data == 1) {
 
 
 
@@ -218,24 +216,22 @@
 
                           
 
-                        }
+                    }
 
 
+                    else {
 
 
-                        else {
-
-
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Advertencia...',
-                                text: 'el campo nombre es obligatorio',
-                                //footer: '<a href="">Why do I have this issue?</a>'
-                            })
-
-                        }
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Advertencia...',
+                            text: 'El campo nombre es obligatorio',
+                            //footer: '<a href="">Why do I have this issue?</a>'
+                        })
 
                     }
+
+                   
 
 
 
@@ -290,7 +286,7 @@
 
 
 
-                        Swal.fire('esta estacion ya existe')
+                        Swal.fire('Esta estacion ya existe')
 
                     }
 
@@ -320,7 +316,7 @@
                         Swal.fire({
                             icon: 'warning',
                             title: 'Advertencia...',
-                            text: 'el campo nombre es obligatorio ',
+                            text: 'El campo nombre es obligatorio ',
                             //footer: '<a href="">Why do I have this issue?</a>'
                         })
 

@@ -10,9 +10,7 @@ namespace gesin_app.ViewModel
         public string Nombre { get; set; }
         public string Codigo { get; set; }
 
-
-
-        [Display(Name ="Funcion")]
+        [Display(Name = "Funcion")]
         public string IdFuncionNavigationNombre { get; set; }
     }
 }

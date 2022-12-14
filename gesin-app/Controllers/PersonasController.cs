@@ -49,7 +49,7 @@ namespace gesin_app.Controllers
 
 
         [HttpPost]
-        public async Task< ActionResult >CrearEditar([FromBody] Persona persona)
+        public async Task< ActionResult >CrearEditar([FromBody] PersonaCrearView persona)
         {
            
           
@@ -67,19 +67,19 @@ namespace gesin_app.Controllers
                         if (BuscarExistePersona == 1)
                         {
                             return Ok(3);
-                        }
-
-                        var personaCreate = await repository.CreateAsync(persona);
+                        };
 
 
-                        return Ok(personaCreate);
+                            var personaMap = mapper.Map<Persona>(persona);
+
+                            var personaCreate = await repository.CreateAsync(personaMap);
 
 
+                            return Ok(personaCreate);
 
 
-                     }
-
-
+                    }
+                        
 
 
                  }
@@ -112,7 +112,9 @@ namespace gesin_app.Controllers
                             return Ok(3);
                         }
 
-                         var personaUpdate = await repository.UpdateAsync(persona);
+                        var personaMap = mapper.Map<Persona>(persona);
+
+                         var personaUpdate = await repository.UpdateAsync(personaMap);
 
 
                         return Ok(personaUpdate);

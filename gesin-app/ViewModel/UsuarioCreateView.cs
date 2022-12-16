@@ -5,7 +5,7 @@ namespace gesin_app.ViewModel
 {
     public class UsuarioCreateView
     {
-        [Required]
+    
         public int Id { get; set; }
 
         [Required]

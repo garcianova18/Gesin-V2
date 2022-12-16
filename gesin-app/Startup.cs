@@ -46,6 +46,8 @@ namespace gesin_app
             services.AddSignalR();
 
             services.AddScoped(typeof(IrepositoryGeneric<>), typeof(RepositoryGeneric<>));
+
+            services.AddDataProtection();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -650,7 +650,6 @@ namespace gesin_app.Controllers
 
                        
 
-
                         reporte.IdUsuarios = Convert.ToInt32(userName[2].Value);
 
 

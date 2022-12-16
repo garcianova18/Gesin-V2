@@ -16,6 +16,7 @@ using gesin_app.Models;
 using gesin_app.Controllers;
 using gesin_app.Servicios;
 using gesin_app.ViewModel;
+using Microsoft.AspNetCore.DataProtection;
 //using Agendatelefonica.Services;
 
 namespace gesin_app.Controllers
@@ -26,14 +27,19 @@ namespace gesin_app.Controllers
         private readonly IMapper mapper;
         private readonly IHubContext<GesinHub> hubContext;
         private readonly IrepositoryGeneric<Usuario> repositoryGenerico;
+        private readonly IDataProtector dataProtector;
 
-        public UsuariosController(GesinV2Context context, IMapper mapper, IHubContext<GesinHub> hubContext, IrepositoryGeneric<Usuario> repositoryGenerico)
+        public UsuariosController(GesinV2Context context, IMapper mapper, IHubContext<GesinHub> hubContext, IrepositoryGeneric<Usuario> repositoryGenerico, IDataProtectionProvider dataProtector)
         {
             this.context = context;
             this.mapper = mapper;
             this.hubContext = hubContext;
             this.repositoryGenerico = repositoryGenerico;
-        }
+
+            //ojo el string como parametro es la llave con la que se van a incripta y desincriptar los datos una vez incriptado con una llave no podemos desincriptar con otra asi que esta llave no se puede cambiar.
+           
+            this.dataProtector = dataProtector.CreateProtector("llave_Protecion");
+        }   
 
         public ActionResult Index()
         {
@@ -78,6 +84,10 @@ namespace gesin_app.Controllers
 
 
                         var mapUsuario = mapper.Map<Usuario>(usuario);
+
+                        var passProtector = dataProtector.Protect(mapUsuario.Password);
+
+                        mapUsuario.Password = passProtector;
 
                         mapUsuario.Fecha = DateTime.Now;
 
@@ -130,6 +140,12 @@ namespace gesin_app.Controllers
 
                         var mapUsuario = mapper.Map<Usuario>(usuario);
 
+                        var passProtector = dataProtector.Protect(mapUsuario.Password);
+
+                        mapUsuario.Password = passProtector;
+
+
+    
                         var usuarioUpdate = await repositoryGenerico.UpdateAsync(mapUsuario);
 
                         await hubContext.Clients.All.SendAsync("recibir");
@@ -166,6 +182,18 @@ namespace gesin_app.Controllers
 
             var mapUsuario =mapper.Map<UsuariosView>(Usuario);
 
+            try
+            {
+                var passUnprotector = dataProtector.Unprotect(mapUsuario.Password);
+
+                mapUsuario.Password = passUnprotector;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
             return mapUsuario;
 
         }
@@ -178,7 +206,9 @@ namespace gesin_app.Controllers
                 return 0;
             }
 
-            var usuario = await repositoryGenerico.GetByIdAsync(id);
+            //var usuario = await repositoryGenerico.GetByIdAsync(id);
+
+            var usuario = await context.Usuarios.Include(c=>c.ConfigUsuarios).FirstOrDefaultAsync(u=>u.Id==id);
 
 
             if (usuario == null)

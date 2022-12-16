@@ -61,6 +61,7 @@ namespace gesin_app.Controllers
             }
             else
             {
+                ViewBag.errorusuario = "El usuario o contraseña que ha ingresado es incorrecto vuelva a intentarlo";
                 return View(nameof(Index));
             }
         }

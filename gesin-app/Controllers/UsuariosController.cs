@@ -49,11 +49,12 @@ namespace gesin_app.Controllers
             return View();
         }
 
-        public ActionResult ListarUsuarios()
+        public async Task< ActionResult >ListarUsuarios()
         {
 
-            var usuarios = context.Usuarios.ProjectTo<UsuariosView>(mapper.ConfigurationProvider);
-
+            var usuarios = await context.Usuarios.Where(u=> u.ActivoInativo == true).ProjectTo<UsuariosView>(mapper.ConfigurationProvider).ToListAsync();
+              
+           
             //var usuarios = context.Usuarios.Include(r => r.IdRolNavigation).ToList();
             //var klk = mapper.Map<List<UsuariosView>>(usuarios);
 
@@ -88,8 +89,6 @@ namespace gesin_app.Controllers
                         var passProtector = dataProtector.Protect(mapUsuario.Password);
 
                         mapUsuario.Password = passProtector;
-
-                        mapUsuario.Fecha = DateTime.Now;
 
                         var usuarioCreate = await repositoryGenerico.CreateAsync(mapUsuario);
                         await hubContext.Clients.All.SendAsync("recibir");
@@ -206,21 +205,21 @@ namespace gesin_app.Controllers
                 return 0;
             }
 
-            //var usuario = await repositoryGenerico.GetByIdAsync(id);
+            var usuario = await repositoryGenerico.GetByIdAsync(id);
 
-            var usuario = await context.Usuarios.Include(c=>c.ConfigUsuarios).FirstOrDefaultAsync(u=>u.Id==id);
-
-
+           
             if (usuario == null)
             {
                 return 0;
             }
 
-            var usuarioDelete = await repositoryGenerico.DeleteAsync(usuario);
+            usuario.ActivoInativo = false;
+
+            var Deshabilitar_usuario = await repositoryGenerico.UpdateAsync(usuario);
 
             await hubContext.Clients.All.SendAsync("recibir");
 
-            return usuarioDelete;
+            return Deshabilitar_usuario;
         }
 
 

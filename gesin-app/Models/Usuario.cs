@@ -21,7 +21,7 @@ namespace gesin_app.Models
         public string UserName { get; set; }
         public string Password { get; set; }
         public int IdRol { get; set; }
-        public DateTime? Fecha { get; set; }
+        public bool ActivoInativo { get; set; }
 
         public virtual Rol IdRolNavigation { get; set; }
         public virtual ICollection<ConfigUsuario> ConfigUsuarios { get; set; }

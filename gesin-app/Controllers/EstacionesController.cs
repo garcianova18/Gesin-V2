@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace gesin_app.Controllers
 {
-    [Authorize(Roles = "administrador")]
+    [Authorize(Roles = "Administrador")]
     public class EstacionesController : Controller
     {
 

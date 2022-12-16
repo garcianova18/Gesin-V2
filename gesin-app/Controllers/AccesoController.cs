@@ -46,6 +46,12 @@ namespace gesin_app.Controllers
 
             if (usuarios != null)
             {
+                if (usuarios.ActivoInativo == false)
+                {
+
+                    ViewBag.errorusuario = "Este Usuario se encuentra deshabilitado comuniquese con el administrador";
+                    return View(nameof(Index));
+                }
 
                 var passUnprotector = dataProtector.Unprotect(usuarios.Password);
 
@@ -72,6 +78,7 @@ namespace gesin_app.Controllers
 
                 else
                 {
+                    ViewBag.errorusuario = "El usuario o contraseña que ha ingresado es incorrecto vuelva a intentarlo";
                     return View(nameof(Index));
                 }
 

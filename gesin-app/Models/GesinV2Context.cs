@@ -33,17 +33,11 @@ namespace gesin_app.Models
         public virtual DbSet<Ubicacion> Ubicacions { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-
-            }
-        }
+      
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AI");
 
             modelBuilder.Entity<Activo>(entity =>
             {
@@ -65,7 +59,7 @@ namespace gesin_app.Models
                 entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithMany(p => p.ConfigUsuarios)
                     .HasForeignKey(d => d.IdUsuario)
-                    .OnDelete(DeleteBehavior.ClientCascade)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Config_Usuario_Usuario");
             });
 
@@ -299,6 +293,8 @@ namespace gesin_app.Models
             {
                 entity.ToTable("Usuario");
 
+                entity.Property(e => e.ActivoInativo).HasColumnName("Activo_Inativo");
+
                 entity.Property(e => e.Apellido)
                     .IsRequired()
                     .HasMaxLength(20);
@@ -306,8 +302,6 @@ namespace gesin_app.Models
                 entity.Property(e => e.Codigo)
                     .IsRequired()
                     .HasMaxLength(50);
-
-                entity.Property(e => e.Fecha).HasColumnType("datetime");
 
                 entity.Property(e => e.Nombre)
                     .IsRequired()

@@ -35,10 +35,23 @@ namespace gesin_app.Servicios
 
         public async Task<int> DeleteAsync(T entidad )
         {
-            
+
 
             Entidades.Remove(entidad);
-           await _context.SaveChangesAsync();
+            try
+            {
+
+                await _context.SaveChangesAsync();
+               
+                
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+
+           
 
             return 1;  
         }

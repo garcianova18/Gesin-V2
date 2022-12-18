@@ -33,11 +33,11 @@ namespace gesin_app.Models
         public virtual DbSet<Ubicacion> Ubicacions { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
-      
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AI");
+            modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
 
             modelBuilder.Entity<Activo>(entity =>
             {
@@ -75,6 +75,8 @@ namespace gesin_app.Models
             modelBuilder.Entity<Estacion>(entity =>
             {
                 entity.ToTable("Estacion");
+
+                entity.Property(e => e.ActivoInactivo).HasColumnName("Activo_Inactivo");
 
                 entity.Property(e => e.Nombre).HasMaxLength(100);
             });

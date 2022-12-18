@@ -14,6 +14,7 @@ namespace gesin_app.Models
 
         public int Id { get; set; }
         public string Nombre { get; set; }
+        public bool ActivoInactivo { get; set; } = true;
 
         public virtual ICollection<Reporte> Reportes { get; set; }
     }

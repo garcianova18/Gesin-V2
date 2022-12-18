@@ -215,11 +215,9 @@ namespace gesin_app.Controllers
 
             usuario.ActivoInativo = false;
 
-            var Deshabilitar_usuario = await repositoryGenerico.UpdateAsync(usuario);
 
-            await hubContext.Clients.All.SendAsync("recibir");
 
-            return Deshabilitar_usuario;
+            return await repositoryGenerico.UpdateAsync(usuario);
         }
 
 

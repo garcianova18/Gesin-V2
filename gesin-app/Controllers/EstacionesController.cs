@@ -1,4 +1,5 @@
 ﻿using gesin_app.Models;
+using gesin_app.Servicios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,12 +15,12 @@ namespace gesin_app.Controllers
     {
 
         private readonly GesinV2Context Db;
+        private readonly IrepositoryGeneric<Estacion> repositoryGeneric;
 
-
-        public EstacionesController(GesinV2Context context)
+        public EstacionesController(GesinV2Context context, IrepositoryGeneric<Estacion> repositoryGeneric)
         {
             Db = context;
-
+            this.repositoryGeneric = repositoryGeneric;
         }
         public IActionResult Index()
         {
@@ -30,7 +31,7 @@ namespace gesin_app.Controllers
 
         public async Task<ActionResult> Listarestaciones()
         {
-            var estaciones = await Db.Estacions.ToListAsync();
+            var estaciones = await Db.Estacions.Where(e=> e.ActivoInactivo==true).ToListAsync();
 
             return Json(estaciones);
         }
@@ -135,43 +136,29 @@ namespace gesin_app.Controllers
         }
 
 
-        public ActionResult Eliminar(int? id)
+        public async Task< ActionResult<int> >Eliminar(int? id)
         {
            
 
-            if (id == null)
+            if (id == null || id ==0)
             {
 
-                return RedirectToAction("Index");
+                return Ok(0);
             }
 
            
-            var buscarestacion = Db.Estacions.Find(id);
+            var buscarestacion = await Db.Estacions.FindAsync(id);
 
-            if (buscarestacion != null)
+
+            if (buscarestacion == null)
             {
-                var buscarReporte = Db.Reportes.FirstOrDefault(r => r.IdEstacion == buscarestacion.Id);
 
-                // si existen reportes que contengan esta estacion no se eliminara dicha estacion de lo contrario podra ser eliminada
-                if (buscarReporte == null)
-                {
-
-                    Db.Remove(buscarestacion);
-                    Db.SaveChanges();
-
-                    return Ok(1);
-                }
-                else
-                {
-
-                    return Ok(2);
-                }
-
+                return  Ok(0);
             }
 
+            buscarestacion.ActivoInactivo = false;
 
-
-            return Json(buscarestacion);
+            return await repositoryGeneric.UpdateAsync(buscarestacion);
 
         }
     }

@@ -449,13 +449,13 @@
         function Eliminarestacion(idEstacion) {
 
             Swal.fire({
-                title: 'Estas seguro?',
-                text: "No podrás revertir esto!",
+                title: 'Alerta',
+                text: "Las Estaciones no puede ser elimiadas pero si deshabilitado!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, eliminar!'
+                confirmButtonText: 'Si, deshabilitar!'
 
             }).then((result) => {
 
@@ -468,27 +468,14 @@
                         .then(res => res.json())
                         .then(data => {
                            
-                            if (data == 1) {
-                              
+                          
+                            if (data == 2) {
 
 
                                 Swal.fire({
-                                    position: 'top-end',
                                     icon: 'success',
-                                    title: 'Se ha eliminado correctamente',
-                                    showConfirmButton: false,
-                                    timer: 2000
-                                })
-                                pintardara();
-                            }
-
-                            else if (data == 2) {
-
-
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error...',
-                                    text: 'la estacion no puede ser eliminada porque existen reportes con ella',
+                                    title: 'Se ha deshabilitado correctamente',
+                                    text: 'para habilitarlo nuevamente consulte con su administrador',
 
                                 })
 

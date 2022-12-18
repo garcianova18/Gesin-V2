@@ -542,21 +542,9 @@
                         .then(res => res.json())
                         .then(data => {
                            
-                            if (data == 1) {
-                              
+                            
 
-
-                                Swal.fire({
-                                    position: 'top-end',
-                                    icon: 'success',
-                                    title: 'Se ha eliminado correctamente',
-                                    showConfirmButton: false,
-                                    timer: 2000
-                                })
-                                pintardara();
-                            }
-
-                            else if (data == 2) {
+                           if (data == 2) {
 
 
                                 Swal.fire({

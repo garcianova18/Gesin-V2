@@ -3,6 +3,7 @@ using gesin_app.Models;
 using gesin_app.Servicios;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -47,7 +49,8 @@ namespace gesin_app
 
             services.AddScoped(typeof(IrepositoryGeneric<>), typeof(RepositoryGeneric<>));
 
-            services.AddDataProtection();
+           
+            services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(@"./Views\shared\protection\"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

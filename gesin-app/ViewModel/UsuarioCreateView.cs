@@ -18,6 +18,10 @@ namespace gesin_app.ViewModel
         public string UserName { get; set; }
         [Required]
         public string Password { get; set; }
+
+        [Required]
+        public bool ActivoInativo { get; set; } = true;
+
         [Required]
         [Range(1, int.MaxValue)]
         public int IdRol { get; set; }

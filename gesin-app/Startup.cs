@@ -50,7 +50,7 @@ namespace gesin_app
             services.AddScoped(typeof(IrepositoryGeneric<>), typeof(RepositoryGeneric<>));
 
            
-            services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(@"./Views\shared\protection\"));
+            services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(@"./Views\shared\protection\")).SetApplicationName("GesinV2");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -45,6 +45,7 @@ namespace gesin_app.Controllers
 
 
             if (usuarios != null)
+
             {
                 if (usuarios.ActivoInativo == false)
                 {
